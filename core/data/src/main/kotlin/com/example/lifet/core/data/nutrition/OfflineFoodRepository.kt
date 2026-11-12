@@ -67,6 +67,12 @@ internal class OfflineFoodRepository
 
         override suspend fun deleteCustomFood(id: String): AppResult<Unit> = io { foodDao.deleteCustomById(id) }
 
+        override suspend fun clearCustomFoodsAndFavorites(): AppResult<Unit> =
+            io {
+                foodDao.deleteAllCustom()
+                foodDao.clearFavorites()
+            }
+
         private fun <T> Flow<T>.seeded(): Flow<T> = onStart { seeder.ensureSeeded() }
 
         private suspend fun <T> io(block: suspend () -> T): AppResult<T> =

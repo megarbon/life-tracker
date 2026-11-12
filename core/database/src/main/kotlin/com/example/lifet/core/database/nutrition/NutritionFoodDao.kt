@@ -46,4 +46,7 @@ public interface NutritionFoodDao {
 
     @Query("DELETE FROM nutrition_food WHERE isCustom = 1")
     public suspend fun deleteAllCustom()
+
+    @Query("UPDATE nutrition_food SET isFavorite = 0 WHERE isFavorite = 1")
+    public suspend fun clearFavorites()
 }

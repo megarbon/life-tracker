@@ -59,14 +59,20 @@ internal class OfflineNutritionLogRepository
 
         override suspend fun deleteMeal(id: String): AppResult<Unit> = io { mealDao.deleteById(id) }
 
-        override suspend fun saveWater(entry: WaterEntry): AppResult<Unit> =
-            if (entry.ml <= 0) {
+        override suspend fun saveWater(entries: List<WaterEntry>): AppResult<Unit> =
+            if (entries.any { it.ml <= 0 }) {
                 AppResult.Failure(AppError.Validation(INVALID_WATER))
             } else {
-                io { waterDao.upsert(entry.toEntity()) }
+                io { waterDao.upsertAll(entries.map { it.toEntity() }) }
             }
 
         override suspend fun deleteWater(id: String): AppResult<Unit> = io { waterDao.deleteById(id) }
+
+        override suspend fun clearAll(): AppResult<Unit> =
+            io {
+                mealDao.deleteAll()
+                waterDao.deleteAll()
+            }
 
         private suspend fun <T> io(block: suspend () -> T): AppResult<T> =
             withContext(ioDispatcher) { runCatchingApp(onError = { AppError.Storage }) { block() } }

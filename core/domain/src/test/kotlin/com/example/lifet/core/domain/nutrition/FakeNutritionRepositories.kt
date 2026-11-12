@@ -44,13 +44,19 @@ class FakeLogRepository : NutritionLogRepository {
         return AppResult.Success(Unit)
     }
 
-    override suspend fun saveWater(entry: WaterEntry): AppResult<Unit> {
-        water.value = water.value + entry
+    override suspend fun saveWater(entries: List<WaterEntry>): AppResult<Unit> {
+        water.value = water.value + entries
         return AppResult.Success(Unit)
     }
 
     override suspend fun deleteWater(id: String): AppResult<Unit> {
         water.value = water.value.filterNot { it.id == id }
+        return AppResult.Success(Unit)
+    }
+
+    override suspend fun clearAll(): AppResult<Unit> {
+        meals.value = emptyList()
+        water.value = emptyList()
         return AppResult.Success(Unit)
     }
 }
@@ -64,6 +70,11 @@ class FakeGoalsRepository(
 
     override suspend fun setGoals(goals: NutritionGoals): AppResult<Unit> {
         this.goals.value = goals
+        return AppResult.Success(Unit)
+    }
+
+    override suspend fun clearGoals(): AppResult<Unit> {
+        goals.value = NutritionGoals.DEFAULT
         return AppResult.Success(Unit)
     }
 }

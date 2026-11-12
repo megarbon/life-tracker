@@ -75,8 +75,8 @@ class NutritionRepositoriesTest {
         runTest(dispatcher) {
             val glass = WaterEntry("w1", today, WaterEntry.GLASS_ML, NOW, zone)
 
-            assertTrue(log.saveWater(glass.copy(ml = 0)) is AppResult.Failure)
-            log.saveWater(glass)
+            assertTrue(log.saveWater(listOf(glass.copy(ml = 0))) is AppResult.Failure)
+            log.saveWater(listOf(glass))
             log.observeWater(today).test {
                 assertEquals(listOf(glass), awaitItem())
                 log.deleteWater("w1")

@@ -29,4 +29,7 @@ public interface FoodRepository {
 
     /** Borra un alimento personalizado; los de la semilla no se pueden borrar y se ignoran. */
     public suspend fun deleteCustomFood(id: String): AppResult<Unit>
+
+    /** Borra los alimentos personalizados y quita los favoritos de la semilla. La semilla se conserva. */
+    public suspend fun clearCustomFoodsAndFavorites(): AppResult<Unit>
 }

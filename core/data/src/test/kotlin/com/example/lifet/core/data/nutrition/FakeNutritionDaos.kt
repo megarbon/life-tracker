@@ -137,4 +137,8 @@ class FakeFoodDao : NutritionFoodDao {
     override suspend fun deleteAllCustom() {
         rows.value = rows.value.filterNot { it.isCustom }
     }
+
+    override suspend fun clearFavorites() {
+        rows.value = rows.value.map { it.copy(isFavorite = false) }
+    }
 }

@@ -40,6 +40,9 @@ internal class OfflineNutritionGoalsRepository
                 }
             }
 
+        override suspend fun clearGoals(): AppResult<Unit> =
+            withContext(ioDispatcher) { runCatchingApp(onError = { AppError.Storage }) { dao.deleteAll() } }
+
         companion object {
             const val GOALS_OUT_OF_RANGE = "goals_out_of_range"
         }

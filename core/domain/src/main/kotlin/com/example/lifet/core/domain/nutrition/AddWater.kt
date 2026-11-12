@@ -29,6 +29,6 @@ public class AddWater
                     loggedAt = date.atTime(LocalTime.now(clock)).atZone(clock.zone).toInstant(),
                     zone = clock.zone,
                 )
-            return log.saveWater(entry).map { entry }
+            return log.saveWater(listOf(entry)).map { entry }
         }
     }

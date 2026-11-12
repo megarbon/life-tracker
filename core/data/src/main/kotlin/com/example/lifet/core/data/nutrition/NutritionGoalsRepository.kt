@@ -10,4 +10,7 @@ public interface NutritionGoalsRepository {
 
     /** Falla con `AppError.Validation("goals_out_of_range")` si algún valor no es razonable. */
     public suspend fun setGoals(goals: NutritionGoals): AppResult<Unit>
+
+    /** Vuelve a los objetivos por defecto. */
+    public suspend fun clearGoals(): AppResult<Unit>
 }

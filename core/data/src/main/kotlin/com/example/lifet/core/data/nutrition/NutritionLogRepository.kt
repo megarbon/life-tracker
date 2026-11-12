@@ -30,7 +30,11 @@ public interface NutritionLogRepository {
 
     public suspend fun deleteMeal(id: String): AppResult<Unit>
 
-    public suspend fun saveWater(entry: WaterEntry): AppResult<Unit>
+    /** Inserta o sustituye agua por lotes (una sola transacción). */
+    public suspend fun saveWater(entries: List<WaterEntry>): AppResult<Unit>
 
     public suspend fun deleteWater(id: String): AppResult<Unit>
+
+    /** Borra todo el diario (comidas y agua). Lo usan los escenarios de demo y "borrar datos". */
+    public suspend fun clearAll(): AppResult<Unit>
 }
