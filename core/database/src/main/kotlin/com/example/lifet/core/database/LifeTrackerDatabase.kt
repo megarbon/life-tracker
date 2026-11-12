@@ -21,6 +21,12 @@ import androidx.room.TypeConverters
         com.example.lifet.core.database.finance.FinanceTransferEntity::class,
         com.example.lifet.core.database.finance.FinanceBudgetEntity::class,
         com.example.lifet.core.database.finance.FinanceRecurringRuleEntity::class,
+        com.example.lifet.core.database.fitness.FitnessWorkoutEntity::class,
+        com.example.lifet.core.database.fitness.FitnessSetEntity::class,
+        com.example.lifet.core.database.fitness.FitnessWeightEntity::class,
+        com.example.lifet.core.database.fitness.FitnessStepsEntity::class,
+        com.example.lifet.core.database.fitness.FitnessTemplateEntity::class,
+        com.example.lifet.core.database.fitness.FitnessTemplateExerciseEntity::class,
     ],
     version = LifeTrackerDatabase.VERSION,
     exportSchema = true,
@@ -31,6 +37,7 @@ internal abstract class LifeTrackerDatabase : RoomDatabase() {
 
     abstract fun moodDao(): com.example.lifet.core.database.mood.MoodDao
     abstract fun financeDao(): com.example.lifet.core.database.finance.FinanceDao
+    abstract fun fitnessDao(): com.example.lifet.core.database.fitness.FitnessDao
 
     companion object {
         const val VERSION = 1
