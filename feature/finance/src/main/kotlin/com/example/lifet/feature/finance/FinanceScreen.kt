@@ -32,8 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -190,16 +190,16 @@ private fun EffectsHandler(
 ) {
     val haptic = LocalHapticFeedback.current
     val undoLabel = stringResource(DesignR.string.lt_undo)
-    val context = LocalContext.current
+    val resources = LocalResources.current
     LaunchedEffect(effects) {
         effects.collect { effect ->
             when (effect) {
                 is FinanceEffect.Message -> {
-                    snackbar.showSnackbar(context.getString(effect.messageRes))
+                    snackbar.showSnackbar(resources.getString(effect.messageRes))
                 }
 
                 is FinanceEffect.Deleted -> {
-                    snackbar.showUndo(context.getString(effect.messageRes), undoLabel) {
+                    snackbar.showUndo(resources.getString(effect.messageRes), undoLabel) {
                         onAction(FinanceAction.Undo(effect.item))
                     }
                 }
