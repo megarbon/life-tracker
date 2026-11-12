@@ -25,11 +25,13 @@ android {
 
 dependencies {
     implementation(project(":core:common"))
+    implementation(project(":core:data"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:domain"))
     implementation(project(":core:model"))
     implementation(project(":core:database"))
     implementation(project(":core:datastore"))
+    debugImplementation(project(":core:demo"))
     implementation(project(":feature:dashboard"))
     implementation(project(":feature:finance"))
     implementation(project(":feature:fitness"))
