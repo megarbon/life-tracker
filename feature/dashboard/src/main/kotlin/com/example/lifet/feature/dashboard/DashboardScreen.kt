@@ -44,6 +44,7 @@ internal fun DashboardRoute(
     onOpenMood: () -> Unit,
     onOpenFinance: () -> Unit,
     onOpenNutrition: () -> Unit,
+    onOpenFitness: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
@@ -63,6 +64,7 @@ internal fun DashboardRoute(
                 onOpenMood = onOpenMood,
                 onOpenFinance = onOpenFinance,
                 onOpenNutrition = onOpenNutrition,
+                onOpenFitness = onOpenFitness,
                 onCheckIn = viewModel::checkIn,
                 onAddWater = viewModel::addGlassOfWater,
             ),
@@ -75,6 +77,7 @@ internal data class DashboardActions(
     val onOpenMood: () -> Unit,
     val onOpenFinance: () -> Unit,
     val onOpenNutrition: () -> Unit,
+    val onOpenFitness: () -> Unit,
     val onCheckIn: (MoodLevel) -> Unit,
     val onAddWater: () -> Unit,
 )
@@ -121,6 +124,7 @@ private fun DashboardContent(
         )
         LTSectionHeader(stringResource(R.string.dashboard_section_areas))
         NutritionTodayCard(summary = state.nutrition, onOpen = actions.onOpenNutrition, onAddWater = actions.onAddWater)
+        FitnessTodayCard(summary = state.fitness, onClick = actions.onOpenFitness)
         FinanceTodayCard(summary = state.finance, onClick = actions.onOpenFinance)
         MoodTodayCard(summary = state.mood, onOpen = actions.onOpenMood, onCheckIn = actions.onCheckIn)
     }
@@ -145,9 +149,10 @@ private fun DashboardScreenPreview() {
                     mood = MoodTodaySummary(null, 0, null, null, 0),
                     finance = FinanceTodaySummary(eur, Money(0, eur), Money(0, eur), null, hasData = false),
                     nutrition = previewNutrition(),
+                    fitness = previewFitness(),
                 ),
             snackbar = remember { SnackbarHostState() },
-            actions = DashboardActions({}, {}, {}, {}, {}),
+            actions = DashboardActions({}, {}, {}, {}, {}, {}),
         )
     }
 }
@@ -159,7 +164,7 @@ private fun DashboardScreenLoadingPreview() {
         DashboardScreen(
             state = DashboardUiState.Loading,
             snackbar = remember { SnackbarHostState() },
-            actions = DashboardActions({}, {}, {}, {}, {}),
+            actions = DashboardActions({}, {}, {}, {}, {}, {}),
         )
     }
 }

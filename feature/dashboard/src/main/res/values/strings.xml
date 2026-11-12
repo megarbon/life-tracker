@@ -32,4 +32,10 @@
     <string name="dashboard_nutrition_add_water">Añadir 250 ml de agua</string>
     <string name="dashboard_nutrition_open">Abrir Alimentación</string>
     <string name="dashboard_nutrition_progress">%1$d %% del objetivo de calorías</string>
+    <string name="dashboard_fitness_title">Minutos activos esta semana</string>
+    <string name="dashboard_fitness_value">%1$s min</string>
+    <string name="dashboard_fitness_goal">de %1$s min recomendados</string>
+    <string name="dashboard_fitness_today">Hoy has entrenado %1$s min</string>
+    <string name="dashboard_fitness_reached">Has superado el objetivo semanal</string>
+    <string name="dashboard_fitness_empty">Registra tu primer entreno para ver el progreso</string>
 </resources>

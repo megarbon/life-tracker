@@ -3,6 +3,7 @@ package com.example.lifet.feature.dashboard
 import app.cash.turbine.test
 import com.example.lifet.core.domain.GetTodayUseCase
 import com.example.lifet.core.domain.finance.ObserveFinanceTodaySummary
+import com.example.lifet.core.domain.fitness.ObserveFitnessTodaySummary
 import com.example.lifet.core.domain.mood.ObserveMoodTodaySummary
 import com.example.lifet.core.domain.mood.SaveMoodEntry
 import com.example.lifet.core.domain.nutrition.AddWater
@@ -11,6 +12,7 @@ import com.example.lifet.core.model.mood.MoodLevel
 import com.example.lifet.core.testing.MainDispatcherRule
 import com.example.lifet.core.testing.TestClock
 import com.example.lifet.core.testing.finance.InMemoryFinanceRepository
+import com.example.lifet.core.testing.fitness.InMemoryFitnessRepository
 import com.example.lifet.core.testing.mood.FakeMoodRepository
 import com.example.lifet.core.testing.nutrition.FakeNutritionGoalsRepository
 import com.example.lifet.core.testing.nutrition.FakeNutritionLogRepository
@@ -39,6 +41,7 @@ class DashboardViewModelTest {
             observeFinance = ObserveFinanceTodaySummary(InMemoryFinanceRepository(), clock),
             observeNutrition =
                 ObserveNutritionTodaySummary(nutritionLog, FakeNutritionGoalsRepository(), getToday),
+            observeFitness = ObserveFitnessTodaySummary(InMemoryFitnessRepository(), clock),
             saveMood = SaveMoodEntry(mood, clock),
             addWater = AddWater(nutritionLog, clock),
         )

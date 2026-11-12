@@ -5,12 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.lifet.core.common.AppResult
 import com.example.lifet.core.domain.GetTodayUseCase
 import com.example.lifet.core.domain.finance.ObserveFinanceTodaySummary
+import com.example.lifet.core.domain.fitness.ObserveFitnessTodaySummary
 import com.example.lifet.core.domain.mood.MoodDraft
 import com.example.lifet.core.domain.mood.ObserveMoodTodaySummary
 import com.example.lifet.core.domain.mood.SaveMoodEntry
 import com.example.lifet.core.domain.nutrition.AddWater
 import com.example.lifet.core.domain.nutrition.ObserveNutritionTodaySummary
+import com.example.lifet.core.model.finance.FinanceTodaySummary
+import com.example.lifet.core.model.fitness.FitnessTodaySummary
 import com.example.lifet.core.model.mood.MoodLevel
+import com.example.lifet.core.model.mood.MoodTodaySummary
+import com.example.lifet.core.model.nutrition.NutritionTodaySummary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -33,14 +38,21 @@ internal class DashboardViewModel
         observeMood: ObserveMoodTodaySummary,
         observeFinance: ObserveFinanceTodaySummary,
         observeNutrition: ObserveNutritionTodaySummary,
+        observeFitness: ObserveFitnessTodaySummary,
         private val saveMood: SaveMoodEntry,
         private val addWater: AddWater,
     ) : ViewModel() {
         private val today = getToday()
 
         val uiState: StateFlow<DashboardUiState> =
-            combine(observeMood(), observeFinance(), observeNutrition()) { mood, finance, nutrition ->
-                DashboardUiState.Success(today = today, mood = mood, finance = finance, nutrition = nutrition)
+            combine(observeMood(), observeFinance(), observeNutrition(), observeFitness()) { areas ->
+                DashboardUiState.Success(
+                    today = today,
+                    mood = areas[MOOD] as MoodTodaySummary,
+                    finance = areas[FINANCE] as FinanceTodaySummary,
+                    nutrition = areas[NUTRITION] as NutritionTodaySummary,
+                    fitness = areas[FITNESS] as FitnessTodaySummary,
+                )
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), DashboardUiState.Loading)
 
         private val messageChannel = Channel<DashboardMessage>(Channel.BUFFERED)
@@ -70,5 +82,9 @@ internal class DashboardViewModel
 
         private companion object {
             const val STOP_TIMEOUT_MS = 5_000L
+            const val MOOD = 0
+            const val FINANCE = 1
+            const val NUTRITION = 2
+            const val FITNESS = 3
         }
     }

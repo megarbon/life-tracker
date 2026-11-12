@@ -113,6 +113,7 @@ fun LifeTrackerNavHost(modifier: Modifier = Modifier) {
                 onOpenMood = { navController.navigate(MoodDestination) },
                 onOpenFinance = { navController.navigateToTab(FinanceDestination) },
                 onOpenNutrition = { navController.navigateToTab(NutritionDestination) },
+                onOpenFitness = { navController.navigateToTab(FitnessDestination) },
             )
             nutritionGraph()
             fitnessGraph()
