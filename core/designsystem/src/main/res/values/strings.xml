@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lt_previous">Anterior</string>
+    <string name="lt_next">Siguiente</string>
+    <string name="lt_range_day">Día</string>
+    <string name="lt_range_week">Semana</string>
+    <string name="lt_range_month">Mes</string>
+    <string name="lt_range_year">Año</string>
+    <string name="lt_view_all">Ver todo</string>
+    <string name="lt_show_table">Ver como tabla</string>
+    <string name="lt_hide_table">Ocultar tabla</string>
+    <string name="lt_undo">Deshacer</string>
+    <string name="lt_cancel">Cancelar</string>
+    <string name="lt_confirm">Confirmar</string>
+    <string name="lt_loading">Cargando</string>
+    <string name="lt_recent">Recientes</string>
+    <string name="lt_close">Cerrar</string>
+    <string name="lt_back">Volver</string>
+    <string name="lt_progress_percent">%1$d %% completado</string>
+    <string name="lt_heatmap_less">Menos</string>
+    <string name="lt_heatmap_more">Más</string>
+</resources>

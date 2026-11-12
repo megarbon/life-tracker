@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lt_previous">Previous</string>
+    <string name="lt_next">Next</string>
+    <string name="lt_range_day">Day</string>
+    <string name="lt_range_week">Week</string>
+    <string name="lt_range_month">Month</string>
+    <string name="lt_range_year">Year</string>
+    <string name="lt_view_all">See all</string>
+    <string name="lt_show_table">View as table</string>
+    <string name="lt_hide_table">Hide table</string>
+    <string name="lt_undo">Undo</string>
+    <string name="lt_cancel">Cancel</string>
+    <string name="lt_confirm">Confirm</string>
+    <string name="lt_loading">Loading</string>
+    <string name="lt_recent">Recent</string>
+    <string name="lt_close">Close</string>
+    <string name="lt_back">Back</string>
+    <string name="lt_progress_percent">%1$d %% complete</string>
+    <string name="lt_heatmap_less">Less</string>
+    <string name="lt_heatmap_more">More</string>
+</resources>
