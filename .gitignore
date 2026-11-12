@@ -1,0 +1,24 @@
+# Gradle / Kotlin
+.gradle/
+.kotlin/
+**/build/
+local.properties
+
+# IDE: se ignora todo salvo la configuración de estilo compartida
+.idea/*
+!.idea/codeStyles/
+!.idea/runConfigurations/
+*.iml
+
+# Android
+/captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# Sistema
+.DS_Store
+Thumbs.db
