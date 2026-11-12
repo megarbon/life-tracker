@@ -20,7 +20,12 @@ class ExerciseAnalyticsTest {
         val history = ExerciseAnalytics.history(listOf(strength("a", day1, lift("Sentadilla", 5 to 100_000L))))
 
         assertTrue(history.records.isEmpty())
-        assertEquals(1, history.exercises.single().sessions.size)
+        assertEquals(
+            1,
+            history.exercises
+                .single()
+                .sessions.size,
+        )
     }
 
     @Test
@@ -109,7 +114,13 @@ class ExerciseAnalyticsTest {
                 ),
             )
 
-        assertEquals(listOf("early", "late"), history.exercises.single().sessions.map { it.workoutId })
+        assertEquals(
+            listOf("early", "late"),
+            history.exercises
+                .single()
+                .sessions
+                .map { it.workoutId },
+        )
         assertEquals("late", history.records.single().workoutId)
     }
 

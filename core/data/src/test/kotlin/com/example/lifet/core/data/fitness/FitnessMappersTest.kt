@@ -30,7 +30,10 @@ class FitnessMappersTest {
     fun `sets are flattened with exercise and set order and rebuilt identically`() {
         val original =
             workout(
-                ExerciseLog("Press banca", listOf(StrengthSet(5, 80_000), StrengthSet(5, 82_500), StrengthSet(3, 85_000))),
+                ExerciseLog(
+                    "Press banca",
+                    listOf(StrengthSet(5, 80_000), StrengthSet(5, 82_500), StrengthSet(3, 85_000)),
+                ),
                 ExerciseLog("Dominadas", listOf(StrengthSet(8, 0))),
             )
 

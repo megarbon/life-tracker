@@ -88,6 +88,8 @@ public class FitnessCalculator(
             recentWorkouts = recent(sortedWorkouts),
             history = ExerciseAnalytics.history(data.workouts),
             weight = weightProgress,
+            weightEntries = data.weights.sortedByDescending { it.date },
+            stepsEntries = data.steps.sortedByDescending { it.date },
             templates = data.templates.sortedBy { it.name.lowercase() },
             stepsGoal = stepsGoal,
             stepsWeekAverage = stepsWeekAverage(currentWeek),

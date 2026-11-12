@@ -147,7 +147,14 @@ class FitnessDaoTest {
         runTest {
             dao.upsertSteps(FitnessStepsEntity(day, 5_000, RecordSource.MANUAL))
             dao.upsertSteps(FitnessStepsEntity(day, 7_200, RecordSource.MANUAL))
-            assertEquals(7_200, dao.observeSteps().first().single().steps)
+            assertEquals(
+                7_200,
+                dao
+                    .observeSteps()
+                    .first()
+                    .single()
+                    .steps,
+            )
 
             dao.deleteSteps(day)
 
@@ -161,8 +168,22 @@ class FitnessDaoTest {
             dao.saveTemplate(
                 template,
                 listOf(
-                    FitnessTemplateExerciseEntity(templateId = "t", position = 1, name = "Fondos", sets = 3, reps = 10, weightGrams = 0),
-                    FitnessTemplateExerciseEntity(templateId = "t", position = 0, name = "Press", sets = 4, reps = 6, weightGrams = 70_000),
+                    FitnessTemplateExerciseEntity(
+                        templateId = "t",
+                        position = 1,
+                        name = "Fondos",
+                        sets = 3,
+                        reps = 10,
+                        weightGrams = 0,
+                    ),
+                    FitnessTemplateExerciseEntity(
+                        templateId = "t",
+                        position = 0,
+                        name = "Press",
+                        sets = 4,
+                        reps = 6,
+                        weightGrams = 70_000,
+                    ),
                 ),
             )
 

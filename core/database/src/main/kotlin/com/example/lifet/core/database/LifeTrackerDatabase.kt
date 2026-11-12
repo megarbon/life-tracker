@@ -36,7 +36,9 @@ internal abstract class LifeTrackerDatabase : RoomDatabase() {
     abstract fun appMetaDao(): AppMetaDao
 
     abstract fun moodDao(): com.example.lifet.core.database.mood.MoodDao
+
     abstract fun financeDao(): com.example.lifet.core.database.finance.FinanceDao
+
     abstract fun fitnessDao(): com.example.lifet.core.database.fitness.FitnessDao
 
     companion object {

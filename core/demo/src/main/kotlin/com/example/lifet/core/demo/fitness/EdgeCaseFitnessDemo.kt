@@ -24,6 +24,7 @@ private const val LONG_EXERCISE_SEED = "Press de banca inclinado con agarre cerr
  * máxima con emojis, cargas y repeticiones en el límite, un día con ocho entrenos, uno de 24 horas, ejercicios
  * escritos de dos maneras, pesos y pasos extremos y un hueco de doce días sin datos (de hace 14 a hace 25).
  */
+@Suppress("TooManyFunctions") // Un método por caso límite: cada uno es independiente y se lee por separado.
 internal class EdgeCaseFitnessDemo(
     private val clock: Clock,
 ) {

@@ -85,7 +85,8 @@ class FitnessUseCasesTest {
     @Test
     fun `series covers the range up to today with zeros on rest days`() =
         runTest {
-            val repository = InMemoryFitnessRepository(FitnessDataSet(workouts = listOf(run("a", today.minusDays(1), 45))))
+            val repository =
+                InMemoryFitnessRepository(FitnessDataSet(workouts = listOf(run("a", today.minusDays(1), 45))))
             val range = DateRange.containing(DateRangeUnit.WEEK, today)
 
             ObserveFitnessSeries(repository, clock)(range).test {

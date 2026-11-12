@@ -74,6 +74,8 @@ public data class WeekTotal(
  * @property intensity intensidad de 0 a 1 de cada día con actividad, para el heatmap.
  * @property workouts todos los entrenos, del más reciente al más antiguo.
  * @property recentWorkouts los últimos entrenos distintos (por tipo y título), para repetirlos con un toque.
+ * @property weightEntries los pesos registrados, del más reciente al más antiguo, con su nota.
+ * @property stepsEntries los pasos anotados, del más reciente al más antiguo.
  */
 public data class FitnessOverview(
     public val today: LocalDate,
@@ -88,6 +90,8 @@ public data class FitnessOverview(
     public val recentWorkouts: List<Workout>,
     public val history: ExerciseHistory,
     public val weight: WeightProgress,
+    public val weightEntries: List<BodyWeight>,
+    public val stepsEntries: List<DailySteps>,
     public val templates: List<WorkoutTemplate>,
     public val stepsGoal: Int,
     public val stepsWeekAverage: Int?,

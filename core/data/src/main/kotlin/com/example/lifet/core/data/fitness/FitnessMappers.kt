@@ -69,7 +69,10 @@ internal fun List<FitnessSetEntity>.toExerciseLogs(): List<ExerciseLog> =
         .toSortedMap()
         .values
         .map { rows ->
-            ExerciseLog(rows.first().exerciseName, rows.sortedBy { it.setIndex }.map { StrengthSet(it.reps, it.weightGrams) })
+            ExerciseLog(
+                rows.first().exerciseName,
+                rows.sortedBy { it.setIndex }.map { StrengthSet(it.reps, it.weightGrams) },
+            )
         }
 
 internal fun FitnessWeightEntity.toDomain(): BodyWeight = BodyWeight(date, weightGrams, note)
@@ -86,7 +89,15 @@ internal fun FitnessTemplateEntity.toDomain(exercises: List<FitnessTemplateExerc
         name = name,
         type = type,
         durationSec = durationSec,
-        exercises = exercises.sortedBy { it.position }.map { TemplateExercise(it.name, it.sets, it.reps, it.weightGrams) },
+        exercises =
+            exercises.sortedBy { it.position }.map {
+                TemplateExercise(
+                    it.name,
+                    it.sets,
+                    it.reps,
+                    it.weightGrams,
+                )
+            },
     )
 
 internal fun WorkoutTemplate.toEntity(): FitnessTemplateEntity =

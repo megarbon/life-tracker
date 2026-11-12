@@ -28,7 +28,8 @@ class FitnessDemoDataGeneratorTest {
 
     /** Días en los que hay algún dato de cualquier tipo, contando cada día que toca un entreno. */
     private fun activeDays(data: FitnessDataSet): Set<LocalDate> =
-        data.workouts.flatMap { it.secondsByDay().keys }.toSet() + data.weights.map { it.date } + data.steps.map { it.date }
+        data.workouts.flatMap { it.secondsByDay().keys }.toSet() + data.weights.map { it.date } +
+            data.steps.map { it.date }
 
     @Test
     fun `area is fitness`() {
@@ -108,7 +109,12 @@ class FitnessDemoDataGeneratorTest {
         runTest {
             val data = load(DemoScenario.REGULAR)
             val calculator = FitnessCalculator(data, today)
-            val empty = calculator.overview().weeks.dropLast(1).filter { it.minutes == 0 }
+            val empty =
+                calculator
+                    .overview()
+                    .weeks
+                    .dropLast(1)
+                    .filter { it.minutes == 0 }
 
             assertEquals(1, empty.size)
             val vacation = (0L until 7L).map { empty.single().weekStart.plusDays(it) }
@@ -190,7 +196,10 @@ class FitnessDemoDataGeneratorTest {
             assertTrue(exercises.all { it.sets.size <= FitnessRules.MAX_SETS_PER_EXERCISE })
             assertTrue(exercises.flatMap { it.sets }.all { it.reps in 1..FitnessRules.MAX_REPS })
             assertTrue(
-                data.weights.all { it.weightGrams in FitnessRules.MIN_BODY_WEIGHT_GRAMS..FitnessRules.MAX_BODY_WEIGHT_GRAMS },
+                data.weights.all {
+                    it.weightGrams in
+                        FitnessRules.MIN_BODY_WEIGHT_GRAMS..FitnessRules.MAX_BODY_WEIGHT_GRAMS
+                },
             )
             assertTrue(data.steps.all { it.steps in 0..FitnessRules.MAX_STEPS })
         }

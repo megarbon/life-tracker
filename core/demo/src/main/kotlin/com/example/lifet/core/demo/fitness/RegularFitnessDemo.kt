@@ -36,6 +36,7 @@ private const val TOTAL_LOSS_G = 2_500L
  * vacaciones sin actividad (con la fuerza algo resentida al volver) y un peso con tendencia suave a la baja.
  * Todo el azar sale de [random]; las fechas, de [clock].
  */
+@Suppress("TooManyFunctions") // Un método por patrón de la demo (fuerza, cada tipo de cardio, peso, pasos...).
 internal class RegularFitnessDemo(
     clock: Clock,
     private val random: Random,
