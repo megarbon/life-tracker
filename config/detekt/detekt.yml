@@ -1,0 +1,11 @@
+# Se aplica encima de la configuración por defecto de detekt 2 (buildUponDefaultConfig = true).
+complexity:
+  LongParameterList:
+    # Los composables reciben muchos parámetros por diseño (estado, lambdas, modifier).
+    allowedFunctionParameters: 8
+    ignoreDefaultParameters: true
+
+naming:
+  FunctionNaming:
+    # Los composables se nombran en PascalCase.
+    ignoreAnnotated: ['Composable']
