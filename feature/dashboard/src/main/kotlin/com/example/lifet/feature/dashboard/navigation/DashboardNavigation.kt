@@ -12,6 +12,6 @@ import kotlinx.serialization.Serializable
 public data object DashboardDestination
 
 /** La feature no conoce a otras features: la navegación saliente llegará como lambdas `onNavigateToX`. */
-public fun NavGraphBuilder.dashboardGraph() {
-    composable<DashboardDestination> { DashboardRoute() }
+public fun NavGraphBuilder.dashboardGraph(onOpenMood: () -> Unit) {
+    composable<DashboardDestination> { DashboardRoute(onOpenMood = onOpenMood) }
 }

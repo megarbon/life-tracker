@@ -14,6 +14,7 @@ import time
 ADB = os.environ.get(
     "ADB", r"C:\Users\MELAKUGARCIABONACHO\AppData\Local\Android\Sdk\platform-tools\adb.exe"
 )
+APP_ID = "com.example.lifet"
 BOUNDS = re.compile(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"')
 
 
@@ -35,7 +36,15 @@ def find(pattern: str) -> tuple[int, int] | None:
     return None
 
 
+def focused_package() -> str:
+    match = re.search(r"mCurrentFocus=.*? u0 ([\w.]+)/", adb("shell", "dumpsys", "window"))
+    return match.group(1) if match else ""
+
+
 for wanted in sys.argv[1:]:
+    # Nunca tocar dentro de otra app (el móvil es de uso personal).
+    if focused_package() != APP_ID:
+        sys.exit(f"Abortado: el foco no está en {APP_ID} sino en '{focused_package()}'.")
     point = find(wanted)
     print(f"{wanted} -> {point}")
     if point:

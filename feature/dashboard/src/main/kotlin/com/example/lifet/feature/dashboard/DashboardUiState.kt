@@ -1,14 +1,16 @@
 package com.example.lifet.feature.dashboard
 
 import androidx.compose.runtime.Immutable
+import com.example.lifet.core.model.mood.MoodTodaySummary
 import java.time.LocalDate
 
-/** Estado de la pantalla "Hoy". Las tarjetas por área se añadirán con cada feature. */
+/** Estado de la pantalla "Hoy". Cada área aporta su tarjeta a medida que se integra. */
 internal sealed interface DashboardUiState {
     data object Loading : DashboardUiState
 
     @Immutable
     data class Success(
         val today: LocalDate,
+        val mood: MoodTodaySummary,
     ) : DashboardUiState
 }

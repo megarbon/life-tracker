@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dashboard_title">Hoy</string>
+    <string name="dashboard_section_areas">Tus áreas</string>
+    <string name="dashboard_mood_title">Ánimo de hoy</string>
+    <string name="dashboard_mood_value">%1$s de 5</string>
+    <string name="dashboard_mood_missing_value">Sin registrar</string>
+    <string name="dashboard_mood_missing">Aún no has registrado nada hoy. Un toque basta.</string>
+    <string name="dashboard_mood_week">Media de los últimos 7 días: %1$s</string>
     <string name="dashboard_empty_message">Aún no hay registros. Cuando añadas finanzas, deporte, comida o sueño, tu resumen aparecerá aquí.</string>
 </resources>
