@@ -36,6 +36,15 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
             failOnKotlinWarnings()
 
+            // Robolectric usa reflexión sobre java.io, cerrada por defecto desde JDK 17.
+            tasks.withType<Test>().configureEach {
+                jvmArgs(
+                    "--add-opens=java.base/java.io=ALL-UNNAMED",
+                    "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                    "--add-exports=java.base/jdk.internal.access=ALL-UNNAMED",
+                )
+            }
+
             dependencies {
                 add("testImplementation", libs.library("junit"))
             }

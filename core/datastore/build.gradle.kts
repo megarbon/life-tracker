@@ -1,5 +1,6 @@
 plugins {
     id("lifetracker.android.library")
+    id("lifetracker.android.hilt")
 }
 
 android {
@@ -7,6 +8,10 @@ android {
 }
 
 dependencies {
+    api(project(":core:model"))
     implementation(project(":core:common"))
-    implementation(project(":core:model"))
+    implementation(libs.androidx.datastore.preferences)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
 }
