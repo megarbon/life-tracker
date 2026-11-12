@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema de arranque (ventana antes de que Compose pinte). El tema real vive en core:designsystem. -->
+    <style name="Theme.LifeTracker" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
