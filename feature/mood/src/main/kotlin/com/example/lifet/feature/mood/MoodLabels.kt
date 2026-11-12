@@ -10,7 +10,7 @@ import androidx.compose.material.icons.rounded.SentimentVerySatisfied
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import com.example.lifet.core.model.mood.MoodLevel
 import java.text.NumberFormat
@@ -97,6 +97,6 @@ internal class MoodFormatters(
 
 @Composable
 internal fun rememberMoodFormatters(): MoodFormatters {
-    val locale = LocalConfiguration.current.locales[0] ?: Locale.getDefault()
+    val locale = LocalLocale.current.platformLocale
     return remember(locale) { MoodFormatters(locale) }
 }
