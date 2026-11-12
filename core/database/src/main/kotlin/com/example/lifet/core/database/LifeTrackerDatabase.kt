@@ -14,6 +14,7 @@ import androidx.room.TypeConverters
 @Database(
     entities = [
         AppMetaEntity::class,
+        com.example.lifet.core.database.mood.MoodEntryEntity::class,
     ],
     version = LifeTrackerDatabase.VERSION,
     exportSchema = true,
@@ -21,6 +22,8 @@ import androidx.room.TypeConverters
 @TypeConverters(Converters::class)
 internal abstract class LifeTrackerDatabase : RoomDatabase() {
     abstract fun appMetaDao(): AppMetaDao
+
+    abstract fun moodDao(): com.example.lifet.core.database.mood.MoodDao
 
     companion object {
         const val VERSION = 1
