@@ -1,0 +1,179 @@
+id;name;category;kcal;protein;carbs;fat;fiber;sugar;serving_g
+seed_manzana;Manzana;FRUIT;52;0.3;14;0.2;2.4;10.4;180
+seed_platano;Plátano;FRUIT;89;1.1;23;0.3;2.6;12;120
+seed_naranja;Naranja;FRUIT;47;0.9;12;0.1;2.4;9.4;150
+seed_mandarina;Mandarina;FRUIT;53;0.8;13;0.3;1.8;10.6;80
+seed_pera;Pera;FRUIT;57;0.4;15;0.1;3.1;9.8;170
+seed_fresas;Fresas;FRUIT;32;0.7;7.7;0.3;2;4.9;150
+seed_uvas;Uvas;FRUIT;69;0.7;18;0.2;0.9;15.5;120
+seed_sandia;Sandía;FRUIT;30;0.6;7.6;0.2;0.4;6.2;300
+seed_melon;Melón;FRUIT;34;0.8;8.2;0.2;0.9;7.9;250
+seed_melocoton;Melocotón;FRUIT;39;0.9;9.5;0.3;1.5;8.4;150
+seed_kiwi;Kiwi;FRUIT;61;1.1;15;0.5;3;9;75
+seed_pina;Piña;FRUIT;50;0.5;13;0.1;1.4;9.9;150
+seed_cerezas;Cerezas;FRUIT;63;1.1;16;0.2;2.1;12.8;100
+seed_albaricoque;Albaricoque;FRUIT;48;1.4;11;0.4;2;9.2;50
+seed_ciruela;Ciruela;FRUIT;46;0.7;11.4;0.3;1.4;9.9;60
+seed_aguacate;Aguacate;FRUIT;160;2;8.5;14.7;6.7;0.7;100
+seed_higos;Higos;FRUIT;74;0.8;19;0.3;2.9;16;50
+seed_arandanos;Arándanos;FRUIT;57;0.7;14;0.3;2.4;10;100
+seed_frambuesas;Frambuesas;FRUIT;52;1.2;12;0.7;6.5;4.4;100
+seed_datiles;Dátiles;FRUIT;282;2.5;75;0.4;8;63;25
+seed_pasas;Pasas;FRUIT;299;3.1;79;0.5;3.7;59;30
+seed_tomate;Tomate;VEGETABLE;18;0.9;3.9;0.2;1.2;2.6;120
+seed_lechuga;Lechuga;VEGETABLE;15;1.4;2.9;0.2;1.3;0.8;60
+seed_cebolla;Cebolla;VEGETABLE;40;1.1;9.3;0.1;1.7;4.2;80
+seed_zanahoria;Zanahoria;VEGETABLE;41;0.9;9.6;0.2;2.8;4.7;80
+seed_pimiento_rojo;Pimiento rojo;VEGETABLE;31;1;6;0.3;2.1;4.2;100
+seed_pimiento_verde;Pimiento verde;VEGETABLE;20;0.9;4.6;0.2;1.7;2.4;100
+seed_pepino;Pepino;VEGETABLE;15;0.7;3.6;0.1;0.5;1.7;100
+seed_calabacin;Calabacín;VEGETABLE;17;1.2;3.1;0.3;1;2.5;150
+seed_berenjena;Berenjena;VEGETABLE;25;1;5.9;0.2;3;3.5;150
+seed_brocoli;Brócoli;VEGETABLE;34;2.8;6.6;0.4;2.6;1.7;150
+seed_coliflor;Coliflor;VEGETABLE;25;1.9;5;0.3;2;1.9;150
+seed_espinacas;Espinacas;VEGETABLE;23;2.9;3.6;0.4;2.2;0.4;100
+seed_judias_verdes;Judías verdes;VEGETABLE;31;1.8;7;0.2;2.7;3.3;150
+seed_champinones;Champiñones;VEGETABLE;22;3.1;3.3;0.3;1;2;100
+seed_patata;Patata cocida;VEGETABLE;87;1.9;20;0.1;1.8;0.9;200
+seed_boniato;Boniato;VEGETABLE;86;1.6;20;0.1;3;4.2;150
+seed_calabaza;Calabaza;VEGETABLE;26;1;6.5;0.1;0.5;2.8;150
+seed_puerro;Puerro;VEGETABLE;61;1.5;14;0.3;1.8;3.9;100
+seed_esparragos;Espárragos;VEGETABLE;20;2.2;3.9;0.1;2.1;1.9;100
+seed_alcachofa;Alcachofa;VEGETABLE;47;3.3;11;0.2;5.4;1;100
+seed_maiz_dulce;Maíz dulce;VEGETABLE;86;3.3;19;1.4;2;6.3;100
+seed_guisantes;Guisantes;VEGETABLE;81;5.4;14;0.4;5.7;5.7;100
+seed_repollo;Repollo;VEGETABLE;25;1.3;5.8;0.1;2.5;3.2;100
+seed_remolacha;Remolacha;VEGETABLE;43;1.6;9.6;0.2;2.8;6.8;100
+seed_aceitunas;Aceitunas verdes;VEGETABLE;145;1;3.8;15.3;3.3;0;30
+seed_lentejas;Lentejas cocidas;LEGUME;116;9;20;0.4;7.9;1.8;200
+seed_garbanzos;Garbanzos cocidos;LEGUME;164;8.9;27;2.6;7.6;4.8;200
+seed_alubias;Alubias blancas cocidas;LEGUME;127;8.7;23;0.5;6.3;0.3;200
+seed_tofu;Tofu;LEGUME;76;8;1.9;4.8;0.3;0.6;100
+seed_hummus;Hummus;LEGUME;166;7.9;14;9.6;6;0.3;50
+seed_pan_blanco;Pan blanco;GRAIN;265;9;49;3.2;2.7;5;40
+seed_pan_integral;Pan integral;GRAIN;247;13;41;3.4;7;6;40
+seed_pan_molde;Pan de molde;GRAIN;266;8;49;3.7;2.5;5;30
+seed_arroz_blanco;Arroz blanco cocido;GRAIN;130;2.7;28;0.3;0.4;0.1;180
+seed_arroz_integral;Arroz integral cocido;GRAIN;123;2.7;26;1;1.6;0.2;180
+seed_pasta;Pasta cocida;GRAIN;158;5.8;31;0.9;1.8;0.6;200
+seed_pasta_integral;Pasta integral cocida;GRAIN;149;5.3;30;1.1;3.9;0.8;200
+seed_avena;Copos de avena;GRAIN;372;13.5;59;7;10;1;40
+seed_muesli;Muesli;GRAIN;363;10;66;6;8;15;40
+seed_cereales_azucarados;Cereales de desayuno azucarados;GRAIN;380;6;84;2;3;30;30
+seed_galletas_maria;Galletas María;GRAIN;430;7;74;11;2.5;20;30
+seed_cuscus;Cuscús cocido;GRAIN;112;3.8;23;0.2;1.4;0.1;180
+seed_quinoa;Quinoa cocida;GRAIN;120;4.4;21;1.9;2.8;0.9;180
+seed_wrap;Tortilla de trigo (wrap);GRAIN;306;8.5;50;8;3;3;60
+seed_biscotes;Biscotes;GRAIN;400;11;74;6;4.5;5;20
+seed_croissant;Croissant;GRAIN;406;8.2;45;21;2.4;11;60
+seed_magdalena;Magdalena;GRAIN;410;6;50;21;1.5;28;40
+seed_pechuga_pollo;Pechuga de pollo a la plancha;MEAT;165;31;0;3.6;0;0;150
+seed_muslo_pollo;Muslo de pollo asado;MEAT;209;26;0;11;0;0;120
+seed_pavo_fiambre;Fiambre de pavo;MEAT;104;17.5;1.5;3;0;1;30
+seed_ternera;Filete de ternera;MEAT;170;26;0;7;0;0;150
+seed_lomo_cerdo;Lomo de cerdo;MEAT;143;21;0;6;0;0;150
+seed_jamon_serrano;Jamón serrano;MEAT;241;31;0;12.5;0;0;30
+seed_jamon_cocido;Jamón cocido;MEAT;126;19;1;5;0;0.5;30
+seed_chorizo;Chorizo;MEAT;455;24;2;38;0;1;30
+seed_salchichas;Salchichas;MEAT;290;11;3;26;0;1;80
+seed_carne_picada;Carne picada mixta;MEAT;254;17;0;20;0;0;120
+seed_bacon;Bacon;MEAT;417;13;1.4;40;0;0.5;20
+seed_salmon;Salmón;FISH;208;20;0;13;0;0;150
+seed_atun_natural;Atún en conserva al natural;FISH;116;26;0;1;0;0;60
+seed_atun_aceite;Atún en aceite;FISH;198;29;0;8.2;0;0;50
+seed_merluza;Merluza;FISH;82;17;0;1.3;0;0;150
+seed_bacalao;Bacalao fresco;FISH;82;18;0;0.7;0;0;150
+seed_sardinas;Sardinas en lata;FISH;208;25;0;11;0;0;80
+seed_gambas;Gambas;FISH;99;24;0.2;0.3;0;0;100
+seed_mejillones;Mejillones;FISH;86;12;3.7;2.2;0;0;100
+seed_calamar;Calamar;FISH;92;16;3;1.4;0;0;120
+seed_dorada;Dorada;FISH;96;18;0;2.5;0;0;150
+seed_lubina;Lubina;FISH;97;18;0;2;0;0;150
+seed_pulpo;Pulpo;FISH;82;15;2.2;1;0;0;150
+seed_caballa;Caballa;FISH;205;19;0;14;0;0;120
+seed_trucha;Trucha;FISH;119;20;0;3.5;0;0;150
+seed_surimi;Surimi;FISH;99;7;15;0.9;0;5;60
+seed_huevo;Huevo;DAIRY_EGGS;143;12.6;0.7;9.5;0;0.4;60
+seed_clara_huevo;Clara de huevo;DAIRY_EGGS;52;11;0.7;0.2;0;0.7;33
+seed_leche_entera;Leche entera;DAIRY_EGGS;61;3.2;4.8;3.3;0;4.8;250
+seed_leche_semi;Leche semidesnatada;DAIRY_EGGS;46;3.3;4.8;1.6;0;4.8;250
+seed_leche_desnatada;Leche desnatada;DAIRY_EGGS;35;3.4;5;0.1;0;5;250
+seed_bebida_avena;Bebida de avena;DAIRY_EGGS;42;0.3;7.5;1.5;0.8;4;250
+seed_bebida_soja;Bebida de soja;DAIRY_EGGS;39;3.3;2.5;1.8;0.5;2.2;250
+seed_yogur_natural;Yogur natural;DAIRY_EGGS;61;3.5;4.7;3.3;0;4.7;125
+seed_yogur_desnatado;Yogur desnatado;DAIRY_EGGS;40;4;5.5;0.2;0;5.5;125
+seed_yogur_griego;Yogur griego;DAIRY_EGGS;115;5.2;4.4;8.5;0;4.4;125
+seed_queso_batido;Queso fresco batido 0 %;DAIRY_EGGS;46;8;3.8;0.2;0;3.8;125
+seed_queso_fresco;Queso fresco;DAIRY_EGGS;174;13;2.5;12.5;0;2.5;50
+seed_queso_manchego;Queso manchego curado;DAIRY_EGGS;390;26;0.5;32;0;0.5;30
+seed_mozzarella;Mozzarella;DAIRY_EGGS;280;22;2.2;22;0;1;50
+seed_queso_lonchas;Queso en lonchas;DAIRY_EGGS;320;19;3;25;0;3;20
+seed_queso_crema;Queso crema;DAIRY_EGGS;342;6;4;34;0;3.5;20
+seed_mantequilla;Mantequilla;DAIRY_EGGS;717;0.9;0.1;81;0;0.1;10
+seed_nata;Nata líquida;DAIRY_EGGS;195;2.5;3.3;20;0;3.3;20
+seed_requeson;Requesón;DAIRY_EGGS;98;11;3.4;4.3;0;3.4;100
+seed_aceite_oliva;Aceite de oliva;FATS_NUTS;884;0;0;100;0;0;10
+seed_aceite_girasol;Aceite de girasol;FATS_NUTS;884;0;0;100;0;0;10
+seed_margarina;Margarina;FATS_NUTS;717;0.2;0.7;80;0;0;10
+seed_mayonesa;Mayonesa;FATS_NUTS;680;1;0.6;75;0;0.6;15
+seed_almendras;Almendras;FATS_NUTS;579;21;22;50;12.5;4.4;25
+seed_nueces;Nueces;FATS_NUTS;654;15;14;65;6.7;2.6;25
+seed_avellanas;Avellanas;FATS_NUTS;628;15;17;61;10;4.3;25
+seed_cacahuetes;Cacahuetes;FATS_NUTS;567;26;16;49;8.5;4;25
+seed_pistachos;Pistachos;FATS_NUTS;560;20;28;45;10;8;25
+seed_anacardos;Anacardos;FATS_NUTS;553;18;30;44;3.3;6;25
+seed_pipas;Pipas de girasol;FATS_NUTS;584;21;20;51;8.6;2.6;25
+seed_crema_cacahuete;Crema de cacahuete;FATS_NUTS;588;25;20;50;6;9;15
+seed_chia;Semillas de chía;FATS_NUTS;486;17;42;31;34;0;15
+seed_chocolate_negro;Chocolate negro 70 %;SWEETS_SNACKS;598;7.8;46;43;11;24;20
+seed_chocolate_leche;Chocolate con leche;SWEETS_SNACKS;535;7.7;59;30;3.4;56;25
+seed_azucar;Azúcar;SWEETS_SNACKS;387;0;100;0;0;100;5
+seed_miel;Miel;SWEETS_SNACKS;304;0.3;82;0;0.2;82;15
+seed_mermelada;Mermelada;SWEETS_SNACKS;250;0.4;62;0.1;1;48;15
+seed_crema_cacao;Crema de cacao y avellanas;SWEETS_SNACKS;539;6.3;57.5;30.9;0;56;15
+seed_galletas_chocolate;Galletas de chocolate;SWEETS_SNACKS;480;6;66;21;3;34;30
+seed_patatas_bolsa;Patatas fritas de bolsa;SWEETS_SNACKS;536;6.6;53;33;4.4;0.5;30
+seed_palomitas;Palomitas de maíz;SWEETS_SNACKS;387;13;78;4.5;14.5;0.9;20
+seed_helado;Helado;SWEETS_SNACKS;207;3.5;24;11;0.7;21;80
+seed_flan;Flan de huevo;SWEETS_SNACKS;118;3.5;19;3;0;18;100
+seed_donut;Donut;SWEETS_SNACKS;452;5;51;25;1.5;25;60
+seed_tortilla_patatas;Tortilla de patatas;DISHES;190;6.5;13;12;1.2;1.2;150
+seed_paella;Paella;DISHES;148;6;21;4.5;1;0.5;300
+seed_gazpacho;Gazpacho;DISHES;46;0.8;4.5;2.8;0.8;3.5;250
+seed_ensalada_mixta;Ensalada mixta sin aliño;DISHES;20;1;3.5;0.2;1.2;2.5;200
+seed_cocido;Cocido (garbanzos, verduras y carne);DISHES;138;9;12;6;3;1;400
+seed_macarrones_tomate;Macarrones con tomate;DISHES;151;5;25;3.5;2;3;250
+seed_lentejas_chorizo;Lentejas estofadas con chorizo;DISHES;117;7.5;14;3.5;4;1;300
+seed_croquetas;Croquetas;DISHES;215;7;22;11;1;2;100
+seed_empanadilla;Empanadilla de atún;DISHES;322;8;32;18;1.5;2;60
+seed_pizza;Pizza margarita;DISHES;249;11;31;9;2;3;150
+seed_hamburguesa;Hamburguesa completa;DISHES;257;13;22;13;1.5;4;200
+seed_huevo_frito;Huevo frito;DISHES;192;13.6;0.8;15;0;0.4;60
+seed_sopa_pollo;Sopa de pollo con fideos;DISHES;33;2;4;1;0.3;0.5;300
+seed_crema_verduras;Crema de verduras;DISHES;50;1.2;6;2.3;1.5;2.5;300
+seed_espaguetis_bolonesa;Espaguetis a la boloñesa;DISHES;157;8;20;5;1.8;3;300
+seed_lasana;Lasaña de carne;DISHES;168;9;15;8;1.2;3;300
+seed_pisto;Pisto;DISHES;61;1.5;6;3.5;2;4;200
+seed_patatas_bravas;Patatas bravas;DISHES;191;2.5;25;9;2.5;1.5;150
+seed_calamares_romana;Calamares a la romana;DISHES;228;12;18;12;1;0.5;150
+seed_bocadillo_jamon;Bocadillo de jamón;DISHES;269;12;35;9;2;2;150
+seed_sandwich_mixto;Sándwich mixto;DISHES;277;13;27;13;1.5;3;140
+seed_tostada_tomate;Tostada con tomate y aceite;DISHES;217;5;29;9;2;2;80
+seed_arroz_pollo;Arroz con pollo;DISHES;148;9;19;4;0.8;0.5;300
+seed_salmorejo;Salmorejo;DISHES;109;2.5;9;7;1;4;250
+seed_fabada;Fabada asturiana;DISHES;144;8;10;8;3;0.5;350
+seed_ensaladilla;Ensaladilla rusa;DISHES;201;3;9;17;1.5;2;150
+seed_tortilla_francesa;Tortilla francesa;DISHES;185;12;0.5;15;0;0.4;100
+seed_cafe_solo;Café solo;DRINKS;2;0.1;0;0;0;0;50
+seed_cafe_leche;Café con leche;DRINKS;30;1.7;2.5;1.5;0;2.5;200
+seed_te;Té o infusión;DRINKS;1;0;0.2;0;0;0;200
+seed_zumo_naranja;Zumo de naranja;DRINKS;45;0.7;10.4;0.2;0.2;8.4;200
+seed_cola;Refresco de cola;DRINKS;42;0;10.6;0;0;10.6;330
+seed_cerveza;Cerveza;DRINKS;43;0.5;3.6;0;0;0;330
+seed_vino_tinto;Vino tinto;DRINKS;85;0.1;2.6;0;0;0.6;150
+seed_isotonica;Bebida isotónica;DRINKS;25;0;6;0;0;6;500
+seed_leche_cacao;Leche con cacao;DRINKS;71;3.3;9;2.5;0.3;8;250
+seed_tomate_frito;Tomate frito;OTHER;81;1.3;9.5;4.2;1.4;8;50
+seed_ketchup;Ketchup;OTHER;100;1.2;25;0.1;0.5;22;15
+seed_salsa_soja;Salsa de soja;OTHER;52;8;5;0.1;0.8;0.4;10
+seed_proteina_polvo;Proteína en polvo (suero);OTHER;406;80;8;6;0;5;30
