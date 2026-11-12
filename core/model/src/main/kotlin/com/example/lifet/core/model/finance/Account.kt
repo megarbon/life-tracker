@@ -19,6 +19,11 @@ public data class Account(
     val sortOrder: Int = 0,
 ) {
     public val currency: CurrencyCode get() = openingBalance.currency
+
+    public companion object {
+        /** Cuenta creada al primer uso; con [name] vacío la UI muestra su nombre localizado ("Cuenta principal"). */
+        public const val DEFAULT_ID: String = "default_account"
+    }
 }
 
 /** Cuenta con su saldo calculado. */
@@ -26,3 +31,11 @@ public data class AccountBalance(
     val account: Account,
     val balance: Money,
 )
+
+/**
+ * Divisa principal: la de la primera cuenta activa. Es la única en la que se agregan resúmenes y gráficas;
+ * el resto de divisas se muestran por cuenta, sin conversión.
+ */
+public fun FinanceDataSet.primaryCurrency(): CurrencyCode =
+    accounts.filterNot { it.archived }.minWithOrNull(compareBy({ it.sortOrder }, { it.name }))?.currency
+        ?: CurrencyCode.EUR

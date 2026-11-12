@@ -40,6 +40,9 @@ public abstract class FinanceDao {
     @Query("SELECT COUNT(*) FROM finance_categories")
     public abstract suspend fun categoryCount(): Int
 
+    @Query("SELECT COUNT(*) FROM finance_accounts")
+    public abstract suspend fun accountCount(): Int
+
     @Upsert
     public abstract suspend fun upsertAccount(entity: FinanceAccountEntity)
 
@@ -72,6 +75,17 @@ public abstract class FinanceDao {
         id: String,
         through: LocalDate,
     )
+
+    /** Inserta las ocurrencias que falten y avanza `generatedThrough` de [ruleIds] en una sola transacción. */
+    @Transaction
+    public open suspend fun applyGenerated(
+        transactions: List<FinanceTransactionEntity>,
+        ruleIds: List<String>,
+        through: LocalDate,
+    ) {
+        insertGeneratedTransactions(transactions)
+        ruleIds.forEach { updateGeneratedThrough(it, through) }
+    }
 
     @Query("DELETE FROM finance_transactions WHERE recurringRuleId = :ruleId AND date > :after")
     public abstract suspend fun deleteGeneratedAfter(

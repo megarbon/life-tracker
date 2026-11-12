@@ -10,6 +10,9 @@ android {
 dependencies {
     api(project(":core:model"))
     api(project(":core:common"))
+    implementation(project(":core:data"))
 
+    testImplementation(project(":core:testing"))
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
 }
