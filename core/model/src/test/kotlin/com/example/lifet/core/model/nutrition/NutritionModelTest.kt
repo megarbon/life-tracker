@@ -138,6 +138,35 @@ class NutritionModelTest {
         assertEquals(0.25, summary.waterProgress, EPS)
     }
 
+    @Test
+    fun `rolling average skips unlogged days and windows without data`() {
+        fun day(
+            offset: Long,
+            kcal: Double?,
+        ): DayTotals {
+            val target = date.plusDays(offset)
+            return if (kcal == null) {
+                DayTotals.empty(target)
+            } else {
+                DayTotals(target, Nutrients.ZERO.copy(kcal = kcal), waterMl = 0, mealCount = 1)
+            }
+        }
+
+        val series =
+            NutritionSeries(
+                start = date,
+                endExclusive = date.plusDays(6),
+                days = listOf(day(0, null), day(1, 1000.0), day(2, null), day(3, 2000.0), day(4, null), day(5, null)),
+                goals = NutritionGoals.DEFAULT,
+            )
+
+        val rolling = series.rollingAverageKcal(window = 2)
+
+        // Día 0: sin datos; 1: 1000; 2: ventana {1,2} = 1000; 3: {2,3} = 2000; 4: {3,4} = 2000; 5: {4,5} vacía.
+        assertEquals(listOf(1L, 2L, 3L, 4L), rolling.map { it.first.toEpochDay() - date.toEpochDay() })
+        assertEquals(listOf(1000.0, 1000.0, 2000.0, 2000.0), rolling.map { it.second })
+    }
+
     private fun mealEntry(
         id: String = "a",
         grams: Int,

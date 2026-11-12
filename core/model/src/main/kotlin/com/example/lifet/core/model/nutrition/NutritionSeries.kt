@@ -32,4 +32,16 @@ public data class NutritionSeries(
         get() = if (days.isEmpty()) 0.0 else days.sumOf { it.waterMl }.toDouble() / days.size
 
     public fun day(date: LocalDate): DayTotals? = days.firstOrNull { it.date == date }
+
+    /**
+     * Media móvil de kcal: para cada día, la media de los días con registro de los últimos [window] días (él incluido).
+     * Los días cuya ventana no tiene ningún registro se omiten, así un hueco largo no dibuja ceros falsos.
+     */
+    public fun rollingAverageKcal(window: Int): List<Pair<LocalDate, Double>> {
+        require(window > 0) { "window debe ser positivo" }
+        return days.indices.mapNotNull { index ->
+            val logged = days.subList(maxOf(0, index - window + 1), index + 1).filter { it.hasMeals }
+            if (logged.isEmpty()) null else days[index].date to logged.sumOf { it.nutrients.kcal } / logged.size
+        }
+    }
 }

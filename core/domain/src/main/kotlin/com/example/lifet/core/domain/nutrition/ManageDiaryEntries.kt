@@ -30,10 +30,14 @@ public class ManageDiaryEntries
             }
         }
 
-        public suspend fun deleteMeals(entries: List<MealEntry>): AppResult<Unit> {
+        public suspend fun deleteMeals(entries: List<MealEntry>): AppResult<Unit> =
+            deleteMealsById(entries.map { it.id })
+
+        /** Borra por id; lo usa el "Deshacer" de un alta, que sólo conoce el identificador. */
+        public suspend fun deleteMealsById(ids: List<String>): AppResult<Unit> {
             var failure: AppError? = null
-            entries.forEach { entry ->
-                val result = log.deleteMeal(entry.id)
+            ids.forEach { id ->
+                val result = log.deleteMeal(id)
                 if (result is AppResult.Failure && failure == null) failure = result.error
             }
             return failure?.let { AppResult.Failure(it) } ?: AppResult.Success(Unit)
