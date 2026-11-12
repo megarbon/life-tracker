@@ -43,12 +43,12 @@ class NutritionDaoTest {
     fun `seeder loads the bundled foods and is idempotent`() =
         runTest {
             val dao = database.nutritionFoodDao()
-            val seeder = NutritionFoodSeeder(context, dao, Dispatchers.Unconfined)
+            val seeder = AssetNutritionFoodSeeder(context, dao, Dispatchers.Unconfined)
 
             seeder.ensureSeeded()
             val first = dao.getAll().size
             // Un segundo seeder (otro proceso) vuelve a intentar: INSERT OR IGNORE no duplica.
-            NutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
+            AssetNutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
 
             assertTrue("la semilla debe tener ~150 alimentos, tiene $first", first >= MIN_SEED_FOODS)
             assertEquals(first, dao.getAll().size)
@@ -58,10 +58,10 @@ class NutritionDaoTest {
     fun `reseeding keeps favorites chosen by the user`() =
         runTest {
             val dao = database.nutritionFoodDao()
-            NutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
+            AssetNutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
             dao.setFavorite("seed_manzana", true)
 
-            NutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
+            AssetNutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
 
             assertTrue(dao.getById("seed_manzana")?.isFavorite == true)
         }
@@ -70,7 +70,7 @@ class NutritionDaoTest {
     fun `seed foods cannot be deleted but custom ones can`() =
         runTest {
             val dao = database.nutritionFoodDao()
-            NutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
+            AssetNutritionFoodSeeder(context, dao, Dispatchers.Unconfined).ensureSeeded()
             dao.upsert(customFood("custom_1"))
 
             dao.deleteCustomById("seed_manzana")

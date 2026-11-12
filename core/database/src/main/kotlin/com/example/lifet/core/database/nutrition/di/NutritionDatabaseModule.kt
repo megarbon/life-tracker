@@ -1,28 +1,36 @@
 package com.example.lifet.core.database.nutrition.di
 
 import com.example.lifet.core.database.LifeTrackerDatabase
+import com.example.lifet.core.database.nutrition.AssetNutritionFoodSeeder
 import com.example.lifet.core.database.nutrition.NutritionFoodDao
+import com.example.lifet.core.database.nutrition.NutritionFoodSeeder
 import com.example.lifet.core.database.nutrition.NutritionGoalsDao
 import com.example.lifet.core.database.nutrition.NutritionMealDao
 import com.example.lifet.core.database.nutrition.NutritionWaterDao
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-/** DAOs de Alimentación; módulo propio para no editar `DatabaseModule`, que es compartido. */
+/** DAOs y semilla de Alimentación; módulo propio para no editar `DatabaseModule`, que es compartido. */
 @Module
 @InstallIn(SingletonComponent::class)
-internal object NutritionDatabaseModule {
-    @Provides
-    fun provideFoodDao(database: LifeTrackerDatabase): NutritionFoodDao = database.nutritionFoodDao()
+internal abstract class NutritionDatabaseModule {
+    @Binds
+    abstract fun bindFoodSeeder(impl: AssetNutritionFoodSeeder): NutritionFoodSeeder
 
-    @Provides
-    fun provideMealDao(database: LifeTrackerDatabase): NutritionMealDao = database.nutritionMealDao()
+    companion object {
+        @Provides
+        fun provideFoodDao(database: LifeTrackerDatabase): NutritionFoodDao = database.nutritionFoodDao()
 
-    @Provides
-    fun provideWaterDao(database: LifeTrackerDatabase): NutritionWaterDao = database.nutritionWaterDao()
+        @Provides
+        fun provideMealDao(database: LifeTrackerDatabase): NutritionMealDao = database.nutritionMealDao()
 
-    @Provides
-    fun provideGoalsDao(database: LifeTrackerDatabase): NutritionGoalsDao = database.nutritionGoalsDao()
+        @Provides
+        fun provideWaterDao(database: LifeTrackerDatabase): NutritionWaterDao = database.nutritionWaterDao()
+
+        @Provides
+        fun provideGoalsDao(database: LifeTrackerDatabase): NutritionGoalsDao = database.nutritionGoalsDao()
+    }
 }
