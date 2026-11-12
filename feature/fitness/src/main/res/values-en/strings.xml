@@ -1,6 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="fitness_title">Fitness</string>
-    <string name="fitness_empty_title">Nothing here yet</string>
-    <string name="fitness_empty_message">Log workouts, steps and weight.</string>
+    <string name="fitness_add">Log</string>
+    <string name="fitness_retry">Retry</string>
+    <string name="fitness_save">Save</string>
+    <string name="fitness_delete">Delete</string>
+    <string name="fitness_close">Close</string>
+    <string name="fitness_ok">OK</string>
+
+    <!-- Tabs -->
+    <string name="fitness_tab_summary">Summary</string>
+    <string name="fitness_tab_history">History</string>
+    <string name="fitness_tab_exercises">Exercises</string>
+    <string name="fitness_tab_body">Body</string>
+
+    <!-- States -->
+    <string name="fitness_empty_title">No workouts yet</string>
+    <string name="fitness_empty_message">Log your first strength or cardio workout and you will see your active minutes, records and progress here.</string>
+    <string name="fitness_empty_cta">Log a workout</string>
+    <string name="fitness_error_load">Your fitness data could not be loaded.</string>
+    <string name="fitness_error_save">Could not save. Please try again.</string>
+    <string name="fitness_error_invalid">Check the highlighted fields before saving.</string>
+    <string name="fitness_deleted_workout">Workout deleted</string>
+    <string name="fitness_deleted_weight">Weight deleted</string>
+    <string name="fitness_deleted_steps">Steps deleted</string>
+    <string name="fitness_deleted_template">Template deleted</string>
+
+    <!-- Summary -->
+    <string name="fitness_hero_title">Active minutes this week</string>
+    <string name="fitness_hero_value">%1$d min</string>
+    <string name="fitness_hero_goal">of %1$d min recommended by the WHO</string>
+    <string name="fitness_hero_remaining">You are %1$d min away from the goal.</string>
+    <string name="fitness_hero_reached">You have passed the weekly goal. Great work.</string>
+    <plurals name="fitness_hero_workouts">
+        <item quantity="one">%1$d workout this week</item>
+        <item quantity="other">%1$d workouts this week</item>
+    </plurals>
+    <string name="fitness_today_active">Today you trained %1$d min</string>
+    <string name="fitness_today_rest">You have not trained yet today</string>
+    <string name="fitness_stat_weight">Weight</string>
+    <string name="fitness_stat_none">Not logged</string>
+    <string name="fitness_weight_unit">%1$s kg</string>
+    <string name="fitness_stat_steps">Steps today</string>
+    <string name="fitness_stat_steps_goal">Goal %1$s</string>
+    <string name="fitness_stat_records">Records</string>
+    <string name="fitness_stat_records_hint">broken in total</string>
+    <string name="fitness_recent_records">Recent records</string>
+    <string name="fitness_recent_records_empty">Your records will appear here when you beat a previous best.</string>
+    <string name="fitness_record_one_rep_max">Estimated 1RM %1$s</string>
+    <plurals name="fitness_record_reps">
+        <item quantity="one">%1$d rep</item>
+        <item quantity="other">%1$d reps</item>
+    </plurals>
+    <string name="fitness_record_row">%1$s: %2$s, %3$s</string>
+    <string name="fitness_templates">Templates</string>
+    <string name="fitness_recent_workouts">Repeat a recent workout</string>
+    <string name="fitness_template_use">Use the %1$s template</string>
+
+    <!-- Charts -->
+    <string name="fitness_chart_weeks_title">Active minutes per week</string>
+    <string name="fitness_chart_weeks_none">No weeks with activity yet.</string>
+    <string name="fitness_chart_weeks_up">This week you are %1$d min above the average of the previous 4.</string>
+    <string name="fitness_chart_weeks_down">This week you are %1$d min below the average of the previous 4.</string>
+    <string name="fitness_chart_weeks_same">This week you are on par with the average of the previous 4.</string>
+    <string name="fitness_chart_weeks_current">So far this week: %1$d min.</string>
+    <string name="fitness_chart_weeks_summary">Active minutes per week, oldest to current: %1$s.</string>
+    <string name="fitness_chart_item">%1$s %2$s</string>
+    <string name="fitness_chart_minutes">%1$d min</string>
+    <string name="fitness_chart_exercise_title">Progress: %1$s</string>
+    <string name="fitness_chart_exercise_reps_title">Reps: %1$s</string>
+    <plurals name="fitness_chart_exercise_up">
+        <item quantity="one">Your estimated 1RM is up %1$s over the last session.</item>
+        <item quantity="other">Your estimated 1RM is up %1$s over the last %2$d sessions.</item>
+    </plurals>
+    <string name="fitness_chart_exercise_same">Your estimated 1RM holds at %1$s.</string>
+    <plurals name="fitness_chart_exercise_down">
+        <item quantity="one">Your estimated 1RM is down %1$s over the last session.</item>
+        <item quantity="other">Your estimated 1RM is down %1$s over the last %2$d sessions.</item>
+    </plurals>
+    <string name="fitness_chart_exercise_one">First session logged: estimated 1RM %1$s.</string>
+    <string name="fitness_chart_reps_up">You went from %1$s to %2$s in a set.</string>
+    <plurals name="fitness_chart_reps_same">
+        <item quantity="one">You hold %1$d rep in a set.</item>
+        <item quantity="other">You hold %1$d reps in a set.</item>
+    </plurals>
+    <plurals name="fitness_chart_reps_one">
+        <item quantity="one">First session logged: %1$d rep.</item>
+        <item quantity="other">First session logged: %1$d reps.</item>
+    </plurals>
+    <string name="fitness_chart_exercise_summary">%1$s, session by session: %2$s.</string>
+    <string name="fitness_chart_weight_title">Weight and 7-day average</string>
+    <string name="fitness_chart_weight_none">Log your weight to see how it evolves.</string>
+    <string name="fitness_chart_weight_current">Your 7-day average is %1$s.</string>
+    <string name="fitness_chart_weight_down">Your 7-day average is down %1$s over the last month.</string>
+    <string name="fitness_chart_weight_up">Your 7-day average is up %1$s over the last month.</string>
+    <string name="fitness_chart_weight_same">Your 7-day average has been steady over the last month.</string>
+    <string name="fitness_chart_weight_summary">7-day average weight, oldest to most recent: %1$s.</string>
+    <string name="fitness_heatmap_title">Activity over recent weeks</string>
+    <plurals name="fitness_heatmap_headline">
+        <item quantity="one">You trained %1$d day in the last %2$d months.</item>
+        <item quantity="other">You trained %1$d days in the last %2$d months.</item>
+    </plurals>
+    <plurals name="fitness_heatmap_month_summary">
+        <item quantity="one">%1$s: %2$d day with activity.</item>
+        <item quantity="other">%1$s: %2$d days with activity.</item>
+    </plurals>
+
+    <!-- History -->
+    <string name="fitness_history_empty">There are no workouts in your history yet.</string>
+    <string name="fitness_week_total">%1$d min</string>
+    <string name="fitness_history_week">Week of %1$s · %2$s</string>
+    <string name="fitness_workout_default_title">Workout</string>
+    <string name="fitness_workout_meta_cardio">%1$s · %2$d min</string>
+    <plurals name="fitness_workout_exercises">
+        <item quantity="one">%1$d exercise</item>
+        <item quantity="other">%1$d exercises</item>
+    </plurals>
+    <plurals name="fitness_workout_sets">
+        <item quantity="one">%1$d set</item>
+        <item quantity="other">%1$d sets</item>
+    </plurals>
+    <string name="fitness_workout_meta_strength">%1$s · %2$s · %3$d min</string>
+    <string name="fitness_workout_distance">%1$s km</string>
+    <string name="fitness_workout_kcal">%1$s kcal</string>
+    <string name="fitness_workout_record_badge">Record</string>
+    <string name="fitness_workout_midnight">Crosses midnight</string>
+
+    <!-- Exercises -->
+    <string name="fitness_exercises_empty">The strength exercises you log will show up here with their progress.</string>
+    <plurals name="fitness_exercise_sessions_count">
+        <item quantity="one">%1$d session</item>
+        <item quantity="other">%1$d sessions</item>
+    </plurals>
+    <string name="fitness_exercise_meta">%1$s · last %2$s</string>
+    <string name="fitness_exercise_best_load">Best estimated 1RM: %1$s</string>
+    <plurals name="fitness_exercise_best_reps">
+        <item quantity="one">Best set: %1$d rep</item>
+        <item quantity="other">Best set: %1$d reps</item>
+    </plurals>
+    <string name="fitness_exercise_sessions">Latest sessions</string>
+    <string name="fitness_exercise_session_row">%1$s: %2$s</string>
+    <string name="fitness_exercise_set_load">%1$d × %2$s</string>
+    <string name="fitness_exercise_set_bodyweight">%1$d × bodyweight</string>
+    <string name="fitness_exercise_records">Records for this exercise</string>
+    <string name="fitness_exercise_missing">This exercise has no sessions left.</string>
+
+    <!-- Body -->
+    <string name="fitness_body_weight_header">Body weight</string>
+    <string name="fitness_body_weight_add">Log weight</string>
+    <string name="fitness_body_weight_empty">You have not logged your weight yet.</string>
+    <string name="fitness_body_steps_header">Steps</string>
+    <string name="fitness_body_steps_add">Log steps</string>
+    <string name="fitness_body_steps_empty">Log your steps by hand. Later they will be able to arrive by themselves from Health Connect.</string>
+    <string name="fitness_body_steps_week">This week\'s average: %1$s steps</string>
+    <string name="fitness_body_row">%1$s · %2$s</string>
+    <string name="fitness_body_row_steps">%1$s · %2$s steps</string>
+    <string name="fitness_show_more">Show more</string>
+
+    <!-- Workout form -->
+    <string name="fitness_sheet_add">Log workout</string>
+    <string name="fitness_sheet_edit">Edit workout</string>
+    <string name="fitness_field_title">Title (optional)</string>
+    <string name="fitness_field_duration">Duration (min)</string>
+    <string name="fitness_field_distance">Distance (km, optional)</string>
+    <string name="fitness_field_energy">Energy (kcal, optional)</string>
+    <string name="fitness_field_note">Note (optional)</string>
+    <string name="fitness_field_date">Date: %1$s</string>
+    <string name="fitness_field_start">Start time: %1$s</string>
+    <string name="fitness_save_as_template">Save as template</string>
+    <string name="fitness_exercise_add">Add exercise</string>
+    <string name="fitness_exercise_name">Exercise %1$d</string>
+    <string name="fitness_exercise_remove">Remove exercise %1$d</string>
+    <string name="fitness_exercise_suggestions">Your exercises</string>
+    <string name="fitness_set_add">Add set</string>
+    <string name="fitness_set_reps">Reps</string>
+    <string name="fitness_set_weight">Kg</string>
+    <string name="fitness_set_label">Set %1$d</string>
+    <string name="fitness_set_remove">Remove set %1$d</string>
+    <string name="fitness_set_weight_hint">Empty kg = bodyweight</string>
+
+    <!-- Workout types -->
+    <string name="fitness_type_strength">Strength</string>
+    <string name="fitness_type_run">Run</string>
+    <string name="fitness_type_walk">Walk</string>
+    <string name="fitness_type_cycling">Cycling</string>
+    <string name="fitness_type_swim">Swim</string>
+    <string name="fitness_type_hike">Hike</string>
+    <string name="fitness_type_row">Rowing</string>
+    <string name="fitness_type_other">Other</string>
+
+    <!-- Weight and steps forms -->
+    <string name="fitness_weight_sheet_add">Log weight</string>
+    <string name="fitness_weight_sheet_edit">Edit weight</string>
+    <string name="fitness_weight_field">Weight (kg)</string>
+    <string name="fitness_weight_note">Note (optional)</string>
+    <string name="fitness_steps_sheet_add">Log steps</string>
+    <string name="fitness_steps_sheet_edit">Edit steps</string>
+    <string name="fitness_steps_field">Steps</string>
+
+    <!-- Field errors -->
+    <string name="fitness_issue_duration_missing">Enter how long it lasted.</string>
+    <string name="fitness_issue_duration_invalid">Duration must be between 1 and 1,440 minutes.</string>
+    <string name="fitness_issue_distance_invalid">The distance is not valid.</string>
+    <string name="fitness_issue_energy_invalid">The kcal value is not valid.</string>
+    <string name="fitness_issue_exercise_name_missing">Give the exercise a name.</string>
+    <string name="fitness_issue_exercise_without_sets">Add at least one set.</string>
+    <string name="fitness_issue_set_invalid">Check the reps and kilos of your sets.</string>
+    <string name="fitness_issue_weight_missing">Enter your weight.</string>
+    <string name="fitness_issue_weight_invalid">Weight must be between 20 and 500 kg.</string>
+    <string name="fitness_issue_steps_missing">Enter the steps.</string>
+    <string name="fitness_issue_steps_invalid">The steps value is not valid.</string>
+    <string name="fitness_issue_template_needs_title">Add a title to save it as a template.</string>
+
 </resources>
