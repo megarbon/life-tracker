@@ -1,6 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="nutrition_title">Food</string>
-    <string name="nutrition_empty_title">Nothing here yet</string>
-    <string name="nutrition_empty_message">Log what you eat and drink to see your calories and macros.</string>
+    <string name="nutrition_back">Back</string>
+    <string name="nutrition_retry">Retry</string>
+    <string name="nutrition_cancel">Cancel</string>
+    <string name="nutrition_save">Save</string>
+    <string name="nutrition_delete">Delete</string>
+    <string name="nutrition_undo">Undo</string>
+
+    <!-- Meals -->
+    <string name="nutrition_meal_breakfast">Breakfast</string>
+    <string name="nutrition_meal_lunch">Lunch</string>
+    <string name="nutrition_meal_dinner">Dinner</string>
+    <string name="nutrition_meal_snack">Snack</string>
+    <string name="nutrition_meal_label">Meal</string>
+
+    <!-- Diary -->
+    <string name="nutrition_today">Today</string>
+    <string name="nutrition_previous_day">Previous day</string>
+    <string name="nutrition_next_day">Next day</string>
+    <string name="nutrition_go_today">Go to today</string>
+    <string name="nutrition_trends">Trends</string>
+    <string name="nutrition_goals">Goals</string>
+    <string name="nutrition_kcal_goal_of">of %1$s kcal</string>
+    <string name="nutrition_kcal_value">%1$s kcal</string>
+    <string name="nutrition_grams_value">%1$s g</string>
+    <string name="nutrition_ring_description">%1$s of %2$s kilocalories</string>
+    <string name="nutrition_remaining_kcal">%1$s kcal left</string>
+    <string name="nutrition_over_kcal">%1$s kcal above your goal</string>
+    <string name="nutrition_macro_protein">Protein</string>
+    <string name="nutrition_macro_carbs">Carbs</string>
+    <string name="nutrition_macro_fat">Fat</string>
+    <string name="nutrition_macro_progress">%1$s of %2$s g</string>
+    <string name="nutrition_macro_description">%1$s: %2$s of %3$s grams</string>
+    <string name="nutrition_water">Water</string>
+    <string name="nutrition_water_progress">%1$s of %2$s ml</string>
+    <string name="nutrition_add_water">+250 ml</string>
+    <string name="nutrition_add_water_description">Add a glass of water, 250 milliliters</string>
+    <string name="nutrition_remove_water_description">Remove the last water entry</string>
+    <string name="nutrition_add_food">Add food</string>
+    <string name="nutrition_add_to_meal">Add to %1$s</string>
+    <string name="nutrition_repeat_yesterday">Repeat yesterday</string>
+    <string name="nutrition_empty_today_title">You haven\'t logged anything today</string>
+    <string name="nutrition_empty_day_title">Nothing logged on this day</string>
+    <string name="nutrition_empty_message">Add what you eat to see your calories and macros.</string>
+    <string name="nutrition_meal_empty">No foods</string>
+    <string name="nutrition_entry_description">%1$s, %2$s grams, %3$s kilocalories</string>
+    <string name="nutrition_edit_entry_title">Edit %1$s</string>
+    <string name="nutrition_grams_label">Amount (g)</string>
+    <string name="nutrition_grams_error">Enter between 1 and 5,000 g</string>
+    <string name="nutrition_quick_add_title">Add to diary</string>
+
+    <!-- Messages and errors -->
+    <string name="nutrition_error_generic">Your data could not be loaded</string>
+    <string name="nutrition_error_save">Could not save. Please try again.</string>
+    <string name="nutrition_entry_added">Food added</string>
+    <string name="nutrition_entry_deleted">Food deleted</string>
+    <string name="nutrition_repeated">Yesterday\'s meals copied</string>
+    <string name="nutrition_nothing_yesterday">Nothing was logged yesterday</string>
+    <string name="nutrition_water_added">Glass of water added</string>
+    <string name="nutrition_water_removed">Water entry removed</string>
+    <string name="nutrition_food_saved">Food saved</string>
+    <string name="nutrition_food_deleted">Food removed from your database</string>
+    <string name="nutrition_goals_saved">Goals saved</string>
+
+    <!-- Charts -->
+    <string name="nutrition_week_chart_title">Last 7 days</string>
+    <string name="nutrition_week_chart_headline">Average of %1$s kcal against a goal of %2$s</string>
+    <string name="nutrition_week_chart_empty">No days logged this week yet</string>
+    <string name="nutrition_week_chart_summary">Calories per day over the last 7 days. Your goal is %1$s kcal a day. %2$s</string>
+    <string name="nutrition_trend_title">30-day trend</string>
+    <string name="nutrition_trend_headline">7-day moving average: %1$s kcal, against a goal of %2$s</string>
+    <string name="nutrition_trend_empty">Log a few more days to see the trend</string>
+    <string name="nutrition_trend_summary">Moving average of calories over the last 30 days. Your goal is %1$s kcal. %2$s</string>
+    <string name="nutrition_macros_title">Macro split</string>
+    <string name="nutrition_macros_headline">Protein %1$s %%, carbs %2$s %% and fat %3$s %% of your energy</string>
+    <string name="nutrition_macros_empty">No macro data for this period</string>
+    <string name="nutrition_macros_summary">Average split of energy between protein, carbs and fat over the last 30 days. %1$s</string>
+    <string name="nutrition_percent_value">%1$s %%</string>
+    <string name="nutrition_logged_days">%1$s of %2$s days logged</string>
+    <string name="nutrition_trends_empty_title">No trends yet</string>
+    <string name="nutrition_trends_empty_message">Once you have logged a few days, your progress will show up here.</string>
+
+    <!-- Search -->
+    <string name="nutrition_search_title">Add to %1$s</string>
+    <string name="nutrition_search_hint">Search food</string>
+    <string name="nutrition_search_clear">Clear search</string>
+    <string name="nutrition_recent">Recent</string>
+    <string name="nutrition_favorites">Favorites</string>
+    <string name="nutrition_all_foods">All foods</string>
+    <string name="nutrition_results">Results</string>
+    <string name="nutrition_no_results_title">Can\'t find \"%1$s\"</string>
+    <string name="nutrition_no_results_message">Create your own food with its values per 100 g.</string>
+    <string name="nutrition_create_food">Create food</string>
+    <string name="nutrition_food_row_description">%1$s, %2$s kilocalories per 100 grams</string>
+    <string name="nutrition_per_100g">%1$s kcal · 100 g</string>
+    <string name="nutrition_favorite_add">Mark %1$s as favorite</string>
+    <string name="nutrition_favorite_remove">Remove %1$s from favorites</string>
+    <string name="nutrition_custom_badge">Custom</string>
+
+    <!-- Detail -->
+    <string name="nutrition_detail_title">Food</string>
+    <string name="nutrition_serving">Amount</string>
+    <string name="nutrition_serving_one">1 serving (%1$s g)</string>
+    <string name="nutrition_nutrients_for">For %1$s g</string>
+    <string name="nutrition_fiber">Fiber</string>
+    <string name="nutrition_sugar">Sugars</string>
+    <string name="nutrition_add_button">Add to diary</string>
+    <string name="nutrition_edit_food">Edit food</string>
+    <string name="nutrition_delete_food">Delete food</string>
+    <string name="nutrition_delete_food_title">Delete this food?</string>
+    <string name="nutrition_delete_food_message">It will be removed from your food database. What you already logged in the diary is kept.</string>
+    <string name="nutrition_food_not_found">This food no longer exists</string>
+    <string name="nutrition_food_not_found_message">You may have deleted it from your food database.</string>
+
+    <!-- Custom food -->
+    <string name="nutrition_custom_title_new">New food</string>
+    <string name="nutrition_custom_title_edit">Edit food</string>
+    <string name="nutrition_custom_name">Name</string>
+    <string name="nutrition_custom_kcal">Energy per 100 g (kcal)</string>
+    <string name="nutrition_custom_protein">Protein per 100 g (g)</string>
+    <string name="nutrition_custom_carbs">Carbs per 100 g (g)</string>
+    <string name="nutrition_custom_fat">Fat per 100 g (g)</string>
+    <string name="nutrition_custom_fiber">Fiber per 100 g (g)</string>
+    <string name="nutrition_custom_sugar">Sugars per 100 g (g)</string>
+    <string name="nutrition_custom_serving">Usual serving (g)</string>
+    <string name="nutrition_field_required">Required</string>
+    <string name="nutrition_field_invalid">Not a valid number</string>
+
+    <!-- Goals -->
+    <string name="nutrition_goals_title">Daily goals</string>
+    <string name="nutrition_goals_intro">You set them: they are a reference to guide you, not a rule.</string>
+    <string name="nutrition_goals_kcal">Energy (kcal)</string>
+    <string name="nutrition_goals_protein">Protein (g)</string>
+    <string name="nutrition_goals_carbs">Carbs (g)</string>
+    <string name="nutrition_goals_fat">Fat (g)</string>
+    <string name="nutrition_goals_water">Water (ml)</string>
+    <string name="nutrition_goals_macro_hint">Your macros add up to %1$s kcal</string>
+    <string name="nutrition_goals_range">Between %1$s and %2$s</string>
+    <string name="nutrition_goals_reset">Reset to defaults</string>
 </resources>

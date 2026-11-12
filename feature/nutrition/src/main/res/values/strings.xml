@@ -1,6 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="nutrition_title">Comida</string>
-    <string name="nutrition_empty_title">Aún no hay nada aquí</string>
-    <string name="nutrition_empty_message">Registra lo que comes y bebes para ver tus calorías y macros.</string>
+    <string name="nutrition_back">Volver</string>
+    <string name="nutrition_retry">Reintentar</string>
+    <string name="nutrition_cancel">Cancelar</string>
+    <string name="nutrition_save">Guardar</string>
+    <string name="nutrition_delete">Borrar</string>
+    <string name="nutrition_undo">Deshacer</string>
+
+    <!-- Comidas -->
+    <string name="nutrition_meal_breakfast">Desayuno</string>
+    <string name="nutrition_meal_lunch">Comida</string>
+    <string name="nutrition_meal_dinner">Cena</string>
+    <string name="nutrition_meal_snack">Snack</string>
+    <string name="nutrition_meal_label">Comida</string>
+
+    <!-- Diario -->
+    <string name="nutrition_today">Hoy</string>
+    <string name="nutrition_previous_day">Día anterior</string>
+    <string name="nutrition_next_day">Día siguiente</string>
+    <string name="nutrition_go_today">Ir a hoy</string>
+    <string name="nutrition_trends">Tendencias</string>
+    <string name="nutrition_goals">Objetivos</string>
+    <string name="nutrition_kcal_goal_of">de %1$s kcal</string>
+    <string name="nutrition_kcal_value">%1$s kcal</string>
+    <string name="nutrition_grams_value">%1$s g</string>
+    <string name="nutrition_ring_description">%1$s de %2$s kilocalorías</string>
+    <string name="nutrition_remaining_kcal">Te quedan %1$s kcal</string>
+    <string name="nutrition_over_kcal">%1$s kcal por encima de tu objetivo</string>
+    <string name="nutrition_macro_protein">Proteínas</string>
+    <string name="nutrition_macro_carbs">Hidratos</string>
+    <string name="nutrition_macro_fat">Grasas</string>
+    <string name="nutrition_macro_progress">%1$s de %2$s g</string>
+    <string name="nutrition_macro_description">%1$s: %2$s de %3$s gramos</string>
+    <string name="nutrition_water">Agua</string>
+    <string name="nutrition_water_progress">%1$s de %2$s ml</string>
+    <string name="nutrition_add_water">+250 ml</string>
+    <string name="nutrition_add_water_description">Añadir un vaso de agua, 250 mililitros</string>
+    <string name="nutrition_remove_water_description">Quitar el último registro de agua</string>
+    <string name="nutrition_add_food">Añadir comida</string>
+    <string name="nutrition_add_to_meal">Añadir a %1$s</string>
+    <string name="nutrition_repeat_yesterday">Repetir ayer</string>
+    <string name="nutrition_empty_today_title">Aún no has registrado nada hoy</string>
+    <string name="nutrition_empty_day_title">No hay nada registrado este día</string>
+    <string name="nutrition_empty_message">Añade lo que comes para ver tus calorías y macros.</string>
+    <string name="nutrition_meal_empty">Sin alimentos</string>
+    <string name="nutrition_entry_description">%1$s, %2$s gramos, %3$s kilocalorías</string>
+    <string name="nutrition_edit_entry_title">Editar %1$s</string>
+    <string name="nutrition_grams_label">Cantidad (g)</string>
+    <string name="nutrition_grams_error">Introduce entre 1 y 5.000 g</string>
+    <string name="nutrition_quick_add_title">Añadir al diario</string>
+
+    <!-- Avisos y errores -->
+    <string name="nutrition_error_generic">No se han podido cargar tus datos</string>
+    <string name="nutrition_error_save">No se ha podido guardar. Inténtalo de nuevo.</string>
+    <string name="nutrition_entry_added">Alimento añadido</string>
+    <string name="nutrition_entry_deleted">Alimento borrado</string>
+    <string name="nutrition_repeated">Comidas de ayer copiadas</string>
+    <string name="nutrition_nothing_yesterday">Ayer no hay nada registrado</string>
+    <string name="nutrition_water_added">Vaso de agua añadido</string>
+    <string name="nutrition_water_removed">Registro de agua quitado</string>
+    <string name="nutrition_food_saved">Alimento guardado</string>
+    <string name="nutrition_food_deleted">Alimento borrado de tu base</string>
+    <string name="nutrition_goals_saved">Objetivos guardados</string>
+
+    <!-- Gráficas -->
+    <string name="nutrition_week_chart_title">Últimos 7 días</string>
+    <string name="nutrition_week_chart_headline">Media de %1$s kcal frente a un objetivo de %2$s</string>
+    <string name="nutrition_week_chart_empty">Aún no hay días registrados en esta semana</string>
+    <string name="nutrition_week_chart_summary">Calorías por día de los últimos 7 días. Tu objetivo es de %1$s kcal al día. %2$s</string>
+    <string name="nutrition_trend_title">Tendencia de 30 días</string>
+    <string name="nutrition_trend_headline">Media móvil de 7 días: %1$s kcal, con un objetivo de %2$s</string>
+    <string name="nutrition_trend_empty">Registra unos días más para ver la tendencia</string>
+    <string name="nutrition_trend_summary">Media móvil de calorías de los últimos 30 días. Tu objetivo es de %1$s kcal. %2$s</string>
+    <string name="nutrition_macros_title">Reparto de macros</string>
+    <string name="nutrition_macros_headline">Proteínas %1$s %%, hidratos %2$s %% y grasas %3$s %% de tu energía</string>
+    <string name="nutrition_macros_empty">Sin datos de macros en este periodo</string>
+    <string name="nutrition_macros_summary">Reparto medio de la energía entre proteínas, hidratos y grasas en los últimos 30 días. %1$s</string>
+    <string name="nutrition_percent_value">%1$s %%</string>
+    <string name="nutrition_logged_days">%1$s de %2$s días registrados</string>
+    <string name="nutrition_trends_empty_title">Aún no hay tendencias</string>
+    <string name="nutrition_trends_empty_message">Cuando registres algunos días verás aquí tu evolución.</string>
+
+    <!-- Buscar -->
+    <string name="nutrition_search_title">Añadir a %1$s</string>
+    <string name="nutrition_search_hint">Buscar alimento</string>
+    <string name="nutrition_search_clear">Borrar búsqueda</string>
+    <string name="nutrition_recent">Recientes</string>
+    <string name="nutrition_favorites">Favoritos</string>
+    <string name="nutrition_all_foods">Todos los alimentos</string>
+    <string name="nutrition_results">Resultados</string>
+    <string name="nutrition_no_results_title">No encuentro «%1$s»</string>
+    <string name="nutrition_no_results_message">Crea tu propio alimento con sus valores por 100 g.</string>
+    <string name="nutrition_create_food">Crear alimento</string>
+    <string name="nutrition_food_row_description">%1$s, %2$s kilocalorías por 100 gramos</string>
+    <string name="nutrition_per_100g">%1$s kcal · 100 g</string>
+    <string name="nutrition_favorite_add">Marcar %1$s como favorito</string>
+    <string name="nutrition_favorite_remove">Quitar %1$s de favoritos</string>
+    <string name="nutrition_custom_badge">Propio</string>
+
+    <!-- Detalle -->
+    <string name="nutrition_detail_title">Alimento</string>
+    <string name="nutrition_serving">Cantidad</string>
+    <string name="nutrition_serving_one">1 ración (%1$s g)</string>
+    <string name="nutrition_nutrients_for">Para %1$s g</string>
+    <string name="nutrition_fiber">Fibra</string>
+    <string name="nutrition_sugar">Azúcares</string>
+    <string name="nutrition_add_button">Añadir al diario</string>
+    <string name="nutrition_edit_food">Editar alimento</string>
+    <string name="nutrition_delete_food">Borrar alimento</string>
+    <string name="nutrition_delete_food_title">¿Borrar este alimento?</string>
+    <string name="nutrition_delete_food_message">Se quitará de tu base de alimentos. Lo que ya registraste en el diario se conserva.</string>
+    <string name="nutrition_food_not_found">Este alimento ya no existe</string>
+    <string name="nutrition_food_not_found_message">Puede que lo hayas borrado de tu base de alimentos.</string>
+
+    <!-- Alimento propio -->
+    <string name="nutrition_custom_title_new">Nuevo alimento</string>
+    <string name="nutrition_custom_title_edit">Editar alimento</string>
+    <string name="nutrition_custom_name">Nombre</string>
+    <string name="nutrition_custom_kcal">Energía por 100 g (kcal)</string>
+    <string name="nutrition_custom_protein">Proteínas por 100 g (g)</string>
+    <string name="nutrition_custom_carbs">Hidratos por 100 g (g)</string>
+    <string name="nutrition_custom_fat">Grasas por 100 g (g)</string>
+    <string name="nutrition_custom_fiber">Fibra por 100 g (g)</string>
+    <string name="nutrition_custom_sugar">Azúcares por 100 g (g)</string>
+    <string name="nutrition_custom_serving">Ración habitual (g)</string>
+    <string name="nutrition_field_required">Obligatorio</string>
+    <string name="nutrition_field_invalid">Número no válido</string>
+
+    <!-- Objetivos -->
+    <string name="nutrition_goals_title">Objetivos diarios</string>
+    <string name="nutrition_goals_intro">Fíjalos tú: son una referencia para orientarte, no una norma.</string>
+    <string name="nutrition_goals_kcal">Energía (kcal)</string>
+    <string name="nutrition_goals_protein">Proteínas (g)</string>
+    <string name="nutrition_goals_carbs">Hidratos (g)</string>
+    <string name="nutrition_goals_fat">Grasas (g)</string>
+    <string name="nutrition_goals_water">Agua (ml)</string>
+    <string name="nutrition_goals_macro_hint">Tus macros suman %1$s kcal</string>
+    <string name="nutrition_goals_range">Entre %1$s y %2$s</string>
+    <string name="nutrition_goals_reset">Restablecer valores por defecto</string>
 </resources>
