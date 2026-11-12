@@ -12,6 +12,8 @@ import com.example.lifet.core.model.nutrition.MealType
 import com.example.lifet.core.model.nutrition.Nutrients
 import com.example.lifet.core.model.nutrition.NutritionGoals
 import com.example.lifet.core.testing.TestClock
+import com.example.lifet.core.testing.nutrition.FakeNutritionGoalsRepository
+import com.example.lifet.core.testing.nutrition.FakeNutritionLogRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -25,8 +27,8 @@ class NutritionUseCasesTest {
     private val clock = TestClock.fixed("2026-03-10T09:00:00Z")
     private val today = LocalDate.of(2026, 3, 10)
     private val monday = LocalDate.of(2026, 3, 9)
-    private val log = FakeLogRepository()
-    private val goals = FakeGoalsRepository()
+    private val log = FakeNutritionLogRepository()
+    private val goals = FakeNutritionGoalsRepository()
 
     private val bread =
         FoodItem(

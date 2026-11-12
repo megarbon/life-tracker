@@ -5,15 +5,18 @@ import com.example.lifet.core.demo.DemoScenario
 import com.example.lifet.core.model.Area
 import com.example.lifet.core.model.nutrition.NutritionGoals
 import com.example.lifet.core.testing.TestClock
+import com.example.lifet.core.testing.nutrition.FakeFoodRepository
+import com.example.lifet.core.testing.nutrition.FakeNutritionGoalsRepository
+import com.example.lifet.core.testing.nutrition.FakeNutritionLogRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class NutritionDemoDataGeneratorTest {
-    private val log = FakeLog()
-    private val goals = FakeGoals()
-    private val foods = FakeFoods()
+    private val log = FakeNutritionLogRepository()
+    private val goals = FakeNutritionGoalsRepository()
+    private val foods = FakeFoodRepository(SeedCatalog.foods.values.toList())
     private val generator = NutritionDemoDataGenerator(log, goals, foods)
     private val seedSize = SeedCatalog.foods.size
 
@@ -34,8 +37,8 @@ class NutritionDemoDataGeneratorTest {
             assertTrue(log.meals.value.isEmpty())
             assertTrue(log.water.value.isEmpty())
             assertEquals(NutritionGoals.DEFAULT, goals.goals.value)
-            assertEquals(seedSize, foods.items.value.size)
-            assertTrue(foods.items.value.none { it.isCustom || it.isFavorite })
+            assertEquals(seedSize, foods.foods.value.size)
+            assertTrue(foods.foods.value.none { it.isCustom || it.isFavorite })
         }
 
     @Test
@@ -46,9 +49,9 @@ class NutritionDemoDataGeneratorTest {
             assertTrue(log.meals.value.size > 1_000)
             assertTrue(log.water.value.isNotEmpty())
             assertEquals(DEMO_REGULAR_GOALS, goals.goals.value)
-            assertEquals(seedSize + DEMO_CUSTOM_FOODS.size, foods.items.value.size)
+            assertEquals(seedSize + DEMO_CUSTOM_FOODS.size, foods.foods.value.size)
             val favorites =
-                foods.items.value
+                foods.foods.value
                     .filter { it.isFavorite }
                     .map { it.id }
                     .toSet()
@@ -64,7 +67,7 @@ class NutritionDemoDataGeneratorTest {
             generator.seed(DemoScenario.REGULAR, context())
 
             assertEquals(first, log.meals.value.size)
-            assertEquals(seedSize + DEMO_CUSTOM_FOODS.size, foods.items.value.size)
+            assertEquals(seedSize + DEMO_CUSTOM_FOODS.size, foods.foods.value.size)
         }
 
     @Test
@@ -75,7 +78,7 @@ class NutritionDemoDataGeneratorTest {
             generator.clear()
 
             assertTrue(log.meals.value.isEmpty())
-            assertEquals(seedSize, foods.items.value.size)
+            assertEquals(seedSize, foods.foods.value.size)
         }
 
     @Test
@@ -84,7 +87,7 @@ class NutritionDemoDataGeneratorTest {
             generator.seed(DemoScenario.EDGE_CASES, context())
 
             val names =
-                foods.items.value
+                foods.foods.value
                     .filter { it.isCustom }
                     .map { it.name }
             assertTrue(names.any { it.contains("🌮") })
