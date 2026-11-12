@@ -26,7 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -64,19 +64,19 @@ internal fun MoodRoute(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val overlay by viewModel.overlay.collectAsStateWithLifecycle()
     val snackbarHost = remember { SnackbarHostState() }
-    val context = LocalContext.current
+    val resources = LocalResources.current
 
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
                 is MoodEffect.Message -> {
-                    snackbarHost.showSnackbar(context.getString(effect.messageRes))
+                    snackbarHost.showSnackbar(resources.getString(effect.messageRes))
                 }
 
                 is MoodEffect.Undoable -> {
                     snackbarHost.showUndo(
-                        message = context.getString(effect.messageRes),
-                        undoLabel = context.getString(R.string.mood_undo),
+                        message = resources.getString(effect.messageRes),
+                        undoLabel = resources.getString(R.string.mood_undo),
                         onUndo = { viewModel.onAction(MoodAction.Undo) },
                     )
                 }

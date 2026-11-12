@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.lifet.core.designsystem.component.LTCalendarHeatmap
@@ -61,7 +62,12 @@ internal fun MoodCalendarTab(
                     if (average == null) {
                         stringResource(R.string.mood_calendar_no_data)
                     } else {
-                        stringResource(R.string.mood_calendar_stats, calendar.loggedDays, formatters.average(average))
+                        pluralStringResource(
+                            R.plurals.mood_calendar_stats,
+                            calendar.loggedDays,
+                            calendar.loggedDays,
+                            formatters.average(average),
+                        )
                     },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -131,7 +137,14 @@ private fun MonthBlock(
         LTCalendarHeatmap(
             range = range,
             intensity = monthDays,
-            summary = stringResource(R.string.mood_calendar_month_summary, name, year, monthDays.size),
+            summary =
+                pluralStringResource(
+                    R.plurals.mood_calendar_month_summary,
+                    monthDays.size,
+                    name,
+                    year,
+                    monthDays.size,
+                ),
             color = LifeTrackerTheme.areaColors.mood,
         )
     }

@@ -48,9 +48,15 @@
 
     <string name="mood_calendar_previous">Previous year</string>
     <string name="mood_calendar_next">Next year</string>
-    <string name="mood_calendar_stats">%1$d days logged · average %2$s</string>
+    <plurals name="mood_calendar_stats">
+        <item quantity="one">%1$d day logged · average %2$s</item>
+        <item quantity="other">%1$d days logged · average %2$s</item>
+    </plurals>
     <string name="mood_calendar_no_data">No entries this year</string>
-    <string name="mood_calendar_month_summary">%1$s %2$d: %3$d days logged.</string>
+    <plurals name="mood_calendar_month_summary">
+        <item quantity="one">%1$s %2$d: %3$d day logged.</item>
+        <item quantity="other">%1$s %2$d: %3$d days logged.</item>
+    </plurals>
     <string name="mood_calendar_hint">Each square is a day; the more intense, the better the mood.</string>
 
     <string name="mood_form_title_new">How are you feeling?</string>

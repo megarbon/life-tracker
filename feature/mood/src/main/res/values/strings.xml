@@ -48,9 +48,15 @@
 
     <string name="mood_calendar_previous">Año anterior</string>
     <string name="mood_calendar_next">Año siguiente</string>
-    <string name="mood_calendar_stats">%1$d días con registro · media %2$s</string>
+    <plurals name="mood_calendar_stats">
+        <item quantity="one">%1$d día con registro · media %2$s</item>
+        <item quantity="other">%1$d días con registro · media %2$s</item>
+    </plurals>
     <string name="mood_calendar_no_data">Sin registros este año</string>
-    <string name="mood_calendar_month_summary">%1$s de %2$d: %3$d días con registro.</string>
+    <plurals name="mood_calendar_month_summary">
+        <item quantity="one">%1$s de %2$d: %3$d día con registro.</item>
+        <item quantity="other">%1$s de %2$d: %3$d días con registro.</item>
+    </plurals>
     <string name="mood_calendar_hint">Cada cuadro es un día; cuanto más intenso, mejor ánimo.</string>
 
     <string name="mood_form_title_new">¿Cómo te sientes?</string>
