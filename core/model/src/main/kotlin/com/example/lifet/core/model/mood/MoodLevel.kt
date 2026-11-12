@@ -1,6 +1,7 @@
 package com.example.lifet.core.model.mood
 
 /** Nivel de ánimo en cinco pasos; [value] (1 a 5) es lo que se guarda y se promedia. */
+@Suppress("MagicNumber") // Los valores 1 a 5 son la definición misma de la escala.
 public enum class MoodLevel(
     public val value: Int,
 ) {

@@ -79,13 +79,15 @@ class MoodDemoDataGeneratorTest {
 
             val mondays = daily.filterKeys { it.dayOfWeek == DayOfWeek.MONDAY }.values.average()
             val others = daily.filterKeys { it.dayOfWeek != DayOfWeek.MONDAY && it.dayOfWeek != DayOfWeek.SATURDAY }
-            assertTrue("los lunes son más bajos ($mondays vs ${others.values.average()})", mondays < others.values.average() - 0.3)
+            val rest = others.values.average()
+            assertTrue("los lunes son más bajos ($mondays vs $rest)", mondays < rest - 0.3)
 
             val sport = MoodStats.factorImpacts(entries).first { it.factor == "sport" }
             assertTrue("el deporte mejora el ánimo (${sport.delta})", sport.delta > 0.4)
 
             val summary = MoodStats.todaySummary(entries, today)
-            assertTrue("racha baja de ${summary.lowStreakDays} días", summary.lowStreakDays >= MoodRules.LOW_STREAK_DAYS)
+            val streak = summary.lowStreakDays
+            assertTrue("racha baja de $streak días", streak >= MoodRules.LOW_STREAK_DAYS)
             assertTrue(summary.showSupport)
         }
 

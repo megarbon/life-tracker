@@ -14,5 +14,7 @@ public class DeleteMoodEntry
     constructor(
         private val repository: MoodRepository,
     ) {
-        public suspend operator fun invoke(entry: MoodEntry): AppResult<Unit> = repository.delete(entry.id)
+        public suspend operator fun invoke(entry: MoodEntry): AppResult<Unit> = invoke(entry.id)
+
+        public suspend operator fun invoke(id: Long): AppResult<Unit> = repository.delete(id)
     }

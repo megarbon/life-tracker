@@ -29,10 +29,16 @@ class FakeMoodDao(
     override suspend fun getById(id: Long): MoodEntryEntity? = rows.value.firstOrNull { it.id == id }
 
     override suspend fun recentEmotions(limit: Int): List<String> =
-        rows.value.sortedByDescending { it.instant }.take(limit).map { it.emotions }
+        rows.value
+            .sortedByDescending { it.instant }
+            .take(limit)
+            .map { it.emotions }
 
     override suspend fun recentFactors(limit: Int): List<String> =
-        rows.value.sortedByDescending { it.instant }.take(limit).map { it.factors }
+        rows.value
+            .sortedByDescending { it.instant }
+            .take(limit)
+            .map { it.factors }
 
     override suspend fun upsert(entity: MoodEntryEntity): Long {
         check(!failWrites) { "Fallo simulado" }
