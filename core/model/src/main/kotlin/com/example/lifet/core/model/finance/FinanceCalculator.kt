@@ -123,12 +123,14 @@ public class FinanceCalculator(
                 .map(::TransferEntry)
         return (transactions + transfers)
             .groupBy { it.date }
-            .toSortedMap(compareByDescending { it })
+            .entries
+            .sortedByDescending { it.key }
             .map { (date, entries) ->
                 val amounts =
-                    entries.filterIsInstance<TransactionEntry>().map { it.transaction.amount }.filter {
-                        it.currency == currency
-                    }
+                    entries
+                        .filterIsInstance<TransactionEntry>()
+                        .map { it.transaction.amount }
+                        .filter { it.currency == currency }
                 DayGroup(date, entries.sortedByDescending { it.createdAt }, amounts.sumOrNull())
             }
     }
@@ -146,6 +148,30 @@ public class FinanceCalculator(
             .sortedByDescending { it.createdAt }
             .distinctBy { it.note.trim().lowercase() to it.categoryId }
             .take(limit)
+
+    /** Todo lo que pinta la pantalla de Finanzas para [month]: resumen, gráficas, listado y catálogos. */
+    public fun overview(
+        month: YearMonth,
+        filter: LedgerFilter = LedgerFilter(),
+        categoryName: (FinanceCategory) -> String = { it.customName.orEmpty() },
+    ): FinanceOverview =
+        FinanceOverview(
+            currency = currency,
+            month = month,
+            today = today,
+            summary = monthSummary(month),
+            monthlyTotals = monthlyTotals(month, TREND_MONTHS),
+            balanceTrend = dailyBalances(month.atDay(1), month.atEndOfMonth()),
+            ledger = ledger(month, filter, categoryName),
+            upcoming = upcoming(),
+            accounts = accountBalances(),
+            categories = data.categories.sortedBy { it.sortOrder },
+            rules = data.rules.sortedBy { it.name },
+            budgets = data.budgets,
+            recentTemplates = recentTemplates(),
+            otherCurrencies = otherCurrencies,
+            hasAnyEntry = data.transactions.isNotEmpty() || data.transfers.isNotEmpty(),
+        )
 
     public fun todaySummary(): FinanceTodaySummary {
         val summary = monthSummary(YearMonth.from(today))
@@ -244,5 +270,6 @@ public class FinanceCalculator(
     public companion object {
         public const val UPCOMING_DAYS: Long = 30L
         public const val RECENT_LIMIT: Int = 6
+        public const val TREND_MONTHS: Int = 6
     }
 }

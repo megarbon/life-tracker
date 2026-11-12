@@ -60,7 +60,7 @@ public data class DayBalance(
     val balance: Money,
 )
 
-/** Un día con sus movimientos. [total] es el neto confirmado en la divisa principal, o `null` si no hay ninguno. */
+/** Un día con sus movimientos. [total] es el neto del día en la divisa principal, o `null` si no hay ninguno. */
 public data class DayGroup(
     val date: LocalDate,
     val entries: List<LedgerEntry>,
@@ -89,12 +89,13 @@ public data class FinanceOverview(
     val today: LocalDate,
     val summary: MonthSummary,
     val monthlyTotals: List<MonthTotals>,
-    val dailyBalances: List<DayBalance>,
+    val balanceTrend: List<DayBalance>,
     val ledger: List<DayGroup>,
     val upcoming: List<FinanceTransaction>,
     val accounts: List<AccountBalance>,
     val categories: List<FinanceCategory>,
     val rules: List<RecurringRule>,
+    val budgets: List<Budget>,
     val recentTemplates: List<FinanceTransaction>,
     val otherCurrencies: Set<CurrencyCode>,
     val hasAnyEntry: Boolean,
