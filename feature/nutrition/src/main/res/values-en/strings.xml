@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nutrition_title">Food</string>
+    <string name="nutrition_empty_title">Nothing here yet</string>
+    <string name="nutrition_empty_message">Log what you eat and drink to see your calories and macros.</string>
+</resources>

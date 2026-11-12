@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="finance_title">Finance</string>
+    <string name="finance_empty_title">Nothing here yet</string>
+    <string name="finance_empty_message">Log expenses and income and keep your budget on track.</string>
+</resources>

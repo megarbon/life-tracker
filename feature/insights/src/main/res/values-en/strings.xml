@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_title">Trends</string>
+    <string name="insights_empty_title">Nothing here yet</string>
+    <string name="insights_empty_message">Here you will see trends and relationships between your areas.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_title">Tendencias</string>
+    <string name="insights_empty_title">Aún no hay nada aquí</string>
+    <string name="insights_empty_message">Aquí verás tendencias y relaciones entre tus áreas.</string>
+</resources>

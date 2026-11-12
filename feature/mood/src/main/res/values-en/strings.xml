@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mood_title">Mood</string>
+    <string name="mood_empty_title">Nothing here yet</string>
+    <string name="mood_empty_message">Note how you feel and find out what affects it.</string>
+</resources>

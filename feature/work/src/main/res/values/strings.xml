@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="work_title">Trabajo</string>
+    <string name="work_empty_title">Aún no hay nada aquí</string>
+    <string name="work_empty_message">Ficha tu jornada y mide tus sesiones de foco.</string>
+</resources>

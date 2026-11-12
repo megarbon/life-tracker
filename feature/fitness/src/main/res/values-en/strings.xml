@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fitness_title">Fitness</string>
+    <string name="fitness_empty_title">Nothing here yet</string>
+    <string name="fitness_empty_message">Log workouts, steps and weight.</string>
+</resources>

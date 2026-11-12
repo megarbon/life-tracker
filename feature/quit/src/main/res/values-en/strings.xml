@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quit_title">Quit habits</string>
+    <string name="quit_empty_title">Nothing here yet</string>
+    <string name="quit_empty_message">Track your days without smoking or drinking, guilt-free.</string>
+</resources>

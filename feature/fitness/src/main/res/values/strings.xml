@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fitness_title">Deporte</string>
+    <string name="fitness_empty_title">Aún no hay nada aquí</string>
+    <string name="fitness_empty_message">Registra entrenos, pasos y peso.</string>
+</resources>

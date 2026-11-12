@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="work_title">Work</string>
+    <string name="work_empty_title">Nothing here yet</string>
+    <string name="work_empty_message">Clock your workday and measure your focus sessions.</string>
+</resources>

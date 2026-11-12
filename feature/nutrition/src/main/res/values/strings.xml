@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nutrition_title">Comida</string>
+    <string name="nutrition_empty_title">Aún no hay nada aquí</string>
+    <string name="nutrition_empty_message">Registra lo que comes y bebes para ver tus calorías y macros.</string>
+</resources>

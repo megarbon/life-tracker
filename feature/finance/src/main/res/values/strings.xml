@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="finance_title">Finanzas</string>
+    <string name="finance_empty_title">Aún no hay nada aquí</string>
+    <string name="finance_empty_message">Registra gastos e ingresos y controla tu presupuesto.</string>
+</resources>
