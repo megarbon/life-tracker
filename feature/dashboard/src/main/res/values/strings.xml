@@ -8,4 +8,17 @@
     <string name="dashboard_mood_missing">Aún no has registrado nada hoy. Un toque basta.</string>
     <string name="dashboard_mood_week">Media de los últimos 7 días: %1$s</string>
     <string name="dashboard_empty_message">Aún no hay registros. Cuando añadas finanzas, deporte, comida o sueño, tu resumen aparecerá aquí.</string>
+    <string name="dashboard_mood_open">Abrir Ánimo</string>
+    <string name="dashboard_mood_checkin">Registrar ánimo: %1$s</string>
+    <string name="dashboard_mood_saved">Ánimo registrado</string>
+    <string name="dashboard_mood_failed">No se pudo guardar el ánimo</string>
+    <string name="dashboard_mood_level_very_low">Muy mal</string>
+    <string name="dashboard_mood_level_low">Mal</string>
+    <string name="dashboard_mood_level_neutral">Regular</string>
+    <string name="dashboard_mood_level_good">Bien</string>
+    <string name="dashboard_mood_level_very_good">Muy bien</string>
+    <string name="dashboard_finance_title">Disponible este mes</string>
+    <string name="dashboard_finance_empty">Registra tu primer gasto para ver el resumen</string>
+    <string name="dashboard_finance_today">Hoy has gastado %1$s</string>
+    <string name="dashboard_finance_today_budget">Hoy has gastado %1$s · quedan %2$s de presupuesto</string>
 </resources>

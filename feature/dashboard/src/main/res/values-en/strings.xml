@@ -8,4 +8,17 @@
     <string name="dashboard_mood_missing">You have not logged anything today yet. One tap is enough.</string>
     <string name="dashboard_mood_week">Average of the last 7 days: %1$s</string>
     <string name="dashboard_empty_message">Nothing logged yet. Once you add finance, fitness, food or sleep entries, your summary will show up here.</string>
+    <string name="dashboard_mood_open">Open Mood</string>
+    <string name="dashboard_mood_checkin">Log mood: %1$s</string>
+    <string name="dashboard_mood_saved">Mood logged</string>
+    <string name="dashboard_mood_failed">Could not save your mood</string>
+    <string name="dashboard_mood_level_very_low">Very bad</string>
+    <string name="dashboard_mood_level_low">Bad</string>
+    <string name="dashboard_mood_level_neutral">Okay</string>
+    <string name="dashboard_mood_level_good">Good</string>
+    <string name="dashboard_mood_level_very_good">Very good</string>
+    <string name="dashboard_finance_title">Available this month</string>
+    <string name="dashboard_finance_empty">Log your first expense to see the summary</string>
+    <string name="dashboard_finance_today">You spent %1$s today</string>
+    <string name="dashboard_finance_today_budget">You spent %1$s today · %2$s of budget left</string>
 </resources>

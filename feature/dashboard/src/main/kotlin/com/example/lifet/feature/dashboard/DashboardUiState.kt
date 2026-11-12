@@ -1,6 +1,7 @@
 package com.example.lifet.feature.dashboard
 
 import androidx.compose.runtime.Immutable
+import com.example.lifet.core.model.finance.FinanceTodaySummary
 import com.example.lifet.core.model.mood.MoodTodaySummary
 import java.time.LocalDate
 
@@ -12,5 +13,6 @@ internal sealed interface DashboardUiState {
     data class Success(
         val today: LocalDate,
         val mood: MoodTodaySummary,
+        val finance: FinanceTodaySummary,
     ) : DashboardUiState
 }

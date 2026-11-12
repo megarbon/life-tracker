@@ -10,9 +10,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,6 +27,10 @@ import com.example.lifet.core.designsystem.component.LTLoadingSkeleton
 import com.example.lifet.core.designsystem.component.LTSectionHeader
 import com.example.lifet.core.designsystem.preview.LTPreviews
 import com.example.lifet.core.designsystem.theme.LifeTrackerTheme
+import com.example.lifet.core.model.CurrencyCode
+import com.example.lifet.core.model.Money
+import com.example.lifet.core.model.finance.FinanceTodaySummary
+import com.example.lifet.core.model.mood.MoodLevel
 import com.example.lifet.core.model.mood.MoodTodaySummary
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -32,28 +39,51 @@ import java.time.format.FormatStyle
 @Composable
 internal fun DashboardRoute(
     onOpenMood: () -> Unit,
+    onOpenFinance: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    DashboardScreen(state = state, onOpenMood = onOpenMood, modifier = modifier)
+    val snackbar = remember { SnackbarHostState() }
+    val saved = stringResource(R.string.dashboard_mood_saved)
+    val failed = stringResource(R.string.dashboard_mood_failed)
+    LaunchedEffect(viewModel) {
+        viewModel.messages.collect { message ->
+            snackbar.showSnackbar(if (message == DashboardMessage.MOOD_SAVED) saved else failed)
+        }
+    }
+    DashboardScreen(
+        state = state,
+        snackbar = snackbar,
+        actions = DashboardActions(onOpenMood, onOpenFinance, viewModel::checkIn),
+        modifier = modifier,
+    )
 }
+
+/** Acciones que salen de la pantalla Hoy. */
+internal data class DashboardActions(
+    val onOpenMood: () -> Unit,
+    val onOpenFinance: () -> Unit,
+    val onCheckIn: (MoodLevel) -> Unit,
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun DashboardScreen(
     state: DashboardUiState,
-    onOpenMood: () -> Unit,
+    snackbar: SnackbarHostState,
+    actions: DashboardActions,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(snackbar) },
         topBar = { TopAppBar(title = { Text(stringResource(R.string.dashboard_title)) }) },
     ) { innerPadding ->
         Box(Modifier.fillMaxSize().padding(innerPadding)) {
             when (state) {
                 DashboardUiState.Loading -> LTLoadingSkeleton(Modifier.padding(LifeTrackerTheme.spacing.md))
-                is DashboardUiState.Success -> DashboardContent(state, onOpenMood)
+                is DashboardUiState.Success -> DashboardContent(state, actions)
             }
         }
     }
@@ -62,7 +92,7 @@ internal fun DashboardScreen(
 @Composable
 private fun DashboardContent(
     state: DashboardUiState.Success,
-    onOpenMood: () -> Unit,
+    actions: DashboardActions,
 ) {
     Column(
         modifier =
@@ -78,7 +108,8 @@ private fun DashboardContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         LTSectionHeader(stringResource(R.string.dashboard_section_areas))
-        MoodTodayCard(summary = state.mood, onClick = onOpenMood)
+        FinanceTodayCard(summary = state.finance, onClick = actions.onOpenFinance)
+        MoodTodayCard(summary = state.mood, onOpen = actions.onOpenMood, onCheckIn = actions.onCheckIn)
     }
 }
 
@@ -92,14 +123,17 @@ private fun formatToday(date: LocalDate): String {
 @LTPreviews
 @Composable
 private fun DashboardScreenPreview() {
+    val eur = CurrencyCode.EUR
     LifeTrackerTheme {
         DashboardScreen(
             state =
                 DashboardUiState.Success(
                     today = LocalDate.parse("2026-03-10"),
                     mood = MoodTodaySummary(null, 0, null, null, 0),
+                    finance = FinanceTodaySummary(eur, Money(0, eur), Money(0, eur), null, hasData = false),
                 ),
-            onOpenMood = {},
+            snackbar = remember { SnackbarHostState() },
+            actions = DashboardActions({}, {}, {}),
         )
     }
 }
@@ -108,6 +142,10 @@ private fun DashboardScreenPreview() {
 @Composable
 private fun DashboardScreenLoadingPreview() {
     LifeTrackerTheme {
-        DashboardScreen(state = DashboardUiState.Loading, onOpenMood = {})
+        DashboardScreen(
+            state = DashboardUiState.Loading,
+            snackbar = remember { SnackbarHostState() },
+            actions = DashboardActions({}, {}, {}),
+        )
     }
 }
