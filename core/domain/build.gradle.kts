@@ -13,7 +13,7 @@ dependencies {
     api(project(":core:common"))
     api(project(":core:data"))
 
+    testImplementation(project(":core:testing"))
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
-    testImplementation(project(":core:testing"))
 }
