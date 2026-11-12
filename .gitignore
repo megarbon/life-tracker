@@ -22,3 +22,6 @@ local.properties
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Restos de abrir main/ como proyecto en el IDE (el proyecto ya vive en la raíz)
+/main/
