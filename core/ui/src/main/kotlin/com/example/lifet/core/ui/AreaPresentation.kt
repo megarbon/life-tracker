@@ -9,7 +9,9 @@ public val Area.labelRes: Int
     get() =
         when (this) {
             Area.FINANCE -> R.string.area_finance
-            Area.FITNESS -> R.string.area_fitness
             Area.NUTRITION -> R.string.area_nutrition
-            Area.SLEEP -> R.string.area_sleep
+            Area.FITNESS -> R.string.area_fitness
+            Area.QUIT -> R.string.area_quit
+            Area.WORK -> R.string.area_work
+            Area.MOOD -> R.string.area_mood
         }

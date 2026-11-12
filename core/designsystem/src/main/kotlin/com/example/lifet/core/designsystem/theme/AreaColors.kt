@@ -11,32 +11,40 @@ import com.example.lifet.core.model.Area
 @Immutable
 public data class AreaColors(
     val finance: Color,
-    val fitness: Color,
     val nutrition: Color,
-    val sleep: Color,
+    val fitness: Color,
+    val quit: Color,
+    val work: Color,
+    val mood: Color,
 ) {
     public fun forArea(area: Area): Color =
         when (area) {
             Area.FINANCE -> finance
-            Area.FITNESS -> fitness
             Area.NUTRITION -> nutrition
-            Area.SLEEP -> sleep
+            Area.FITNESS -> fitness
+            Area.QUIT -> quit
+            Area.WORK -> work
+            Area.MOOD -> mood
         }
 }
 
-// Finanzas = teal, deporte = naranja, comida = ámbar, sueño = índigo.
+// Finanzas = teal, comida = ámbar, deporte = naranja, dejar hábitos = verde, trabajo = azul, ánimo = rosa.
 internal val LightAreaColors =
     AreaColors(
         finance = Color(0xFF00796B),
-        fitness = Color(0xFFD84315),
         nutrition = Color(0xFFB26A00),
-        sleep = Color(0xFF3949AB),
+        fitness = Color(0xFFD84315),
+        quit = Color(0xFF2E7D32),
+        work = Color(0xFF1565C0),
+        mood = Color(0xFFAD1457),
     )
 
 internal val DarkAreaColors =
     AreaColors(
         finance = Color(0xFF4DB6AC),
-        fitness = Color(0xFFFF8A65),
         nutrition = Color(0xFFFFCA28),
-        sleep = Color(0xFF9FA8DA),
+        fitness = Color(0xFFFF8A65),
+        quit = Color(0xFF81C784),
+        work = Color(0xFF64B5F6),
+        mood = Color(0xFFF48FB1),
     )

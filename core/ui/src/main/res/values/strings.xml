@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="area_finance">Finanzas</string>
-    <string name="area_fitness">Deporte</string>
     <string name="area_nutrition">Comida</string>
-    <string name="area_sleep">Sueño</string>
+    <string name="area_fitness">Deporte</string>
+    <string name="area_quit">Dejar hábitos</string>
+    <string name="area_work">Trabajo</string>
+    <string name="area_mood">Ánimo</string>
 </resources>
