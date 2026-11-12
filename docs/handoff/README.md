@@ -8,7 +8,7 @@ Los ficheros compartidos son del **integrador**. Los agentes de área no los edi
 - `settings.gradle.kts`, `gradle/libs.versions.toml`, `build-logic/**`
 - `app/**` (incluida la navegación raíz)
 - `core/designsystem/**` (si falta un componente `LT*`, pídelo en tu handoff y usa un stub local)
-- `core/database/.../LifeTrackerDatabase.kt` y `DatabaseModule.kt`
+- `core/database/.../DatabaseModule.kt`
 
 ## Lo que SÍ es de cada área
 
@@ -17,22 +17,12 @@ Los ficheros compartidos son del **integrador**. Los agentes de área no los edi
 - `core/database/.../<area>/` (entities y DAOs; los DAOs se declaran `public` o `internal` según los use `core:data`)
 - `core/demo/.../<area>/` (generador de datos de prueba)
 
-## Cómo pedir una entidad nueva en la base de datos
+## Base de datos (regla de la iteración 2)
 
-Como Room necesita una lista única de entidades, el agente NO edita `LifeTrackerDatabase`. En su handoff escribe:
-
-```
-## Entities
-- FinanceTransactionEntity (core/database/.../finance/FinanceTransactionEntity.kt)
-- FinanceCategoryEntity (...)
-## DAOs
-- FinanceDao (...)
-## Migración
-- Solo tablas nuevas: no toca tablas existentes.
-```
-
-El integrador registra las entities, sube la versión y añade la migración `N → N+1` (solo `CREATE TABLE`,
-que no puede romper datos existentes) con su test.
+Cada área **registra sus propias entities y DAOs** en `LifeTrackerDatabase` (una línea en `entities = [...]` y un
+`abstract fun xDao()`), y se queda en `VERSION = 1` mientras no haya datos reales: en builds debug la base se recrea
+sola al cambiar el esquema (`DatabaseModule`). Los conflictos de merge en esas dos listas se resuelven conservando
+ambas líneas. Antes del primer uso real se congela el esquema y desde ahí toda entidad nueva exige migración con test.
 
 ## Plantilla de handoff
 
