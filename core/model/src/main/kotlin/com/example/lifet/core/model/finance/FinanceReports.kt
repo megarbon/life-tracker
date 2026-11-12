@@ -30,7 +30,7 @@ public data class CategorySpend(
 
 /**
  * Resumen de un mes en la divisa principal. [spent] es neto de devoluciones.
- * [available] = ingresos (reales + previstos) - gastos (reales + previstos): lo que sobra del mes si se cumple lo previsto.
+ * [available] = ingresos - gastos, reales y previstos: lo que sobra del mes si se cumple lo previsto.
  */
 public data class MonthSummary(
     val month: YearMonth,

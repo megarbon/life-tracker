@@ -1,8 +1,11 @@
 package com.example.lifet.core.domain.finance
 
+import com.example.lifet.core.common.AppError
 import com.example.lifet.core.common.AppResult
+import com.example.lifet.core.common.runCatchingApp
 import com.example.lifet.core.data.finance.FinanceRepository
 import com.example.lifet.core.model.finance.FinanceCalculator
+import com.example.lifet.core.model.finance.RecurringRule
 import com.example.lifet.core.model.finance.pendingTransactions
 import kotlinx.coroutines.flow.first
 import java.time.Clock
@@ -22,10 +25,15 @@ public class SyncRecurringTransactions
         private val repository: FinanceRepository,
         private val clock: Clock,
     ) {
-        public suspend operator fun invoke(): AppResult<Unit> {
+        public suspend operator fun invoke(): AppResult<Unit> =
+            when (val read = runCatchingApp(onError = { AppError.Storage }) { repository.observeData().first() }) {
+                is AppResult.Failure -> read
+                is AppResult.Success -> generate(read.value.rules.filter { it.active })
+            }
+
+        private suspend fun generate(rules: List<RecurringRule>): AppResult<Unit> {
             val today = LocalDate.now(clock)
             val horizon = maxOf(YearMonth.from(today).atEndOfMonth(), today.plusDays(FinanceCalculator.UPCOMING_DAYS))
-            val rules = repository.observeData().first().rules.filter { it.active }
             val pending =
                 rules.flatMap { rule ->
                     rule.pendingTransactions(rule.startDate, horizon, clock.instant(), clock.zone)

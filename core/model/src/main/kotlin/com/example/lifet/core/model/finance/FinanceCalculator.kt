@@ -15,6 +15,7 @@ import java.time.YearMonth
  * - El gasto es neto de devoluciones (importes positivos en categorías de gasto).
  * - Las transferencias nunca son gasto ni ingreso, sólo mueven saldo entre cuentas.
  */
+@Suppress("TooManyFunctions") // Un único punto de cálculo sobre el mismo conjunto de datos.
 public class FinanceCalculator(
     private val data: FinanceDataSet,
     private val currency: CurrencyCode,
@@ -56,7 +57,7 @@ public class FinanceCalculator(
         )
     }
 
-    /** Ingresos y gasto confirmados de los [count] meses que terminan en [lastMonth], del más antiguo al más reciente. */
+    /** Ingresos y gasto confirmados de los [count] meses hasta [lastMonth], del más antiguo al más reciente. */
     public fun monthlyTotals(
         lastMonth: YearMonth,
         count: Int,
@@ -85,6 +86,20 @@ public class FinanceCalculator(
                 DayBalance(day, running)
             }.toList()
     }
+
+    /**
+     * Saldo total al cierre de cada uno de los [count] meses que terminan en [lastMonth] (del más antiguo al
+     * más reciente). El mes en curso usa el saldo de hoy; un mes futuro no tiene saldo confirmado y se omite.
+     */
+    public fun monthEndBalances(
+        lastMonth: YearMonth,
+        count: Int,
+    ): List<DayBalance> =
+        (count - 1 downTo 0).mapNotNull { back ->
+            val month = lastMonth.minusMonths(back.toLong())
+            val day = minOf(month.atEndOfMonth(), today)
+            dailyBalances(day, day).firstOrNull()
+        }
 
     /** Saldo total confirmado hoy (sólo cuentas en la divisa principal). */
     public fun totalBalance(): Money = dailyBalances(today, today).firstOrNull()?.balance ?: zero
@@ -161,7 +176,7 @@ public class FinanceCalculator(
             today = today,
             summary = monthSummary(month),
             monthlyTotals = monthlyTotals(month, TREND_MONTHS),
-            balanceTrend = dailyBalances(month.atDay(1), month.atEndOfMonth()),
+            balanceTrend = monthEndBalances(month, TREND_MONTHS),
             ledger = ledger(month, filter, categoryName),
             upcoming = upcoming(),
             accounts = accountBalances(),
@@ -219,7 +234,10 @@ public class FinanceCalculator(
         -transactions.filter { kindOf(it) == CategoryKind.EXPENSE }.map { it.amount }.sumOrZero()
 
     private fun openingTotal(): Money =
-        data.accounts.filter { it.currency == currency }.map { it.openingBalance }.sumOrZero()
+        data.accounts
+            .filter { it.currency == currency }
+            .map { it.openingBalance }
+            .sumOrZero()
 
     // Las transferencias entre cuentas de la divisa principal se anulan en el total; sólo cuentan los movimientos.
     private fun dailyDeltas(): Map<LocalDate, Money> {

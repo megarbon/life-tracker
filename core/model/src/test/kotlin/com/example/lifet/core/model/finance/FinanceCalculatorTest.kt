@@ -110,7 +110,11 @@ class FinanceCalculatorTest {
     fun `transfers move account balances but not the total or the spending`() {
         val transfer =
             FinanceTransfer("tr", "bank", "cash", Money(2_000, eur), today, createdAt = Instant.EPOCH, zone = zone)
-        val calc = calculator(listOf(tx(-1_000, DefaultCategory.LEISURE, today, account = "cash")), transfers = listOf(transfer))
+        val calc =
+            calculator(
+                listOf(tx(-1_000, DefaultCategory.LEISURE, today, account = "cash")),
+                transfers = listOf(transfer),
+            )
 
         val balances = calc.accountBalances().associate { it.account.id to it.balance }
 
@@ -137,6 +141,17 @@ class FinanceCalculatorTest {
         assertEquals(4, balances.size)
         assertEquals(Money(105_000, eur), balances.first().balance)
         assertEquals(Money(103_500, eur), balances.last().balance)
+    }
+
+    @Test
+    fun `month end balances use today for the current month`() {
+        val calc = calculator(listOf(tx(-1_000, DefaultCategory.LEISURE, march.minusMonths(1).atDay(15))))
+
+        val balances = calc.monthEndBalances(march, 3)
+
+        assertEquals(listOf(LocalDate.of(2026, 1, 31), LocalDate.of(2026, 2, 28), today), balances.map { it.date })
+        // Saldo inicial 105.000 (banco + efectivo); el gasto de 1.000 es del 15 de febrero.
+        assertEquals(listOf(105_000L, 104_000L, 104_000L), balances.map { it.balance.amountMinor })
     }
 
     @Test

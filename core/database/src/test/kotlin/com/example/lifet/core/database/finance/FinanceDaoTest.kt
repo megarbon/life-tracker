@@ -120,5 +120,4 @@ class FinanceDaoTest {
 
             assertEquals(listOf("new"), dao.observeTransactions().first().map { it.id })
         }
-
 }

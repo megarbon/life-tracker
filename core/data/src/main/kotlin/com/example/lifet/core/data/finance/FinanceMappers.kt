@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions") // Un par de mapeos entity <-> dominio por cada una de las seis tablas.
+
 package com.example.lifet.core.data.finance
 
 import com.example.lifet.core.database.finance.FinanceAccountEntity
@@ -89,7 +91,8 @@ internal fun FinanceTransfer.toEntity(): FinanceTransferEntity =
 
 internal fun FinanceBudgetEntity.toDomain(): Budget = Budget(categoryId, Money(limitMinor, CurrencyCode(currency)))
 
-internal fun Budget.toEntity(): FinanceBudgetEntity = FinanceBudgetEntity(categoryId, limit.amountMinor, limit.currency.value)
+internal fun Budget.toEntity(): FinanceBudgetEntity =
+    FinanceBudgetEntity(categoryId, limit.amountMinor, limit.currency.value)
 
 internal fun FinanceRecurringRuleEntity.toDomain(): RecurringRule =
     RecurringRule(

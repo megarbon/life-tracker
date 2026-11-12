@@ -15,6 +15,7 @@ import java.time.LocalDate
  * lo haya editado) nunca se sobrescribe.
  */
 @Dao
+@Suppress("TooManyFunctions") // Un DAO por área: seis tablas relacionadas que se escriben en transacciones.
 public abstract class FinanceDao {
     @Query("SELECT * FROM finance_accounts ORDER BY archived, sortOrder, name")
     public abstract fun observeAccounts(): Flow<List<FinanceAccountEntity>>

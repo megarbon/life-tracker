@@ -25,6 +25,7 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions") // Implementa FinanceRepository.
 internal class RoomFinanceRepository
     @Inject
     constructor(
@@ -59,7 +60,8 @@ internal class RoomFinanceRepository
 
         override suspend fun deleteTransfer(id: String): AppResult<Unit> = write { dao.deleteTransfer(id) }
 
-        override suspend fun saveAccount(account: Account): AppResult<Unit> = write { dao.upsertAccount(account.toEntity()) }
+        override suspend fun saveAccount(account: Account): AppResult<Unit> =
+            write { dao.upsertAccount(account.toEntity()) }
 
         override suspend fun saveCategory(category: FinanceCategory): AppResult<Unit> =
             write { dao.upsertCategory(category.toEntity()) }
@@ -69,7 +71,13 @@ internal class RoomFinanceRepository
             limit: Money?,
         ): AppResult<Unit> =
             write {
-                if (limit == null) dao.deleteBudget(categoryId) else dao.upsertBudget(Budget(categoryId, limit).toEntity())
+                if (limit ==
+                    null
+                ) {
+                    dao.deleteBudget(categoryId)
+                } else {
+                    dao.upsertBudget(Budget(categoryId, limit).toEntity())
+                }
             }
 
         override suspend fun saveRule(

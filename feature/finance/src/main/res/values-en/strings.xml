@@ -1,6 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="finance_title">Finance</string>
-    <string name="finance_empty_title">Nothing here yet</string>
-    <string name="finance_empty_message">Log expenses and income and keep your budget on track.</string>
+    <string name="finance_empty_title">No transactions yet</string>
+    <string name="finance_empty_message">Log your first expense or income and you will see here how much is left this month.</string>
+    <string name="finance_empty_cta">Add transaction</string>
+
+    <string name="finance_tab_summary">Summary</string>
+    <string name="finance_tab_ledger">Transactions</string>
+    <string name="finance_tab_budgets">Budgets</string>
+    <string name="finance_tab_accounts">Accounts</string>
+    <string name="finance_month_previous">Previous month</string>
+    <string name="finance_month_next">Next month</string>
+
+    <string name="finance_available_title">Available this month</string>
+    <string name="finance_available_subtitle">Income %1$s · spent %2$s</string>
+    <string name="finance_available_planned">Includes %1$s of planned spending and %2$s of planned income</string>
+    <string name="finance_budget_card_title">Monthly budget</string>
+    <string name="finance_budget_left">%1$s left of %2$s</string>
+    <string name="finance_budget_over">You are %1$s over %2$s</string>
+    <string name="finance_budget_none">You have not set any budgets yet.</string>
+    <string name="finance_budget_set_cta">Set budgets</string>
+    <string name="finance_by_category">Spending by category</string>
+    <string name="finance_by_category_empty">No spending this month.</string>
+    <string name="finance_category_row_budget">%1$s of %2$s</string>
+    <string name="finance_category_row_over">Over budget</string>
+    <string name="finance_upcoming">Upcoming recurring</string>
+    <string name="finance_upcoming_empty">Nothing planned.</string>
+    <string name="finance_planned">Planned</string>
+    <string name="finance_other_currencies">Some accounts use other currencies (%1$s). Summaries only add up %2$s.</string>
+
+    <string name="finance_chart_months_title">Spending, last 6 months</string>
+    <string name="finance_chart_months_up">This month you spend %1$d %% more than the last one</string>
+    <string name="finance_chart_months_down">This month you spend %1$d %% less than the last one</string>
+    <string name="finance_chart_months_same">You spend the same as last month</string>
+    <string name="finance_chart_months_none">Monthly spending, net of refunds</string>
+    <string name="finance_chart_months_summary">Monthly spending for the last six months: %1$s.</string>
+    <string name="finance_chart_balance_title">Balance at month end</string>
+    <string name="finance_chart_balance_headline">Current balance: %1$s</string>
+    <string name="finance_chart_balance_summary">Balance at the end of each month: %1$s.</string>
+    <string name="finance_chart_summary_item">%1$s %2$s</string>
+
+    <string name="finance_search_hint">Search notes and categories</string>
+    <string name="finance_search_clear">Clear search</string>
+    <string name="finance_search_scope">Searching the whole history</string>
+    <string name="finance_filters_clear">Clear filters</string>
+    <string name="finance_filter_categories">Categories</string>
+    <string name="finance_filter_accounts">Accounts</string>
+    <string name="finance_ledger_empty_title">No transactions</string>
+    <string name="finance_ledger_empty_message">There are no transactions this month.</string>
+    <string name="finance_no_results_title">No results</string>
+    <string name="finance_no_results_message">Try another search or clear the filters.</string>
+    <string name="finance_day_total_cd">%1$s, daily total %2$s</string>
+    <string name="finance_transfer_row">%1$s → %2$s</string>
+    <string name="finance_transfer_title">Transfer</string>
+    <string name="finance_no_note">No note</string>
+
+    <string name="finance_add">Add transaction</string>
+    <string name="finance_add_transfer">New transfer</string>
+    <string name="finance_sheet_add">New transaction</string>
+    <string name="finance_sheet_edit">Edit transaction</string>
+    <string name="finance_transfer_sheet_add">New transfer</string>
+    <string name="finance_transfer_sheet_edit">Edit transfer</string>
+    <string name="finance_field_amount">Amount</string>
+    <string name="finance_field_note">Note</string>
+    <string name="finance_field_category">Category</string>
+    <string name="finance_field_account">Account</string>
+    <string name="finance_field_date">Date</string>
+    <string name="finance_field_from">From</string>
+    <string name="finance_field_to">To</string>
+    <string name="finance_field_name">Name</string>
+    <string name="finance_field_opening">Opening balance</string>
+    <string name="finance_field_currency">Currency (ISO 4217)</string>
+    <string name="finance_field_start">First date</string>
+    <string name="finance_save">Save</string>
+    <string name="finance_delete">Delete</string>
+    <string name="finance_date_ok">OK</string>
+    <string name="finance_retry">Retry</string>
+    <string name="finance_entry_expense">Expense</string>
+    <string name="finance_entry_income">Income</string>
+    <string name="finance_entry_refund">Refund</string>
+
+    <string name="finance_issue_amount_missing">Enter an amount</string>
+    <string name="finance_issue_amount_invalid">Invalid amount</string>
+    <string name="finance_issue_account_missing">Choose an account</string>
+    <string name="finance_issue_category_missing">Choose a category</string>
+    <string name="finance_issue_same_account">Choose different accounts</string>
+    <string name="finance_issue_currency_mismatch">Both accounts must use the same currency</string>
+    <string name="finance_issue_currency_invalid">Invalid currency (for example EUR)</string>
+    <string name="finance_issue_name_missing">Enter a name</string>
+
+    <string name="finance_budgets_intro">Set a monthly limit for each spending category.</string>
+    <string name="finance_budget_row_none">No limit</string>
+    <string name="finance_budget_sheet_title">Budget for %1$s</string>
+    <string name="finance_budget_field">Monthly limit</string>
+    <string name="finance_budget_hint_empty">Leave empty to remove the budget</string>
+
+    <string name="finance_accounts_header">Accounts</string>
+    <string name="finance_categories_header">Categories</string>
+    <string name="finance_rules_header">Recurring</string>
+    <string name="finance_account_add">Add account</string>
+    <string name="finance_category_add">Add category</string>
+    <string name="finance_rule_add">Add recurring</string>
+    <string name="finance_account_default">Main account</string>
+    <string name="finance_account_type_cash">Cash</string>
+    <string name="finance_account_type_bank">Bank</string>
+    <string name="finance_account_type_card">Card</string>
+    <string name="finance_account_type_savings">Savings</string>
+    <string name="finance_account_sheet_add">New account</string>
+    <string name="finance_account_sheet_edit">Edit account</string>
+    <string name="finance_category_sheet_add">New category</string>
+    <string name="finance_category_sheet_edit">Edit category</string>
+    <string name="finance_category_default_hint">Leave empty to use the original name</string>
+    <string name="finance_rule_sheet_add">New recurring</string>
+    <string name="finance_rule_sheet_edit">Edit recurring</string>
+    <string name="finance_rule_active">Active</string>
+    <string name="finance_rule_row">%1$s · %2$s</string>
+    <string name="finance_archived">Archived</string>
+    <string name="finance_archive">Archive</string>
+    <string name="finance_unarchive">Restore</string>
+    <string name="finance_frequency_weekly">Every week</string>
+    <string name="finance_frequency_monthly">Every month</string>
+    <string name="finance_frequency_yearly">Every year</string>
+
+    <string name="finance_cat_groceries">Groceries</string>
+    <string name="finance_cat_housing">Housing</string>
+    <string name="finance_cat_subscriptions">Subscriptions</string>
+    <string name="finance_cat_restaurants">Restaurants</string>
+    <string name="finance_cat_leisure">Leisure</string>
+    <string name="finance_cat_transport">Transport</string>
+    <string name="finance_cat_health">Health</string>
+    <string name="finance_cat_shopping">Shopping</string>
+    <string name="finance_cat_other_expense">Other expenses</string>
+    <string name="finance_cat_salary">Salary</string>
+    <string name="finance_cat_other_income">Other income</string>
+
+    <string name="finance_error_load">Your finances could not be loaded.</string>
+    <string name="finance_error_save">Could not save. Please try again.</string>
+    <string name="finance_error_invalid">Check the form data.</string>
+    <string name="finance_deleted_transaction">Transaction deleted</string>
+    <string name="finance_deleted_transfer">Transfer deleted</string>
+    <string name="finance_deleted_rule">Recurring deleted</string>
 </resources>

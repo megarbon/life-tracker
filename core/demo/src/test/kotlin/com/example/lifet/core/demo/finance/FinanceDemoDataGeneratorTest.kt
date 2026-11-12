@@ -45,7 +45,11 @@ class FinanceDemoDataGeneratorTest {
     @Test
     fun `new user has about three days of data`() =
         runTest {
-            val dates = seeded(DemoScenario.NEW_USER).current.transactions.map { it.date }.toSet()
+            val dates =
+                seeded(DemoScenario.NEW_USER)
+                    .current.transactions
+                    .map { it.date }
+                    .toSet()
 
             assertEquals(setOf(today.minusDays(2), today.minusDays(1), today), dates)
         }
@@ -59,7 +63,14 @@ class FinanceDemoDataGeneratorTest {
             val salaries = txs.filter { it.categoryId == DefaultCategory.SALARY.id && it.date <= today }
             assertEquals(7, salaries.size)
             assertTrue(salaries.all { it.date.dayOfMonth == 1 })
-            assertEquals(3, txs.filter { it.categoryId == DefaultCategory.SUBSCRIPTIONS.id }.map { it.note }.toSet().size)
+            assertEquals(
+                3,
+                txs
+                    .filter { it.categoryId == DefaultCategory.SUBSCRIPTIONS.id }
+                    .map { it.note }
+                    .toSet()
+                    .size,
+            )
             assertTrue(txs.any { it.categoryId == DefaultCategory.HOUSING.id })
             val groceriesPerWeek =
                 txs
@@ -72,7 +83,12 @@ class FinanceDemoDataGeneratorTest {
                     .map { it.size }
             assertTrue(groceriesPerWeek.all { it in 2..4 })
             val leisure = txs.filter { it.categoryId == DefaultCategory.LEISURE.id && it.note != "Concierto 🎸" }
-            assertTrue(leisure.filter { it.amount.amountMinor < 0 }.all { it.date.dayOfWeek.value >= 6 || it.note == "Escape room" })
+            assertTrue(
+                leisure.filter { it.amount.amountMinor < 0 }.all {
+                    it.date.dayOfWeek.value >= 6 ||
+                        it.note == "Escape room"
+                },
+            )
             assertTrue(txs.any { it.isPlannedAt(today) })
         }
 

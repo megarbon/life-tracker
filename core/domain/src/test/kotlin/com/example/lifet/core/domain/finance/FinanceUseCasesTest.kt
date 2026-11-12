@@ -121,11 +121,19 @@ class FinanceUseCasesTest {
             assertEquals(AppResult.Success(Unit), sync())
             sync()
 
-            val dates = repository.current.transactions.map { it.date }.sorted()
+            val dates =
+                repository.current.transactions
+                    .map { it.date }
+                    .sorted()
             // El horizonte es hoy + 30 días (9 de abril): el 15 de abril aún no se genera.
             assertEquals(listOf("2026-01-15", "2026-02-15", "2026-03-15").map(LocalDate::parse), dates)
             assertEquals(1, repository.current.transactions.count { it.isPlannedAt(today) })
-            assertEquals(LocalDate.of(2026, 4, 9), repository.current.rules.single().generatedThrough)
+            assertEquals(
+                LocalDate.of(2026, 4, 9),
+                repository.current.rules
+                    .single()
+                    .generatedThrough,
+            )
         }
 
     @Test
@@ -152,7 +160,8 @@ class FinanceUseCasesTest {
                 assertEquals(Money(1_299, eur), overview.summary.plannedSpent)
                 assertEquals(listOf(LocalDate.of(2026, 3, 15)), overview.upcoming.map { it.date })
                 assertEquals(6, overview.monthlyTotals.size)
-                assertEquals(10, overview.balanceTrend.size)
+                assertEquals(6, overview.balanceTrend.size)
+                assertEquals(today, overview.balanceTrend.last().date)
             }
         }
 }

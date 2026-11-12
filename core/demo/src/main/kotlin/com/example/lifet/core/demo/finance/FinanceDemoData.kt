@@ -3,6 +3,10 @@
 package com.example.lifet.core.demo.finance
 
 import com.example.lifet.core.demo.DemoScenario
+import com.example.lifet.core.demo.finance.DemoLedgerBuilder.Companion.BANK
+import com.example.lifet.core.demo.finance.DemoLedgerBuilder.Companion.LONG_TEXT
+import com.example.lifet.core.demo.finance.DemoLedgerBuilder.Companion.OLD_ACCOUNT
+import com.example.lifet.core.demo.finance.DemoLedgerBuilder.Companion.OLD_CATEGORY
 import com.example.lifet.core.model.CurrencyCode
 import com.example.lifet.core.model.Money
 import com.example.lifet.core.model.finance.Account
@@ -29,20 +33,13 @@ import java.util.Random
 private const val REGULAR_MONTHS = 6L
 private const val NEW_USER_DAYS = 2L
 private const val DAYS_PER_WEEK = 7
-private const val HUGE_AMOUNT = 123_456_789_012_345L
-private const val LONG_NOTE_CHARS = 800
 private const val OVER_BUDGET_MONTHS_AGO = 3L
 private const val REFUND_MONTHS_AGO = 2L
 
 /** Cuenta, categoría y reglas con ids fijos para que sembrar dos veces dé exactamente los mismos datos. */
-private const val BANK = Account.DEFAULT_ID
 private const val CASH = "demo_cash"
 private const val SAVINGS = "demo_savings"
-private const val USD_ACCOUNT = "demo_usd"
-private const val JPY_ACCOUNT = "demo_jpy"
-private const val OLD_ACCOUNT = "demo_old"
 private const val PETS = "custom_pets"
-private const val OLD_CATEGORY = "custom_old"
 
 /**
  * Construye los datos de demo de Finanzas. Es pura: todo el azar sale de [random] y todas las fechas son
@@ -51,11 +48,10 @@ private const val OLD_CATEGORY = "custom_old"
 internal class FinanceDemoData(
     private val clock: Clock,
     private val random: Random,
-) {
-    private val zone: ZoneId = clock.zone
+) : DemoLedgerBuilder(clock.zone, random) {
     private val today: LocalDate = LocalDate.now(clock)
     private val eur = CurrencyCode.EUR
-    private var counter = 0
+    private val edge by lazy { EdgeCaseDemoData(clock, random) }
 
     fun build(scenario: DemoScenario): FinanceDataSet =
         when (scenario) {
@@ -181,7 +177,11 @@ internal class FinanceDemoData(
     }
 
     private fun regularTransfers(start: LocalDate): List<FinanceTransfer> {
-        val months = generateSequence(YearMonth.from(start)) { it.plusMonths(1) }.takeWhile { it <= YearMonth.from(today) }
+        val months =
+            generateSequence(YearMonth.from(start)) { it.plusMonths(1) }.takeWhile {
+                it <=
+                    YearMonth.from(today)
+            }
         val savings =
             months
                 .map { it.atDay(2) }
@@ -203,36 +203,20 @@ internal class FinanceDemoData(
 
     /** Divisas distintas, importes enormes, medianoche, cambio de hora, textos larguísimos y huecos sin datos. */
     private fun edgeCases(): FinanceDataSet {
-        val usd = CurrencyCode("USD")
-        val jpy = CurrencyCode("JPY")
-        val txs = mutableListOf<FinanceTransaction>()
-        txs += expense(DefaultCategory.OTHER_EXPENSE, today, 1, "Un céntimo")
-        txs += income(DefaultCategory.OTHER_INCOME, today.minusDays(3), HUGE_AMOUNT, "Premio enorme 🎰")
-        txs += expense(DefaultCategory.HOUSING, today.minusDays(4), HUGE_AMOUNT / 2, "Compra de un castillo")
-        txs += expense(DefaultCategory.SHOPPING, today.minusDays(5), 4_999, "x".repeat(LONG_NOTE_CHARS))
-        txs += expense(DefaultCategory.LEISURE, today.minusDays(6), 2_300, "Cena 🍣🍜🥢 con 日本語 y العربية " + LONG_TEXT)
-        txs += expense(DefaultCategory.GROCERIES, today.minusDays(7), 3_100, "")
-        txs += midnightPair()
-        txs += daylightSavingPair()
-        txs += expense(DefaultCategory.RESTAURANTS, today.minusDays(40), 2_500, "Tras 20 días sin datos")
-        txs += expense(DefaultCategory.TRANSPORT, today.plusDays(2), 1_500, "Previsto: taxi aeropuerto")
-        txs += expense(DefaultCategory.SUBSCRIPTIONS, today.plusDays(45), 999, "Previsto lejano")
-        txs += expense(DefaultCategory.SHOPPING, today.minusDays(2), 129_900, "Portátil", account = USD_ACCOUNT, currency = usd)
-        txs += expense(DefaultCategory.RESTAURANTS, today.minusDays(1), 1_800_000, "Ramen en Tokio", account = JPY_ACCOUNT, currency = jpy)
-        txs += spend(OLD_CATEGORY, today.minusDays(60), 1_000, "Categoría archivada", account = OLD_ACCOUNT)
         val categories =
             defaultFinanceCategories() +
-                FinanceCategory(OLD_CATEGORY, CategoryKind.EXPENSE, "category", "Antigua 🗄️", archived = true, sortOrder = 99)
+                FinanceCategory(
+                    OLD_CATEGORY,
+                    CategoryKind.EXPENSE,
+                    "category",
+                    "Antigua 🗄️",
+                    archived = true,
+                    sortOrder = 99,
+                )
         return FinanceDataSet(
-            accounts =
-                listOf(
-                    bankAccount(opening = -5_000L),
-                    Account(USD_ACCOUNT, "Cuenta EE. UU.", AccountType.BANK, Money(250_000, usd), sortOrder = 1),
-                    Account(JPY_ACCOUNT, "Yenes", AccountType.CASH, Money(5_000_000, jpy), sortOrder = 2),
-                    Account(OLD_ACCOUNT, "Cuenta cerrada", AccountType.CARD, Money.zero(eur), archived = true, sortOrder = 3),
-                ),
+            accounts = edge.accounts(),
             categories = categories,
-            transactions = txs,
+            transactions = edge.transactions(),
             transfers = listOf(transfer(BANK, OLD_ACCOUNT, 500, today.minusDays(10), "Traspaso " + LONG_TEXT)),
             budgets =
                 listOf(
@@ -243,121 +227,7 @@ internal class FinanceDemoData(
         )
     }
 
-    /** Dos movimientos a ambos lados de la medianoche local: 23:59:59 y 00:00:01 del día siguiente. */
-    private fun midnightPair(): List<FinanceTransaction> {
-        val day = today.minusDays(9)
-        return listOf(
-            expense(DefaultCategory.LEISURE, day, 1_800, "Última copa", createdAt = instantAt(day, 23, 59, 59)),
-            expense(DefaultCategory.TRANSPORT, day.plusDays(1), 2_200, "Taxi de vuelta", createdAt = instantAt(day.plusDays(1), 0, 0, 1)),
-        )
-    }
-
-    /** Si la zona tiene cambio de hora, pone movimientos justo antes y después de la última transición. */
-    private fun daylightSavingPair(): List<FinanceTransaction> {
-        val transition = zone.rules.previousTransition(clock.instant()) ?: return emptyList()
-        val before = transition.instant.minusSeconds(ONE_HOUR)
-        val after = transition.instant.plusSeconds(ONE_HOUR)
-        return listOf(
-            expense(DefaultCategory.LEISURE, before.atZone(zone).toLocalDate(), 1_100, "Antes del cambio de hora", createdAt = before),
-            expense(DefaultCategory.LEISURE, after.atZone(zone).toLocalDate(), 1_200, "Después del cambio de hora", createdAt = after),
-        )
-    }
-
-    private fun bankAccount(opening: Long) = Account(BANK, "Cuenta corriente", AccountType.BANK, Money(opening, eur))
-
-    private fun spend(
-        categoryId: String,
-        date: LocalDate,
-        cents: Long,
-        note: String,
-        account: String = BANK,
-        currency: CurrencyCode = eur,
-        createdAt: Instant = instantAt(date, DEFAULT_HOUR + random.nextInt(HOURS_SPREAD), random.nextInt(MINUTES)),
-    ) = transaction(categoryId, date, Money(-cents, currency), note, account, createdAt)
-
-    private fun expense(
-        category: DefaultCategory,
-        date: LocalDate,
-        cents: Long,
-        note: String,
-        account: String = BANK,
-        currency: CurrencyCode = eur,
-        createdAt: Instant = instantAt(date, DEFAULT_HOUR + random.nextInt(HOURS_SPREAD), random.nextInt(MINUTES)),
-    ) = spend(category.id, date, cents, note, account, currency, createdAt)
-
-    private fun income(
-        category: DefaultCategory,
-        date: LocalDate,
-        cents: Long,
-        note: String,
-    ) = transaction(
-        category.id,
-        date,
-        Money(cents, eur),
-        note,
-        BANK,
-        instantAt(date, DEFAULT_HOUR + random.nextInt(HOURS_SPREAD), random.nextInt(MINUTES)),
-    )
-
-    private fun transaction(
-        categoryId: String,
-        date: LocalDate,
-        amount: Money,
-        note: String,
-        account: String,
-        createdAt: Instant,
-    ) = FinanceTransaction(
-        id = "demo_tx_${counter++}",
-        accountId = account,
-        categoryId = categoryId,
-        amount = amount,
-        date = date,
-        note = note,
-        createdAt = createdAt,
-        zone = zone,
-    )
-
-    private fun transfer(
-        from: String,
-        to: String,
-        cents: Long,
-        date: LocalDate,
-        note: String,
-    ) = FinanceTransfer(
-        id = "demo_tr_${counter++}",
-        fromAccountId = from,
-        toAccountId = to,
-        amount = Money(cents, eur),
-        date = date,
-        note = note,
-        createdAt = instantAt(date, TRANSFER_HOUR, 0),
-        zone = zone,
-    )
-
-    private fun instantAt(
-        date: LocalDate,
-        hour: Int,
-        minute: Int,
-        second: Int = 0,
-    ): Instant = date.atTime(hour, minute, second).atZone(zone).toInstant()
-
-    private fun randomCents(
-        min: Int,
-        max: Int,
-    ): Long = (min + random.nextInt(max - min + 1)).toLong()
-
-    private fun pick(options: List<String>): String = options[random.nextInt(options.size)]
-
     private companion object {
-        const val DEFAULT_HOUR = 9
-        const val HOURS_SPREAD = 12
-        const val MINUTES = 60
-        const val TRANSFER_HOUR = 8
-        const val ONE_HOUR = 3_600L
-        const val LONG_TEXT =
-            "Una nota extraordinariamente larga para comprobar que la lista, la hoja de edición y los " +
-                "resúmenes no se rompen cuando el usuario pega un párrafo entero en el campo de nota, " +
-                "incluso con la fuente al doscientos por ciento y en pantallas estrechas."
         val GROCERY_NOTES = listOf("Mercadona", "Carrefour", "Lidl", "Frutería", "Dia", "Panadería 🥖")
         val LEISURE_NOTES = listOf("Cine 🎬", "Cervezas", "Bolera", "Museo", "Partido de fútbol ⚽")
         val RESTAURANT_NOTES = listOf("Cena con amigos", "Brunch 🥞", "Pizzería", "Tapas", "Sushi 🍣")

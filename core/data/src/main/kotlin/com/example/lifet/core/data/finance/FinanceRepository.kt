@@ -15,6 +15,7 @@ import java.time.LocalDate
  * Fuente única de verdad de finanzas (Room). Las lecturas son reactivas; las escrituras devuelven
  * [AppResult] y nunca lanzan, salvo cancelación.
  */
+@Suppress("TooManyFunctions") // Un repositorio por área (CRUD de seis entidades relacionadas).
 public interface FinanceRepository {
     /** Todo el contenido de finanzas; vuelve a emitir con cada cambio. */
     public fun observeData(): Flow<FinanceDataSet>

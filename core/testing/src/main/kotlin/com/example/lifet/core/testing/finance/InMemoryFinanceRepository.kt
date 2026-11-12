@@ -3,6 +3,7 @@ package com.example.lifet.core.testing.finance
 import com.example.lifet.core.common.AppError
 import com.example.lifet.core.common.AppResult
 import com.example.lifet.core.data.finance.FinanceRepository
+import com.example.lifet.core.model.CurrencyCode
 import com.example.lifet.core.model.Money
 import com.example.lifet.core.model.finance.Account
 import com.example.lifet.core.model.finance.AccountType
@@ -13,7 +14,6 @@ import com.example.lifet.core.model.finance.FinanceTransaction
 import com.example.lifet.core.model.finance.FinanceTransfer
 import com.example.lifet.core.model.finance.RecurringRule
 import com.example.lifet.core.model.finance.defaultFinanceCategories
-import com.example.lifet.core.model.CurrencyCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,6 +24,7 @@ import java.time.LocalDate
  * generadores de demo sin necesidad de base de datos. Con [failWrites] las escrituras devuelven un error de
  * almacenamiento, para probar los estados de error.
  */
+@Suppress("TooManyFunctions") // Implementa FinanceRepository.
 public class InMemoryFinanceRepository(
     initial: FinanceDataSet = FinanceDataSet(),
 ) : FinanceRepository {

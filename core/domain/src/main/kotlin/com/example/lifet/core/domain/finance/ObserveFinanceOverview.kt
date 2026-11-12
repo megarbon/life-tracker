@@ -2,6 +2,7 @@ package com.example.lifet.core.domain.finance
 
 import com.example.lifet.core.data.finance.FinanceRepository
 import com.example.lifet.core.model.finance.FinanceCalculator
+import com.example.lifet.core.model.finance.FinanceCategory
 import com.example.lifet.core.model.finance.FinanceOverview
 import com.example.lifet.core.model.finance.LedgerFilter
 import com.example.lifet.core.model.finance.primaryCurrency
@@ -12,7 +13,10 @@ import java.time.LocalDate
 import java.time.YearMonth
 import javax.inject.Inject
 
-/** Datos de la pantalla de Finanzas para [month], recalculados con cada cambio en la base de datos. */
+/**
+ * Datos de la pantalla de Finanzas para [month], recalculados con cada cambio en la base de datos.
+ * [categoryName] resuelve el nombre localizado de las categorías de partida para la búsqueda de texto.
+ */
 public class ObserveFinanceOverview
     @Inject
     constructor(
@@ -22,8 +26,10 @@ public class ObserveFinanceOverview
         public operator fun invoke(
             month: YearMonth,
             filter: LedgerFilter = LedgerFilter(),
+            categoryName: (FinanceCategory) -> String = { it.customName.orEmpty() },
         ): Flow<FinanceOverview> =
             repository.observeData().map { data ->
-                FinanceCalculator(data, data.primaryCurrency(), LocalDate.now(clock)).overview(month, filter)
+                FinanceCalculator(data, data.primaryCurrency(), LocalDate.now(clock))
+                    .overview(month, filter, categoryName)
             }
     }
