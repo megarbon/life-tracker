@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="area_finance">Finance</string>
+    <string name="area_fitness">Fitness</string>
+    <string name="area_nutrition">Food</string>
+    <string name="area_sleep">Sleep</string>
+</resources>
