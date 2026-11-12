@@ -47,14 +47,16 @@ internal class TrendsViewModel
     ) : ViewModel() {
         private val retry = MutableStateFlow(0)
 
+        // El catch va dentro de flatMapLatest: si estuviera fuera, un error completaría el flujo y Reintentar no
+        // volvería a suscribirse.
         val uiState: StateFlow<TrendsUiState> =
             retry
                 .flatMapLatest {
                     val today = getToday()
                     observeSeries(today.minusDays(WINDOW_DAYS - 1), today.plusDays(1))
-                }.map { series -> series.toUiState() }
-                .catch { emit(TrendsUiState.Error(R.string.nutrition_error_generic)) }
-                .stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), TrendsUiState.Loading)
+                        .map { series -> series.toUiState() }
+                        .catch { emit(TrendsUiState.Error(R.string.nutrition_error_generic)) }
+                }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), TrendsUiState.Loading)
 
         fun onRetry() {
             retry.value += 1

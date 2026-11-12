@@ -66,9 +66,10 @@ internal class SearchViewModel
             query
                 .debounce(DEBOUNCE_MS)
                 .distinctUntilChanged()
-                .flatMapLatest { text -> stateFor(text.trim()) }
-                .catch { emit(SearchUiState.Error(R.string.nutrition_error_generic)) }
-                .stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), SearchUiState.Loading)
+                // catch por consulta: un error no corta el flujo y la siguiente búsqueda vuelve a funcionar.
+                .flatMapLatest { text ->
+                    stateFor(text.trim()).catch { emit(SearchUiState.Error(R.string.nutrition_error_generic)) }
+                }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), SearchUiState.Loading)
 
         fun onQueryChange(text: String) {
             savedStateHandle[KEY_QUERY] = text.take(MAX_QUERY)
