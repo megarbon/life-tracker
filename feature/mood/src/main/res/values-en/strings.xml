@@ -1,6 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="mood_title">Mood</string>
-    <string name="mood_empty_title">Nothing here yet</string>
-    <string name="mood_empty_message">Note how you feel and find out what affects it.</string>
+    <string name="mood_empty_title">Start with how you feel</string>
+    <string name="mood_empty_message">One tap is enough. Over time you will see what helps and what weighs on you.</string>
+
+    <string name="mood_tab_overview">Overview</string>
+    <string name="mood_tab_journal">Journal</string>
+    <string name="mood_tab_calendar">Calendar</string>
+    <string name="mood_add">Log</string>
+
+    <string name="mood_hero_title">Mood today</string>
+    <string name="mood_hero_value">%1$s of 5</string>
+    <string name="mood_hero_missing_value">Not logged</string>
+    <string name="mood_hero_missing">You have not logged anything today yet. One tap is enough.</string>
+    <plurals name="mood_check_ins_today">
+        <item quantity="one">%1$d check-in today</item>
+        <item quantity="other">%1$d check-ins today</item>
+    </plurals>
+    <string name="mood_hero_week">Average of the last 7 days: %1$s</string>
+
+    <string name="mood_quick_title">How are you right now?</string>
+    <string name="mood_quick_hint">One tap saves the check-in. Use Log to add detail.</string>
+    <string name="mood_quick_saved">Check-in saved</string>
+
+    <string name="mood_chart_trend_title">Mood and 7-day average</string>
+    <string name="mood_chart_trend_up">This week you are a bit better than last week (%1$s)</string>
+    <string name="mood_chart_trend_down">This week you are a bit lower than last week (%1$s)</string>
+    <string name="mood_chart_trend_flat">Your mood is steady compared with last week</string>
+    <string name="mood_chart_trend_none">Log a few more days to see the trend</string>
+    <string name="mood_chart_trend_summary">7-day moving average. Average for the period: %1$s of 5.</string>
+
+    <string name="mood_chart_emotions_title">Most frequent emotions</string>
+    <string name="mood_chart_emotions_headline">The most repeated one: %1$s</string>
+    <string name="mood_chart_emotions_summary">Times each emotion appears: %1$s.</string>
+
+    <string name="mood_chart_factors_title">Factor impact</string>
+    <string name="mood_chart_factors_headline">On days with %1$s your average mood changes by %2$s points</string>
+    <string name="mood_chart_factors_note">Compares days with and without each factor; it does not prove cause and effect.</string>
+    <string name="mood_chart_factors_summary">Difference in average mood with and without each factor: %1$s.</string>
+    <string name="mood_chart_empty">There is not enough data in this period for these charts yet.</string>
+
+    <string name="mood_support_title">A few harder days</string>
+    <string name="mood_support_message">Your mood has been lower than usual for several days. It happens to many people and you do not have to carry it alone: talking to someone you trust often helps, and if you need it, your doctor or a mental health professional can support you. If you ever feel you are in danger, call 024 (suicide prevention line in Spain) or 112.</string>
+    <string name="mood_support_dismiss">Hide</string>
+
+    <string name="mood_journal_day_average">Average %1$s</string>
+
+    <string name="mood_calendar_previous">Previous year</string>
+    <string name="mood_calendar_next">Next year</string>
+    <string name="mood_calendar_stats">%1$d days logged · average %2$s</string>
+    <string name="mood_calendar_no_data">No entries this year</string>
+    <string name="mood_calendar_month_summary">%1$s %2$d: %3$d days logged.</string>
+    <string name="mood_calendar_hint">Each square is a day; the more intense, the better the mood.</string>
+
+    <string name="mood_form_title_new">How are you feeling?</string>
+    <string name="mood_form_title_edit">Edit check-in</string>
+    <string name="mood_form_save">Save</string>
+    <string name="mood_form_level_required">Pick how you feel to be able to save</string>
+    <string name="mood_form_detail_show">Add detail</string>
+    <string name="mood_form_detail_hide">Hide detail</string>
+    <string name="mood_form_emotions">Emotions</string>
+    <string name="mood_form_energy">Energy</string>
+    <string name="mood_form_stress">Stress</string>
+    <string name="mood_form_scale_option">%1$s: %2$d of 5</string>
+    <string name="mood_form_factors">Factors</string>
+    <string name="mood_form_note">Note</string>
+    <string name="mood_form_gratitude">Something you are grateful for</string>
+    <string name="mood_form_custom_emotion">Another emotion</string>
+    <string name="mood_form_custom_factor">Another factor</string>
+    <string name="mood_form_add_tag">Add tag</string>
+
+    <string name="mood_detail_edit">Edit</string>
+    <string name="mood_detail_delete">Delete</string>
+    <string name="mood_detail_energy">Energy %1$d of 5</string>
+    <string name="mood_detail_stress">Stress %1$d of 5</string>
+    <string name="mood_detail_gratitude">Gratitude</string>
+    <string name="mood_detail_note">Note</string>
+    <string name="mood_entry_description">%1$s, %2$s</string>
+
+    <string name="mood_level_very_low">Very low</string>
+    <string name="mood_level_low">Low</string>
+    <string name="mood_level_neutral">Okay</string>
+    <string name="mood_level_good">Good</string>
+    <string name="mood_level_very_good">Very good</string>
+
+    <string name="mood_emotion_joy">Joy</string>
+    <string name="mood_emotion_calm">Calm</string>
+    <string name="mood_emotion_gratitude">Gratitude</string>
+    <string name="mood_emotion_motivation">Motivation</string>
+    <string name="mood_emotion_love">Love</string>
+    <string name="mood_emotion_pride">Pride</string>
+    <string name="mood_emotion_tired">Tired</string>
+    <string name="mood_emotion_anxiety">Anxiety</string>
+    <string name="mood_emotion_sadness">Sadness</string>
+    <string name="mood_emotion_anger">Anger</string>
+    <string name="mood_emotion_loneliness">Loneliness</string>
+    <string name="mood_emotion_boredom">Boredom</string>
+
+    <string name="mood_factor_sleep">Sleep</string>
+    <string name="mood_factor_sport">Sport</string>
+    <string name="mood_factor_work">Work</string>
+    <string name="mood_factor_social">Social life</string>
+    <string name="mood_factor_family">Family</string>
+    <string name="mood_factor_health">Health</string>
+    <string name="mood_factor_food">Food</string>
+    <string name="mood_factor_money">Money</string>
+    <string name="mood_factor_nature">Nature</string>
+    <string name="mood_factor_hobbies">Hobbies</string>
+
+    <string name="mood_delete_title">Delete this check-in?</string>
+    <string name="mood_delete_message">You can undo it right after.</string>
+    <string name="mood_saved">Check-in saved</string>
+    <string name="mood_updated">Changes saved</string>
+    <string name="mood_deleted">Check-in deleted</string>
+    <string name="mood_undo">Undo</string>
+    <string name="mood_error_load">We could not load your mood data.</string>
+    <string name="mood_error_save">Could not save. Please try again.</string>
+    <string name="mood_error_delete">Could not delete. Please try again.</string>
+    <string name="mood_retry">Retry</string>
 </resources>
