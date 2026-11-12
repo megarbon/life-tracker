@@ -33,6 +33,12 @@ import com.example.lifet.core.database.nutrition.NutritionWaterEntity
         NutritionMealEntity::class,
         NutritionWaterEntity::class,
         NutritionGoalsEntity::class,
+        com.example.lifet.core.database.fitness.FitnessWorkoutEntity::class,
+        com.example.lifet.core.database.fitness.FitnessSetEntity::class,
+        com.example.lifet.core.database.fitness.FitnessWeightEntity::class,
+        com.example.lifet.core.database.fitness.FitnessStepsEntity::class,
+        com.example.lifet.core.database.fitness.FitnessTemplateEntity::class,
+        com.example.lifet.core.database.fitness.FitnessTemplateExerciseEntity::class,
     ],
     version = LifeTrackerDatabase.VERSION,
     exportSchema = true,
@@ -52,6 +58,8 @@ internal abstract class LifeTrackerDatabase : RoomDatabase() {
     abstract fun nutritionWaterDao(): NutritionWaterDao
 
     abstract fun nutritionGoalsDao(): NutritionGoalsDao
+
+    abstract fun fitnessDao(): com.example.lifet.core.database.fitness.FitnessDao
 
     companion object {
         const val VERSION = 1

@@ -1,6 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="fitness_title">Deporte</string>
-    <string name="fitness_empty_title">Aún no hay nada aquí</string>
-    <string name="fitness_empty_message">Registra entrenos, pasos y peso.</string>
+    <string name="fitness_add">Registrar</string>
+    <string name="fitness_retry">Reintentar</string>
+    <string name="fitness_save">Guardar</string>
+    <string name="fitness_delete">Borrar</string>
+    <string name="fitness_close">Cerrar</string>
+    <string name="fitness_ok">Aceptar</string>
+
+    <!-- Pestañas -->
+    <string name="fitness_tab_summary">Resumen</string>
+    <string name="fitness_tab_history">Historial</string>
+    <string name="fitness_tab_exercises">Ejercicios</string>
+    <string name="fitness_tab_body">Cuerpo</string>
+
+    <!-- Estados -->
+    <string name="fitness_empty_title">Aún no hay entrenos</string>
+    <string name="fitness_empty_message">Registra tu primer entreno de fuerza o cardio y aquí verás tus minutos activos, tus récords y tu progreso.</string>
+    <string name="fitness_empty_cta">Registrar un entreno</string>
+    <string name="fitness_error_load">No se han podido cargar tus datos de deporte.</string>
+    <string name="fitness_error_save">No se ha podido guardar. Inténtalo de nuevo.</string>
+    <string name="fitness_error_invalid">Revisa los datos marcados antes de guardar.</string>
+    <string name="fitness_deleted_workout">Entreno borrado</string>
+    <string name="fitness_deleted_weight">Peso borrado</string>
+    <string name="fitness_deleted_steps">Pasos borrados</string>
+    <string name="fitness_deleted_template">Plantilla borrada</string>
+
+    <!-- Resumen -->
+    <string name="fitness_hero_title">Minutos activos esta semana</string>
+    <string name="fitness_hero_value">%1$d min</string>
+    <string name="fitness_hero_goal">de %1$d min recomendados por la OMS</string>
+    <string name="fitness_hero_remaining">Te faltan %1$d min para llegar al objetivo.</string>
+    <string name="fitness_hero_reached">Has superado el objetivo semanal. Buen trabajo.</string>
+    <plurals name="fitness_hero_workouts">
+        <item quantity="one">%1$d entreno esta semana</item>
+        <item quantity="other">%1$d entrenos esta semana</item>
+    </plurals>
+    <string name="fitness_today_active">Hoy has entrenado %1$d min</string>
+    <string name="fitness_today_rest">Hoy aún no has entrenado</string>
+    <string name="fitness_stat_weight">Peso</string>
+    <string name="fitness_stat_none">Sin registrar</string>
+    <string name="fitness_weight_unit">%1$s kg</string>
+    <string name="fitness_stat_steps">Pasos hoy</string>
+    <string name="fitness_stat_steps_goal">Objetivo %1$s</string>
+    <string name="fitness_stat_records">Récords</string>
+    <string name="fitness_stat_records_hint">batidos en total</string>
+    <string name="fitness_recent_records">Récords recientes</string>
+    <string name="fitness_recent_records_empty">Tus récords aparecerán aquí cuando superes una marca anterior.</string>
+    <string name="fitness_record_one_rep_max">1RM estimado %1$s</string>
+    <plurals name="fitness_record_reps">
+        <item quantity="one">%1$d repetición</item>
+        <item quantity="other">%1$d repeticiones</item>
+    </plurals>
+    <string name="fitness_record_row">%1$s: %2$s, %3$s</string>
+    <string name="fitness_templates">Plantillas</string>
+    <string name="fitness_recent_workouts">Repetir un entreno reciente</string>
+    <string name="fitness_template_use">Usar la plantilla %1$s</string>
+
+    <!-- Gráficas -->
+    <string name="fitness_chart_weeks_title">Minutos activos por semana</string>
+    <string name="fitness_chart_weeks_none">Aún no hay semanas con actividad.</string>
+    <string name="fitness_chart_weeks_up">Esta semana llevas %1$d min más que la media de las 4 anteriores.</string>
+    <string name="fitness_chart_weeks_down">Esta semana llevas %1$d min menos que la media de las 4 anteriores.</string>
+    <string name="fitness_chart_weeks_same">Esta semana vas igual que la media de las 4 anteriores.</string>
+    <string name="fitness_chart_weeks_current">Esta semana llevas %1$d min.</string>
+    <string name="fitness_chart_weeks_summary">Minutos activos por semana, de la más antigua a la actual: %1$s.</string>
+    <string name="fitness_chart_item">%1$s %2$s</string>
+    <string name="fitness_chart_minutes">%1$d min</string>
+    <string name="fitness_chart_exercise_title">Progresión: %1$s</string>
+    <string name="fitness_chart_exercise_reps_title">Repeticiones: %1$s</string>
+    <plurals name="fitness_chart_exercise_up">
+        <item quantity="one">Tu 1RM estimado ha subido %1$s en la última sesión.</item>
+        <item quantity="other">Tu 1RM estimado ha subido %1$s en las últimas %2$d sesiones.</item>
+    </plurals>
+    <string name="fitness_chart_exercise_same">Tu 1RM estimado se mantiene en %1$s.</string>
+    <plurals name="fitness_chart_exercise_down">
+        <item quantity="one">Tu 1RM estimado ha bajado %1$s en la última sesión.</item>
+        <item quantity="other">Tu 1RM estimado ha bajado %1$s en las últimas %2$d sesiones.</item>
+    </plurals>
+    <string name="fitness_chart_exercise_one">Primera sesión registrada: 1RM estimado %1$s.</string>
+    <string name="fitness_chart_reps_up">Has pasado de %1$s a %2$s en una serie.</string>
+    <plurals name="fitness_chart_reps_same">
+        <item quantity="one">Mantienes %1$d repetición en una serie.</item>
+        <item quantity="other">Mantienes %1$d repeticiones en una serie.</item>
+    </plurals>
+    <plurals name="fitness_chart_reps_one">
+        <item quantity="one">Primera sesión registrada: %1$d repetición.</item>
+        <item quantity="other">Primera sesión registrada: %1$d repeticiones.</item>
+    </plurals>
+    <string name="fitness_chart_exercise_summary">%1$s, sesión a sesión: %2$s.</string>
+    <string name="fitness_chart_weight_title">Peso y media de 7 días</string>
+    <string name="fitness_chart_weight_none">Registra tu peso para ver su evolución.</string>
+    <string name="fitness_chart_weight_current">Tu media de 7 días es %1$s.</string>
+    <string name="fitness_chart_weight_down">Tu media de 7 días ha bajado %1$s en el último mes.</string>
+    <string name="fitness_chart_weight_up">Tu media de 7 días ha subido %1$s en el último mes.</string>
+    <string name="fitness_chart_weight_same">Tu media de 7 días se mantiene estable en el último mes.</string>
+    <string name="fitness_chart_weight_summary">Media de 7 días del peso, de la fecha más antigua a la más reciente: %1$s.</string>
+    <string name="fitness_heatmap_title">Actividad de las últimas semanas</string>
+    <plurals name="fitness_heatmap_headline">
+        <item quantity="one">Has entrenado %1$d día en los últimos %2$d meses.</item>
+        <item quantity="other">Has entrenado %1$d días en los últimos %2$d meses.</item>
+    </plurals>
+    <plurals name="fitness_heatmap_month_summary">
+        <item quantity="one">%1$s: %2$d día con actividad.</item>
+        <item quantity="other">%1$s: %2$d días con actividad.</item>
+    </plurals>
+
+    <!-- Historial -->
+    <string name="fitness_history_empty">Aún no hay entrenos en tu historial.</string>
+    <string name="fitness_week_total">%1$d min</string>
+    <string name="fitness_history_week">Semana del %1$s · %2$s</string>
+    <string name="fitness_workout_default_title">Entreno</string>
+    <string name="fitness_workout_meta_cardio">%1$s · %2$d min</string>
+    <plurals name="fitness_workout_exercises">
+        <item quantity="one">%1$d ejercicio</item>
+        <item quantity="other">%1$d ejercicios</item>
+    </plurals>
+    <plurals name="fitness_workout_sets">
+        <item quantity="one">%1$d serie</item>
+        <item quantity="other">%1$d series</item>
+    </plurals>
+    <string name="fitness_workout_meta_strength">%1$s · %2$s · %3$d min</string>
+    <string name="fitness_workout_distance">%1$s km</string>
+    <string name="fitness_workout_kcal">%1$s kcal</string>
+    <string name="fitness_workout_record_badge">Récord</string>
+    <string name="fitness_workout_midnight">Cruza la medianoche</string>
+
+    <!-- Ejercicios -->
+    <string name="fitness_exercises_empty">Los ejercicios de fuerza que registres aparecerán aquí con su progresión.</string>
+    <plurals name="fitness_exercise_sessions_count">
+        <item quantity="one">%1$d sesión</item>
+        <item quantity="other">%1$d sesiones</item>
+    </plurals>
+    <string name="fitness_exercise_meta">%1$s · última %2$s</string>
+    <string name="fitness_exercise_best_load">Mejor 1RM estimado: %1$s</string>
+    <plurals name="fitness_exercise_best_reps">
+        <item quantity="one">Mejor serie: %1$d repetición</item>
+        <item quantity="other">Mejor serie: %1$d repeticiones</item>
+    </plurals>
+    <string name="fitness_exercise_sessions">Últimas sesiones</string>
+    <string name="fitness_exercise_session_row">%1$s: %2$s</string>
+    <string name="fitness_exercise_set_load">%1$d × %2$s</string>
+    <string name="fitness_exercise_set_bodyweight">%1$d × peso corporal</string>
+    <string name="fitness_exercise_records">Récords de este ejercicio</string>
+    <string name="fitness_exercise_missing">Este ejercicio ya no tiene sesiones registradas.</string>
+
+    <!-- Cuerpo -->
+    <string name="fitness_body_weight_header">Peso corporal</string>
+    <string name="fitness_body_weight_add">Registrar peso</string>
+    <string name="fitness_body_weight_empty">Aún no has registrado tu peso.</string>
+    <string name="fitness_body_steps_header">Pasos</string>
+    <string name="fitness_body_steps_add">Anotar pasos</string>
+    <string name="fitness_body_steps_empty">Anota tus pasos a mano. Más adelante podrán llegar solos desde Health Connect.</string>
+    <string name="fitness_body_steps_week">Media de esta semana: %1$s pasos</string>
+    <string name="fitness_body_row">%1$s · %2$s</string>
+    <string name="fitness_body_row_steps">%1$s · %2$s pasos</string>
+    <string name="fitness_show_more">Mostrar más</string>
+
+    <!-- Formulario de entreno -->
+    <string name="fitness_sheet_add">Registrar entreno</string>
+    <string name="fitness_sheet_edit">Editar entreno</string>
+    <string name="fitness_field_title">Título (opcional)</string>
+    <string name="fitness_field_duration">Duración (min)</string>
+    <string name="fitness_field_distance">Distancia (km, opcional)</string>
+    <string name="fitness_field_energy">Energía (kcal, opcional)</string>
+    <string name="fitness_field_note">Nota (opcional)</string>
+    <string name="fitness_field_date">Fecha: %1$s</string>
+    <string name="fitness_field_start">Hora de inicio: %1$s</string>
+    <string name="fitness_save_as_template">Guardar como plantilla</string>
+    <string name="fitness_exercise_add">Añadir ejercicio</string>
+    <string name="fitness_exercise_name">Ejercicio %1$d</string>
+    <string name="fitness_exercise_remove">Quitar el ejercicio %1$d</string>
+    <string name="fitness_exercise_suggestions">Tus ejercicios</string>
+    <string name="fitness_set_add">Añadir serie</string>
+    <string name="fitness_set_reps">Reps</string>
+    <string name="fitness_set_weight">Kg</string>
+    <string name="fitness_set_label">Serie %1$d</string>
+    <string name="fitness_set_remove">Quitar la serie %1$d</string>
+    <string name="fitness_set_weight_hint">Kg vacíos = peso corporal</string>
+
+    <!-- Tipos de entreno -->
+    <string name="fitness_type_strength">Fuerza</string>
+    <string name="fitness_type_run">Correr</string>
+    <string name="fitness_type_walk">Caminar</string>
+    <string name="fitness_type_cycling">Bici</string>
+    <string name="fitness_type_swim">Natación</string>
+    <string name="fitness_type_hike">Senderismo</string>
+    <string name="fitness_type_row">Remo</string>
+    <string name="fitness_type_other">Otro</string>
+
+    <!-- Formularios de peso y pasos -->
+    <string name="fitness_weight_sheet_add">Registrar peso</string>
+    <string name="fitness_weight_sheet_edit">Editar peso</string>
+    <string name="fitness_weight_field">Peso (kg)</string>
+    <string name="fitness_weight_note">Nota (opcional)</string>
+    <string name="fitness_steps_sheet_add">Anotar pasos</string>
+    <string name="fitness_steps_sheet_edit">Editar pasos</string>
+    <string name="fitness_steps_field">Pasos</string>
+
+    <!-- Errores de campo -->
+    <string name="fitness_issue_duration_missing">Indica cuánto duró.</string>
+    <string name="fitness_issue_duration_invalid">La duración debe ser de 1 a 1.440 minutos.</string>
+    <string name="fitness_issue_distance_invalid">La distancia no es válida.</string>
+    <string name="fitness_issue_energy_invalid">Las kcal no son válidas.</string>
+    <string name="fitness_issue_exercise_name_missing">Ponle nombre al ejercicio.</string>
+    <string name="fitness_issue_exercise_without_sets">Añade al menos una serie.</string>
+    <string name="fitness_issue_set_invalid">Revisa las repeticiones y los kilos de las series.</string>
+    <string name="fitness_issue_weight_missing">Indica tu peso.</string>
+    <string name="fitness_issue_weight_invalid">El peso debe estar entre 20 y 500 kg.</string>
+    <string name="fitness_issue_steps_missing">Indica los pasos.</string>
+    <string name="fitness_issue_steps_invalid">Los pasos no son válidos.</string>
+    <string name="fitness_issue_template_needs_title">Ponle un título para guardarlo como plantilla.</string>
+
 </resources>
