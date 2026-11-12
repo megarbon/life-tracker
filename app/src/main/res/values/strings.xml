@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Life Tracker</string>
+    <string name="tab_today">Hoy</string>
+    <string name="tab_nutrition">Comida</string>
+    <string name="tab_fitness">Deporte</string>
+    <string name="tab_finance">Finanzas</string>
+    <string name="tab_more">Más</string>
+    <string name="more_title">Más</string>
+    <string name="more_quit">Dejar de fumar y beber</string>
+    <string name="more_work">Trabajo</string>
+    <string name="more_mood">Ánimo</string>
+    <string name="more_insights">Insights</string>
+    <string name="more_settings">Ajustes</string>
 </resources>
