@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard_title">Hoy</string>
+    <string name="dashboard_empty_message">Aún no hay registros. Cuando añadas finanzas, deporte, comida o sueño, tu resumen aparecerá aquí.</string>
+</resources>
