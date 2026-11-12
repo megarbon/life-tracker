@@ -37,7 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -54,6 +53,7 @@ import com.example.lifet.core.model.nutrition.MealType
 import com.example.lifet.feature.nutrition.R
 import com.example.lifet.feature.nutrition.ui.BackButton
 import com.example.lifet.feature.nutrition.ui.labelRes
+import com.example.lifet.feature.nutrition.ui.rememberEffectMessages
 import com.example.lifet.feature.nutrition.ui.rememberNutritionFormatter
 
 internal class FoodDetailCallbacks(
@@ -70,13 +70,13 @@ internal fun FoodDetailRoute(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
-    val context = LocalContext.current
+    val messages = rememberEffectMessages(R.string.nutrition_error_save)
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
                 is FoodDetailEffect.Added -> callbacks.onAdded(effect.id)
                 FoodDetailEffect.Deleted -> callbacks.onBack()
-                is FoodDetailEffect.ShowError -> snackbar.showSnackbar(context.getString(effect.messageRes))
+                is FoodDetailEffect.ShowError -> snackbar.showSnackbar(messages.get(effect.messageRes))
             }
         }
     }

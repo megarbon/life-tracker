@@ -24,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,6 +35,7 @@ import com.example.lifet.core.designsystem.theme.MinTouchTarget
 import com.example.lifet.core.model.nutrition.NutritionGoals
 import com.example.lifet.feature.nutrition.R
 import com.example.lifet.feature.nutrition.ui.BackButton
+import com.example.lifet.feature.nutrition.ui.rememberEffectMessages
 import com.example.lifet.feature.nutrition.ui.rememberNutritionFormatter
 
 @Composable
@@ -46,12 +46,12 @@ internal fun GoalsRoute(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
-    val context = LocalContext.current
+    val messages = rememberEffectMessages(R.string.nutrition_error_save)
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
                 GoalsEffect.Saved -> onBack()
-                is GoalsEffect.ShowError -> snackbar.showSnackbar(context.getString(effect.messageRes))
+                is GoalsEffect.ShowError -> snackbar.showSnackbar(messages.get(effect.messageRes))
             }
         }
     }

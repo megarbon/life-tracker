@@ -22,7 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,6 +31,7 @@ import com.example.lifet.core.designsystem.theme.LifeTrackerTheme
 import com.example.lifet.core.designsystem.theme.MinTouchTarget
 import com.example.lifet.feature.nutrition.R
 import com.example.lifet.feature.nutrition.ui.BackButton
+import com.example.lifet.feature.nutrition.ui.rememberEffectMessages
 
 @Composable
 internal fun CustomFoodRoute(
@@ -41,12 +41,12 @@ internal fun CustomFoodRoute(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
-    val context = LocalContext.current
+    val messages = rememberEffectMessages(R.string.nutrition_error_save)
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
                 CustomFoodEffect.Saved -> onBack()
-                is CustomFoodEffect.ShowError -> snackbar.showSnackbar(context.getString(effect.messageRes))
+                is CustomFoodEffect.ShowError -> snackbar.showSnackbar(messages.get(effect.messageRes))
             }
         }
     }

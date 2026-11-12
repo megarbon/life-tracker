@@ -33,7 +33,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -51,6 +50,7 @@ import com.example.lifet.core.ui.icon
 import com.example.lifet.feature.nutrition.R
 import com.example.lifet.feature.nutrition.add.QuickAddActions
 import com.example.lifet.feature.nutrition.add.QuickAddSheetRoute
+import com.example.lifet.feature.nutrition.ui.rememberEffectMessages
 import java.time.LocalDate
 
 @Composable
@@ -65,8 +65,17 @@ internal fun DiaryRoute(
     val date by viewModel.date.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val haptic = LocalHapticFeedback.current
-    val context = LocalContext.current
     val undoLabel = stringResource(R.string.nutrition_undo)
+    val messages =
+        rememberEffectMessages(
+            R.string.nutrition_water_added,
+            R.string.nutrition_water_removed,
+            R.string.nutrition_repeated,
+            R.string.nutrition_entry_deleted,
+            R.string.nutrition_entry_added,
+            R.string.nutrition_nothing_yesterday,
+            R.string.nutrition_error_save,
+        )
 
     LaunchedEffect(addedIds) {
         if (addedIds.isNotEmpty()) {
@@ -79,13 +88,13 @@ internal fun DiaryRoute(
             when (effect) {
                 is DiaryEffect.ShowUndo -> {
                     haptic.performHapticFeedback(HapticFeedbackType.Confirm)
-                    snackbarHostState.showUndo(context.getString(effect.messageRes), undoLabel) {
+                    snackbarHostState.showUndo(messages.get(effect.messageRes), undoLabel) {
                         viewModel.onAction(DiaryAction.Undo(effect.undo))
                     }
                 }
 
                 is DiaryEffect.ShowError -> {
-                    snackbarHostState.showSnackbar(context.getString(effect.messageRes))
+                    snackbarHostState.showSnackbar(messages.get(effect.messageRes))
                 }
             }
         }
