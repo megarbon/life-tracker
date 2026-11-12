@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_entry">Opciones de desarrollador</string>
+    <string name="dev_title">Desarrollador</string>
+    <string name="dev_gallery_title">Galería de componentes</string>
+    <string name="dev_open_gallery">Abrir galería de componentes</string>
+    <string name="dev_demo_title">Datos de demostración</string>
+    <string name="dev_demo_registered">Áreas con generador: %1$d</string>
+    <string name="dev_load_scenario">Cargar %1$s</string>
+    <string name="dev_clear_all">Borrar todos los datos de demo</string>
+    <string name="dev_working">Trabajando…</string>
+    <string name="dev_done">Hecho</string>
+    <string name="dev_failed">Error: %1$s</string>
+</resources>

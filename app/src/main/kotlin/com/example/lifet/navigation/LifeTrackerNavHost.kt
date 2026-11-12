@@ -2,11 +2,8 @@ package com.example.lifet.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material.icons.rounded.ShoppingCart
-import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.MoreHoriz
+import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
@@ -27,6 +24,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.lifet.R
+import com.example.lifet.core.model.Area
+import com.example.lifet.core.ui.icon
+import com.example.lifet.dev.devMoreEntries
+import com.example.lifet.dev.devOptionsGraph
 import com.example.lifet.feature.dashboard.navigation.DashboardDestination
 import com.example.lifet.feature.dashboard.navigation.dashboardGraph
 import com.example.lifet.feature.finance.navigation.FinanceDestination
@@ -53,11 +54,11 @@ private enum class TopLevelTab(
     val icon: ImageVector,
     @param:StringRes val label: Int,
 ) {
-    TODAY(DashboardDestination, DashboardDestination::class, Icons.Rounded.Home, R.string.tab_today),
-    NUTRITION(NutritionDestination, NutritionDestination::class, Icons.Rounded.Favorite, R.string.tab_nutrition),
-    FITNESS(FitnessDestination, FitnessDestination::class, Icons.Rounded.Star, R.string.tab_fitness),
-    FINANCE(FinanceDestination, FinanceDestination::class, Icons.Rounded.ShoppingCart, R.string.tab_finance),
-    MORE(MoreDestination, MoreDestination::class, Icons.Rounded.Menu, R.string.tab_more),
+    TODAY(DashboardDestination, DashboardDestination::class, Icons.Rounded.Today, R.string.tab_today),
+    NUTRITION(NutritionDestination, NutritionDestination::class, Area.NUTRITION.icon, R.string.tab_nutrition),
+    FITNESS(FitnessDestination, FitnessDestination::class, Area.FITNESS.icon, R.string.tab_fitness),
+    FINANCE(FinanceDestination, FinanceDestination::class, Area.FINANCE.icon, R.string.tab_finance),
+    MORE(MoreDestination, MoreDestination::class, Icons.Rounded.MoreHoriz, R.string.tab_more),
 }
 
 private val moreEntries =
@@ -67,7 +68,7 @@ private val moreEntries =
         MoreEntry(R.string.more_work, WorkDestination),
         MoreEntry(R.string.more_insights, InsightsDestination),
         MoreEntry(R.string.more_settings, SettingsDestination),
-    )
+    ) + devMoreEntries
 
 /**
  * Único sitio que conoce todas las features. Cada feature expone su `xGraph()`; así
@@ -116,6 +117,7 @@ fun LifeTrackerNavHost(modifier: Modifier = Modifier) {
             quitGraph()
             workGraph()
             insightsGraph()
+            devOptionsGraph(navController)
             settingsGraph()
             composable<MoreDestination> {
                 MoreScreen(
