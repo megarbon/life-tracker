@@ -21,6 +21,9 @@ public object MoodRules {
     /** Días bajos seguidos a partir de los cuales se ofrecen recursos de apoyo. */
     public const val LOW_STREAK_DAYS: Int = 5
 
+    /** Ventana (en días, incluido hoy) en la que se busca esa racha. */
+    public const val LOW_STREAK_LOOKBACK_DAYS: Int = 7
+
     /** Días con y sin un factor necesarios para comparar su impacto. */
     public const val MIN_FACTOR_DAYS: Int = 3
 

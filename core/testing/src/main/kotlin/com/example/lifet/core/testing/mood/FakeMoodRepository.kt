@@ -62,6 +62,18 @@ public class FakeMoodRepository(
         return if (exists) AppResult.Success(Unit) else AppResult.Failure(AppError.NotFound)
     }
 
+    override suspend fun saveAll(entries: List<MoodEntry>): AppResult<Unit> {
+        if (failWrites) return AppResult.Failure(AppError.Storage)
+        entries.forEach { save(it.copy(id = 0)) }
+        return AppResult.Success(Unit)
+    }
+
+    override suspend fun clear(): AppResult<Unit> {
+        if (failWrites) return AppResult.Failure(AppError.Storage)
+        entries.value = emptyList()
+        return AppResult.Success(Unit)
+    }
+
     override suspend fun tagHistory(): AppResult<MoodTagHistory> {
         val sorted = entries.value.sortedByDescending(MoodEntry::instant)
         return AppResult.Success(

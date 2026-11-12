@@ -60,6 +60,15 @@ internal class DefaultMoodRepository
                 }
             }
 
+        override suspend fun saveAll(entries: List<MoodEntry>): AppResult<Unit> =
+            runCatchingApp(onError = { AppError.Storage }) {
+                val now = clock.instant()
+                withContext(io) { dao.insertAll(entries.map { it.toEntity(updatedAt = now) }) }
+            }
+
+        override suspend fun clear(): AppResult<Unit> =
+            runCatchingApp(onError = { AppError.Storage }) { withContext(io) { dao.deleteAll() } }
+
         override suspend fun tagHistory(): AppResult<MoodTagHistory> =
             runCatchingApp(onError = { AppError.Storage }) {
                 withContext(io) {

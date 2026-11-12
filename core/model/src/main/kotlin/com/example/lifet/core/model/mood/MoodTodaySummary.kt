@@ -7,7 +7,7 @@ package com.example.lifet.core.model.mood
  * @property checkInsToday número de check-ins de hoy.
  * @property weekAverage media de los últimos 7 días con registro (incluido hoy) o `null`.
  * @property lastLevel nivel del último check-in de hoy.
- * @property lowStreakDays días bajos seguidos que terminan hoy o ayer (0 si no hay racha).
+ * @property lowStreakDays racha más larga de días bajos seguidos en la última semana (0 si no hay).
  */
 public data class MoodTodaySummary(
     public val averageToday: Double?,

@@ -117,13 +117,13 @@ class MoodStatsTest {
     }
 
     @Test
-    fun `low streak counts from yesterday when today has no check-in and breaks on gaps`() {
-        val daily =
-            (1L..5L).associate { today.minusDays(it) to 2.0 } +
-                mapOf(today.minusDays(7) to 1.0)
+    fun `recent low streak survives a better day today but not gaps or old streaks`() {
+        val lowWeek = (1L..5L).associate { today.minusDays(it) to 2.0 }
 
-        assertEquals(5, MoodStats.lowStreak(daily, today))
-        assertEquals(0, MoodStats.lowStreak(daily + (today to 4.0), today))
+        assertEquals(5, MoodStats.recentLowStreak(lowWeek, today))
+        assertEquals(5, MoodStats.recentLowStreak(lowWeek + (today to 4.0), today))
+        assertEquals(2, MoodStats.recentLowStreak(lowWeek - today.minusDays(3), today))
+        assertEquals(0, MoodStats.recentLowStreak(lowWeek, today.plusDays(7)))
     }
 
     @Test

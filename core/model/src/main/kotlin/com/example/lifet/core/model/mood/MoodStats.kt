@@ -119,17 +119,23 @@ public object MoodStats {
     }
 
     /**
-     * Días seguidos con media por debajo de [MoodRules.LOW_DAY_THRESHOLD] que terminan en [today] o, si hoy
-     * aún no hay registro, en ayer. Un día sin datos corta la racha: no se presupone cómo estuvo.
+     * Racha más larga de días seguidos con media por debajo de [MoodRules.LOW_DAY_THRESHOLD] dentro de los
+     * últimos [MoodRules.LOW_STREAK_LOOKBACK_DAYS] días (incluido [today]). Mirar una ventana, y no sólo la racha
+     * que acaba hoy, evita que un único check-in algo mejor retire de golpe la tarjeta de apoyo.
+     * Un día sin datos corta la racha: no se presupone cómo estuvo.
      */
-    public fun lowStreak(
+    public fun recentLowStreak(
         daily: Map<LocalDate, Double>,
         today: LocalDate,
     ): Int {
-        val start = if (daily.containsKey(today)) today else today.minusDays(1)
-        return generateSequence(start) { it.minusDays(1) }
-            .takeWhile { day -> daily[day]?.let { it < MoodRules.LOW_DAY_THRESHOLD } == true }
-            .count()
+        var longest = 0
+        var current = 0
+        for (offset in MoodRules.LOW_STREAK_LOOKBACK_DAYS - 1 downTo 0) {
+            val average = daily[today.minusDays(offset.toLong())]
+            current = if (average != null && average < MoodRules.LOW_DAY_THRESHOLD) current + 1 else 0
+            longest = maxOf(longest, current)
+        }
+        return longest
     }
 
     /** Resumen para la pantalla "Hoy" a partir de los check-ins recientes (bastan los últimos 14 días). */
@@ -144,7 +150,7 @@ public object MoodStats {
             checkInsToday = todayEntries.size,
             weekAverage = movingAverage(daily, today),
             lastLevel = todayEntries.lastOrNull()?.level,
-            lowStreakDays = lowStreak(daily, today),
+            lowStreakDays = recentLowStreak(daily, today),
         )
     }
 }

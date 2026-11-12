@@ -35,5 +35,11 @@ public interface MoodRepository {
 
     public suspend fun delete(id: Long): AppResult<Unit>
 
+    /** Inserta varias entradas de golpe (importación, datos de demo). Los ids se asignan al insertar. */
+    public suspend fun saveAll(entries: List<MoodEntry>): AppResult<Unit>
+
+    /** Borra todos los check-ins. */
+    public suspend fun clear(): AppResult<Unit>
+
     public suspend fun tagHistory(): AppResult<MoodTagHistory>
 }
