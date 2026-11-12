@@ -21,4 +21,15 @@
     <string name="dashboard_finance_empty">Log your first expense to see the summary</string>
     <string name="dashboard_finance_today">You spent %1$s today</string>
     <string name="dashboard_finance_today_budget">You spent %1$s today · %2$s of budget left</string>
+    <string name="dashboard_water_saved">+250 ml of water</string>
+    <string name="dashboard_water_failed">Could not save the water</string>
+    <string name="dashboard_nutrition_title">Nutrition</string>
+    <string name="dashboard_nutrition_kcal">%1$s kcal</string>
+    <string name="dashboard_nutrition_goal">of %1$s kcal</string>
+    <string name="dashboard_nutrition_remaining">%1$s kcal left</string>
+    <string name="dashboard_nutrition_over">%1$s kcal over your goal</string>
+    <string name="dashboard_nutrition_water">Water: %1$s ml</string>
+    <string name="dashboard_nutrition_add_water">Add 250 ml of water</string>
+    <string name="dashboard_nutrition_open">Open Nutrition</string>
+    <string name="dashboard_nutrition_progress">%1$d %% of your calorie goal</string>
 </resources>

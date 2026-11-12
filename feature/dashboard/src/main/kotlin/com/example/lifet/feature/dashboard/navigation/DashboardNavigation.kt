@@ -15,6 +15,13 @@ public data object DashboardDestination
 public fun NavGraphBuilder.dashboardGraph(
     onOpenMood: () -> Unit,
     onOpenFinance: () -> Unit,
+    onOpenNutrition: () -> Unit,
 ) {
-    composable<DashboardDestination> { DashboardRoute(onOpenMood = onOpenMood, onOpenFinance = onOpenFinance) }
+    composable<DashboardDestination> {
+        DashboardRoute(
+            onOpenMood = onOpenMood,
+            onOpenFinance = onOpenFinance,
+            onOpenNutrition = onOpenNutrition,
+        )
+    }
 }

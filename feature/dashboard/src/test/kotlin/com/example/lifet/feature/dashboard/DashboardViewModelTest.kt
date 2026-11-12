@@ -5,11 +5,15 @@ import com.example.lifet.core.domain.GetTodayUseCase
 import com.example.lifet.core.domain.finance.ObserveFinanceTodaySummary
 import com.example.lifet.core.domain.mood.ObserveMoodTodaySummary
 import com.example.lifet.core.domain.mood.SaveMoodEntry
+import com.example.lifet.core.domain.nutrition.AddWater
+import com.example.lifet.core.domain.nutrition.ObserveNutritionTodaySummary
 import com.example.lifet.core.model.mood.MoodLevel
 import com.example.lifet.core.testing.MainDispatcherRule
 import com.example.lifet.core.testing.TestClock
 import com.example.lifet.core.testing.finance.InMemoryFinanceRepository
 import com.example.lifet.core.testing.mood.FakeMoodRepository
+import com.example.lifet.core.testing.nutrition.FakeNutritionGoalsRepository
+import com.example.lifet.core.testing.nutrition.FakeNutritionLogRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -26,13 +30,19 @@ class DashboardViewModelTest {
     private fun viewModel(
         clock: Clock,
         mood: FakeMoodRepository = FakeMoodRepository(),
-    ): DashboardViewModel =
-        DashboardViewModel(
-            getToday = GetTodayUseCase(clock),
+    ): DashboardViewModel {
+        val getToday = GetTodayUseCase(clock)
+        val nutritionLog = FakeNutritionLogRepository()
+        return DashboardViewModel(
+            getToday = getToday,
             observeMood = ObserveMoodTodaySummary(mood, clock),
             observeFinance = ObserveFinanceTodaySummary(InMemoryFinanceRepository(), clock),
+            observeNutrition =
+                ObserveNutritionTodaySummary(nutritionLog, FakeNutritionGoalsRepository(), getToday),
             saveMood = SaveMoodEntry(mood, clock),
+            addWater = AddWater(nutritionLog, clock),
         )
+    }
 
     @Test
     fun `emits Loading and then Success with today's date`() =
@@ -76,6 +86,24 @@ class DashboardViewModelTest {
                 val updated = awaitItem() as DashboardUiState.Success
                 assertEquals(1, updated.mood.checkInsToday)
                 assertEquals(MoodLevel.GOOD.value.toDouble(), updated.mood.averageToday)
+            }
+        }
+
+    @Test
+    fun `adding a glass of water is reflected in the summary and announced`() =
+        runTest {
+            val viewModel = viewModel(TestClock.fixed("2026-03-10T09:00:00Z"))
+
+            viewModel.uiState.test {
+                skipItems(1)
+                assertEquals(0, (awaitItem() as DashboardUiState.Success).nutrition.waterMl)
+
+                viewModel.messages.test {
+                    viewModel.addGlassOfWater()
+                    assertEquals(DashboardMessage.WATER_SAVED, awaitItem())
+                }
+
+                assertEquals(250, (awaitItem() as DashboardUiState.Success).nutrition.waterMl)
             }
         }
 

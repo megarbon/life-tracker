@@ -32,6 +32,9 @@ import com.example.lifet.core.model.Money
 import com.example.lifet.core.model.finance.FinanceTodaySummary
 import com.example.lifet.core.model.mood.MoodLevel
 import com.example.lifet.core.model.mood.MoodTodaySummary
+import com.example.lifet.core.model.nutrition.Nutrients
+import com.example.lifet.core.model.nutrition.NutritionGoals
+import com.example.lifet.core.model.nutrition.NutritionTodaySummary
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -40,22 +43,29 @@ import java.time.format.FormatStyle
 internal fun DashboardRoute(
     onOpenMood: () -> Unit,
     onOpenFinance: () -> Unit,
+    onOpenNutrition: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
-    val saved = stringResource(R.string.dashboard_mood_saved)
-    val failed = stringResource(R.string.dashboard_mood_failed)
+    val texts = DashboardMessageTexts.rememberTexts()
     LaunchedEffect(viewModel) {
         viewModel.messages.collect { message ->
-            snackbar.showSnackbar(if (message == DashboardMessage.MOOD_SAVED) saved else failed)
+            snackbar.showSnackbar(texts.textFor(message))
         }
     }
     DashboardScreen(
         state = state,
         snackbar = snackbar,
-        actions = DashboardActions(onOpenMood, onOpenFinance, viewModel::checkIn),
+        actions =
+            DashboardActions(
+                onOpenMood = onOpenMood,
+                onOpenFinance = onOpenFinance,
+                onOpenNutrition = onOpenNutrition,
+                onCheckIn = viewModel::checkIn,
+                onAddWater = viewModel::addGlassOfWater,
+            ),
         modifier = modifier,
     )
 }
@@ -64,7 +74,9 @@ internal fun DashboardRoute(
 internal data class DashboardActions(
     val onOpenMood: () -> Unit,
     val onOpenFinance: () -> Unit,
+    val onOpenNutrition: () -> Unit,
     val onCheckIn: (MoodLevel) -> Unit,
+    val onAddWater: () -> Unit,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -108,6 +120,7 @@ private fun DashboardContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         LTSectionHeader(stringResource(R.string.dashboard_section_areas))
+        NutritionTodayCard(summary = state.nutrition, onOpen = actions.onOpenNutrition, onAddWater = actions.onAddWater)
         FinanceTodayCard(summary = state.finance, onClick = actions.onOpenFinance)
         MoodTodayCard(summary = state.mood, onOpen = actions.onOpenMood, onCheckIn = actions.onCheckIn)
     }
@@ -131,9 +144,10 @@ private fun DashboardScreenPreview() {
                     today = LocalDate.parse("2026-03-10"),
                     mood = MoodTodaySummary(null, 0, null, null, 0),
                     finance = FinanceTodaySummary(eur, Money(0, eur), Money(0, eur), null, hasData = false),
+                    nutrition = previewNutrition(),
                 ),
             snackbar = remember { SnackbarHostState() },
-            actions = DashboardActions({}, {}, {}),
+            actions = DashboardActions({}, {}, {}, {}, {}),
         )
     }
 }
@@ -145,7 +159,7 @@ private fun DashboardScreenLoadingPreview() {
         DashboardScreen(
             state = DashboardUiState.Loading,
             snackbar = remember { SnackbarHostState() },
-            actions = DashboardActions({}, {}, {}),
+            actions = DashboardActions({}, {}, {}, {}, {}),
         )
     }
 }
