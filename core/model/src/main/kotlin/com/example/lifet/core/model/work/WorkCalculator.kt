@@ -27,6 +27,12 @@ public class WorkCalculator(
         data.shifts.filter { it.isForgotten(now) }.sortedBy { it.start }
     }
 
+    /** Jornada en curso: abierta, ya empezada y no olvidada. Si hubiera varias, la más reciente. */
+    public fun currentShift(): WorkShift? = activeShift
+
+    /** Jornadas abiertas desde hace tanto que se dan por olvidadas, de la más antigua a la más reciente. */
+    public fun forgotten(): List<WorkShift> = forgottenShifts
+
     public fun todaySummary(): WorkTodaySummary {
         val active = activeShift
         return WorkTodaySummary(
