@@ -28,13 +28,13 @@ public object LifeTrackerTheme {
 }
 
 /**
- * Tema de la app: Material 3 con color dinámico (Android 12+) y paleta de marca como respaldo.
- * Los colores de área no son dinámicos a propósito: mantienen su significado semántico.
+ * Tema de la app: paleta de marca estilo lista agrupada de iOS. El color dinámico (Android 12+) es opcional y viene
+ * apagado para mantener la identidad visual (ver docs/DESIGN_GUIDE.md). Los colores de área nunca son dinámicos.
  */
 @Composable
 public fun LifeTrackerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val colorScheme =
@@ -60,6 +60,7 @@ public fun LifeTrackerTheme(
         MaterialTheme(
             colorScheme = colorScheme,
             typography = LifeTrackerTypography,
+            shapes = LifeTrackerShapes,
             content = content,
         )
     }
