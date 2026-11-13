@@ -117,6 +117,29 @@ class WorkShiftTest {
     }
 
     @Test
+    fun `closing a forgotten shift afterwards drops and trims the breaks that fall after the chosen end`() {
+        val forgotten =
+            shift(
+                "a",
+                "2026-03-10T09:00",
+                null,
+                breaks =
+                    listOf(
+                        pause("2026-03-10T09:30", "2026-03-10T10:30"),
+                        pause("2026-03-10T13:00", "2026-03-10T13:30"),
+                        pause("2026-03-10T15:00", null),
+                    ),
+            )
+
+        val closed = forgotten.closedAt(at("2026-03-10T10:00"))
+
+        assertEquals(at("2026-03-10T10:00"), closed.end)
+        assertEquals(1, closed.breaks.size)
+        assertEquals(at("2026-03-10T10:00"), closed.breaks.single().end)
+        assertTrue(ShiftValidator.validate(closed, emptyList(), at("2026-03-12T12:00")).isEmpty())
+    }
+
+    @Test
     fun `the day follows the zone the shift was recorded in`() {
         val tokyo = ZoneId.of("Asia/Tokyo")
         val shift = shift("a", "2026-03-11T08:00", "2026-03-11T16:00", zone = tokyo)

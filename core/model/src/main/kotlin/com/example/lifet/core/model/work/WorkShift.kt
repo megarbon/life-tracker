@@ -77,6 +77,17 @@ public data class WorkShift(
     public fun withBreakEnded(at: Instant): WorkShift =
         if (openBreak == null) this else copy(breaks = breaks.map { if (it.isOpen) it.copy(end = at) else it })
 
-    /** Cierra la jornada en [at] (y la pausa abierta, si la hay, para que no quede una pausa sin fin). */
-    public fun closedAt(at: Instant): WorkShift = withBreakEnded(at).copy(end = at)
+    /**
+     * Cierra la jornada en [at]. Las pausas que empezaban a esa hora o después se descartan y las que terminaban más
+     * tarde (o seguían abiertas) se recortan a [at]: cerrar a posteriori una jornada olvidada nunca deja una pausa
+     * fuera de su jornada.
+     */
+    public fun closedAt(at: Instant): WorkShift =
+        copy(
+            end = at,
+            breaks =
+                breaks
+                    .filter { it.start < at }
+                    .map { pause -> if (pause.end == null || pause.end > at) pause.copy(end = at) else pause },
+        )
 }
