@@ -1,6 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="quit_title">Dejar hábitos</string>
-    <string name="quit_empty_title">Aún no hay nada aquí</string>
-    <string name="quit_empty_message">Sigue tus días sin fumar o beber, sin culpa.</string>
+    <string name="quit_add">Registrar</string>
+    <string name="quit_retry">Reintentar</string>
+    <string name="quit_save">Guardar</string>
+    <string name="quit_delete">Borrar</string>
+    <string name="quit_ok">Aceptar</string>
+    <string name="quit_edit_habit">Editar hábito</string>
+
+    <!-- Pestañas -->
+    <string name="quit_tab_summary">Resumen</string>
+    <string name="quit_tab_milestones">Hitos</string>
+    <string name="quit_tab_history">Historial</string>
+
+    <!-- Estados -->
+    <string name="quit_empty_title">Empieza a tu ritmo</string>
+    <string name="quit_empty_message">Aquí verás cuánto tiempo llevas sin fumar o sin beber, lo que has ahorrado y cómo van tus antojos. Sin presión y sin culpa: cada día cuenta.</string>
+    <string name="quit_empty_cta">Añadir un hábito</string>
+    <string name="quit_error_load">No se han podido cargar tus datos.</string>
+    <string name="quit_error_save">No se ha podido guardar. Inténtalo de nuevo.</string>
+    <string name="quit_error_invalid">Revisa los datos marcados antes de guardar.</string>
+    <string name="quit_saved_habit">Hábito guardado</string>
+    <string name="quit_saved_craving">Antojo anotado. Lo has atravesado.</string>
+    <string name="quit_saved_consumption">Anotado. Un tropiezo no borra lo que llevas.</string>
+    <string name="quit_deleted_habit">Hábito borrado</string>
+    <string name="quit_deleted_craving">Antojo borrado</string>
+    <string name="quit_deleted_consumption">Registro borrado</string>
+
+    <!-- Selector de hábito -->
+    <string name="quit_habit_selected">%1$s, seleccionado</string>
+    <string name="quit_habit_add_another">Añadir otro hábito</string>
+
+    <!-- Héroe -->
+    <string name="quit_hero_title_quit">Tiempo limpio</string>
+    <string name="quit_hero_title_reduce">Esta semana</string>
+    <string name="quit_hero_saved">%1$s ahorrados</string>
+    <string name="quit_hero_started_today">Hoy empieza tu camino. El primer día es el más importante.</string>
+    <string name="quit_hero_not_started">Empiezas el %1$s. Aquí estaremos.</string>
+    <string name="quit_hero_since_last">%1$s limpios desde la última vez</string>
+    <string name="quit_hero_record">Tu récord: %1$s</string>
+    <string name="quit_hero_record_current">Esta es tu mejor racha</string>
+    <string name="quit_hero_keep_going">Una recaída no borra tu progreso: tu récord y tus totales siguen aquí.</string>
+    <plurals name="quit_clean_days_total">
+        <item quantity="one">%1$d día limpio en total</item>
+        <item quantity="other">%1$d días limpios en total</item>
+    </plurals>
+    <string name="quit_hero_description">%1$s: %2$s. %3$s</string>
+
+    <!-- Reducción -->
+    <string name="quit_reduce_week_value">%1$d de %2$d</string>
+    <string name="quit_reduce_week_value_no_limit">%1$d</string>
+    <string name="quit_reduce_within">Vas dentro de tu límite semanal.</string>
+    <plurals name="quit_reduce_remaining">
+        <item quantity="one">Te queda %1$d consumición esta semana.</item>
+        <item quantity="other">Te quedan %1$d consumiciones esta semana.</item>
+    </plurals>
+    <string name="quit_reduce_at_limit">Has llegado a tu límite semanal. Lo que viene es una semana nueva.</string>
+    <string name="quit_reduce_over">Esta semana te has pasado un poco. Pasa. Lo importante es el camino de varias semanas.</string>
+    <string name="quit_reduce_compliance">Has cumplido tu límite %1$d de las últimas %2$d semanas.</string>
+    <string name="quit_reduce_compliance_none">Aún no hay semanas completas para comparar.</string>
+
+    <!-- Tarjetas -->
+    <string name="quit_stat_craving_today">Antojos hoy</string>
+    <string name="quit_stat_cravings_in_total">%1$s en total</string>
+    <string name="quit_triggers_title">Qué suele provocar tus antojos</string>
+    <string name="quit_stat_avoided">Sin consumir</string>
+    <plurals name="quit_stat_avoided_units">
+        <item quantity="one">%1$s unidad</item>
+        <item quantity="other">%1$s unidades</item>
+    </plurals>
+    <string name="quit_stat_avoided_hint">respecto a antes</string>
+    <string name="quit_stat_slips">Tropiezos</string>
+    <string name="quit_stat_slips_hint">no cuentan en tu contra</string>
+    <string name="quit_stat_none">Ninguno</string>
+    <string name="quit_next_milestone">Próximo hito: %1$s</string>
+    <string name="quit_next_milestone_remaining">Faltan %1$s</string>
+    <string name="quit_all_milestones">Has alcanzado todos los hitos. Increíble.</string>
+
+    <!-- Acciones principales -->
+    <string name="quit_action_craving">Tengo un antojo</string>
+    <string name="quit_action_consumption">He consumido</string>
+    <string name="quit_action_sos">Necesito ayuda ahora</string>
+    <plurals name="quit_craving_today">
+        <item quantity="one">Hoy has anotado %1$d antojo y sigues aquí.</item>
+        <item quantity="other">Hoy has anotado %1$d antojos y sigues aquí.</item>
+    </plurals>
+
+    <!-- Gráficas -->
+    <string name="quit_chart_hours_title">Antojos por hora del día</string>
+    <string name="quit_chart_hours_none">Cuando anotes antojos verás a qué horas llegan.</string>
+    <string name="quit_chart_hours_peak">Tus antojos llegan sobre todo entre las %1$s y las %2$s.</string>
+    <string name="quit_chart_hours_summary">Antojos por hora del día, de las 0 a las 23: %1$s.</string>
+    <string name="quit_chart_item">%1$s %2$s</string>
+    <string name="quit_chart_hour_label">%1$d h</string>
+    <string name="quit_chart_savings_title">Ahorro acumulado</string>
+    <string name="quit_chart_savings_none">Tu ahorro empezará a crecer desde hoy.</string>
+    <string name="quit_chart_savings_up">Has ahorrado %1$s desde que empezaste.</string>
+    <string name="quit_chart_savings_summary">Ahorro acumulado, de la fecha más antigua a la más reciente: %1$s.</string>
+    <string name="quit_chart_week_title">Consumo por semana</string>
+    <string name="quit_chart_week_summary">Consumiciones por semana, de la más antigua a la actual: %1$s.</string>
+    <string name="quit_chart_week_within">Tu consumo de esta semana está dentro del límite de %1$d.</string>
+    <string name="quit_chart_week_at">Esta semana llevas %1$d de un límite de %2$d.</string>
+    <string name="quit_heatmap_title">Calendario de días limpios</string>
+    <plurals name="quit_heatmap_headline">
+        <item quantity="one">%1$d día limpio en los últimos %2$d meses.</item>
+        <item quantity="other">%1$d días limpios en los últimos %2$d meses.</item>
+    </plurals>
+    <plurals name="quit_heatmap_month_summary">
+        <item quantity="one">%1$s: %2$d día limpio.</item>
+        <item quantity="other">%1$s: %2$d días limpios.</item>
+    </plurals>
+    <string name="quit_heatmap_legend">Los días más tenues son días con algún consumo; no restan.</string>
+
+    <!-- Hitos -->
+    <string name="quit_milestones_intro">Cada hito marca lo que tu cuerpo y tu cabeza ya han ganado. Los que ya conseguiste se quedan contigo.</string>
+    <string name="quit_milestones_reduce">En modo reducción no hay hitos de tiempo: lo que cuenta es mantenerte dentro de tu límite semana a semana.</string>
+    <string name="quit_milestone_reached_now">Conseguido</string>
+    <string name="quit_milestone_reached_before">Ya lo conseguiste antes</string>
+    <string name="quit_milestone_pending">Pendiente</string>
+    <string name="quit_milestone_new">Nuevo</string>
+    <string name="quit_milestone_in">Faltan %1$s</string>
+    <string name="quit_milestone_reached_on">Conseguido el %1$s</string>
+    <string name="quit_milestone_24h">24 horas</string>
+    <string name="quit_milestone_48h">48 horas</string>
+    <string name="quit_milestone_72h">72 horas</string>
+    <string name="quit_milestone_1w">1 semana</string>
+    <string name="quit_milestone_2w">2 semanas</string>
+    <string name="quit_milestone_1m">1 mes</string>
+    <string name="quit_milestone_3m">3 meses</string>
+    <string name="quit_milestone_6m">6 meses</string>
+    <string name="quit_milestone_1y">1 año</string>
+    <string name="quit_milestone_2y">2 años</string>
+    <string name="quit_milestone_5y">5 años</string>
+    <string name="quit_milestone_24h_note">Tu cuerpo ya está limpiando el monóxido de carbono.</string>
+    <string name="quit_milestone_48h_note">El gusto y el olfato empiezan a recuperarse.</string>
+    <string name="quit_milestone_72h_note">Lo más duro de la abstinencia física suele quedar atrás.</string>
+    <string name="quit_milestone_1w_note">Una semana entera. Tu rutina ya se está reorganizando.</string>
+    <string name="quit_milestone_2w_note">Tu circulación y tu energía mejoran poco a poco.</string>
+    <string name="quit_milestone_1m_note">Un mes: los antojos son menos frecuentes y más cortos.</string>
+    <string name="quit_milestone_3m_note">Tres meses: tus pulmones respiran con más facilidad.</string>
+    <string name="quit_milestone_6m_note">Medio año. Has cambiado de verdad tu manera de vivir.</string>
+    <string name="quit_milestone_1y_note">Un año completo. Es un logro enorme.</string>
+    <string name="quit_milestone_2y_note">Dos años: ya es parte de quien eres.</string>
+    <string name="quit_milestone_5y_note">Cinco años. Una vida distinta, construida día a día.</string>
+    <string name="quit_celebration_title">Hito conseguido</string>
+    <string name="quit_celebration_message">Has llegado a %1$s. Mereces celebrarlo con calma.</string>
+    <string name="quit_celebration_dismiss">Gracias</string>
+
+    <!-- Historial -->
+    <string name="quit_history_empty">Aún no hay antojos ni consumos. Cuando los anotes, aparecerán aquí.</string>
+    <string name="quit_history_craving">Antojo · intensidad %1$d de %2$d</string>
+    <string name="quit_history_consumption">Consumo · %1$s</string>
+    <string name="quit_history_meta">%1$s · %2$s</string>
+    <string name="quit_history_midnight">Cerca de la medianoche</string>
+    <plurals name="quit_units">
+        <item quantity="one">%1$d unidad</item>
+        <item quantity="other">%1$d unidades</item>
+    </plurals>
+
+    <!-- SOS -->
+    <string name="quit_sos_title">Respira conmigo</string>
+    <string name="quit_sos_intro">Un antojo sube, llega a su punto más alto y baja solo. Suele durar pocos minutos. Vamos a pasarlo juntos.</string>
+    <string name="quit_sos_start">Empezar</string>
+    <string name="quit_sos_stop">Parar</string>
+    <string name="quit_sos_inhale">Inspira despacio</string>
+    <string name="quit_sos_hold">Mantén el aire</string>
+    <string name="quit_sos_exhale">Suelta el aire poco a poco</string>
+    <plurals name="quit_sos_cycles">
+        <item quantity="one">%1$d respiración completada</item>
+        <item quantity="other">%1$d respiraciones completadas</item>
+    </plurals>
+    <string name="quit_sos_keep_going">Lo estás haciendo bien. Sigue a tu ritmo.</string>
+    <string name="quit_sos_reduced_motion">El círculo no se mueve: sigue las palabras y los números.</string>
+    <string name="quit_sos_log">Ya ha pasado, anotarlo</string>
+    <string name="quit_sos_tips_title">Mientras tanto</string>
+    <string name="quit_sos_tip_water">Bebe un vaso de agua despacio.</string>
+    <string name="quit_sos_tip_move">Cambia de sitio o da un paseo corto.</string>
+    <string name="quit_sos_tip_wait">Espera diez minutos: el antojo pierde fuerza.</string>
+    <string name="quit_sos_tip_call">Escribe o llama a alguien de confianza.</string>
+    <string name="quit_sos_support">Si lo estás pasando muy mal, no tienes que llevarlo solo: tu centro de salud o un profesional pueden acompañarte. En España, el 112 atiende emergencias.</string>
+    <string name="quit_breath_circle_description">%1$s, quedan %2$d segundos</string>
+
+    <!-- Hoja de hábito -->
+    <string name="quit_habit_sheet_add">Nuevo hábito</string>
+    <string name="quit_habit_sheet_edit">Editar hábito</string>
+    <string name="quit_kind_tobacco">Tabaco</string>
+    <string name="quit_kind_alcohol">Alcohol</string>
+    <string name="quit_mode_quit">Dejarlo del todo</string>
+    <string name="quit_mode_reduce">Reducirlo</string>
+    <string name="quit_mode_hint">Si prefieres bajar poco a poco, fija un límite por semana.</string>
+    <string name="quit_field_name">Nombre (opcional)</string>
+    <string name="quit_field_start_date">Empezaste el %1$s</string>
+    <string name="quit_field_start_time">A las %1$s</string>
+    <string name="quit_field_baseline_day_tobacco">Cigarrillos al día antes</string>
+    <string name="quit_field_baseline_week_tobacco">Cigarrillos a la semana antes</string>
+    <string name="quit_field_baseline_day_alcohol">Consumiciones al día antes</string>
+    <string name="quit_field_baseline_week_alcohol">Consumiciones a la semana antes</string>
+    <string name="quit_period_day">Al día</string>
+    <string name="quit_period_week">A la semana</string>
+    <string name="quit_field_pack_size">Cigarrillos por cajetilla</string>
+    <string name="quit_field_pack_price">Precio de la cajetilla</string>
+    <string name="quit_field_drink_price">Precio de una consumición</string>
+    <string name="quit_field_weekly_limit">Límite semanal (consumiciones)</string>
+    <string name="quit_field_currency">Divisa (código de tres letras)</string>
+
+    <!-- Hoja de antojo y consumo -->
+    <string name="quit_event_sheet_craving">Anotar un antojo</string>
+    <string name="quit_event_sheet_craving_edit">Editar antojo</string>
+    <string name="quit_event_sheet_consumption">Anotar un consumo</string>
+    <string name="quit_event_sheet_consumption_edit">Editar consumo</string>
+    <string name="quit_event_kind_craving">Antojo</string>
+    <string name="quit_event_kind_consumption">Consumo</string>
+    <string name="quit_consumption_reassurance">Un tropiezo no es un fracaso. Se quedan tu récord, tus días limpios y lo que has ahorrado. Solo reinicia la racha actual.</string>
+    <string name="quit_craving_reassurance">Notar el antojo y pararte a anotarlo ya es una forma de ganarle.</string>
+    <string name="quit_field_intensity">Intensidad: %1$s</string>
+    <string name="quit_intensity_1">muy suave</string>
+    <string name="quit_intensity_2">suave</string>
+    <string name="quit_intensity_3">media</string>
+    <string name="quit_intensity_4">fuerte</string>
+    <string name="quit_intensity_5">muy fuerte</string>
+    <string name="quit_field_trigger">¿Qué lo provocó?</string>
+    <string name="quit_field_trigger_optional">¿Qué lo provocó? (opcional)</string>
+    <string name="quit_field_strategy">¿Qué hiciste?</string>
+    <string name="quit_field_strategy_none">Nada en concreto</string>
+    <string name="quit_field_units">Cuántas unidades</string>
+    <string name="quit_field_note">Nota (opcional)</string>
+    <string name="quit_field_date">Día: %1$s</string>
+    <string name="quit_field_time">A las %1$s</string>
+    <string name="quit_recent_combo">%1$s · %2$s</string>
+
+    <!-- Disparadores -->
+    <string name="quit_trigger_stress">Estrés</string>
+    <string name="quit_trigger_emotions">Emociones</string>
+    <string name="quit_trigger_social">Compañía</string>
+    <string name="quit_trigger_boredom">Aburrimiento</string>
+    <string name="quit_trigger_after_meal">Después de comer</string>
+    <string name="quit_trigger_coffee">Café</string>
+    <string name="quit_trigger_work_break">Pausa en el trabajo</string>
+    <string name="quit_trigger_tiredness">Cansancio</string>
+    <string name="quit_trigger_routine">Rutina</string>
+    <string name="quit_trigger_other">Otro</string>
+
+    <!-- Estrategias -->
+    <string name="quit_strategy_breathing">Respirar</string>
+    <string name="quit_strategy_walk">Pasear</string>
+    <string name="quit_strategy_water">Beber agua</string>
+    <string name="quit_strategy_call_someone">Hablar con alguien</string>
+    <string name="quit_strategy_distraction">Distraerme</string>
+    <string name="quit_strategy_exercise">Hacer ejercicio</string>
+    <string name="quit_strategy_wait">Esperar</string>
+    <string name="quit_strategy_snack">Picar algo</string>
+    <string name="quit_strategy_other">Otra cosa</string>
+
+    <!-- Errores de formulario -->
+    <string name="quit_issue_baseline_missing">Indica cuánto consumías.</string>
+    <string name="quit_issue_baseline_invalid">Escribe un número entero entre 1 y 1.000.</string>
+    <string name="quit_issue_pack_size_missing">Indica cuántos trae una cajetilla.</string>
+    <string name="quit_issue_pack_size_invalid">Escribe un número entero entre 1 y 1.000.</string>
+    <string name="quit_issue_price_missing">Indica el precio.</string>
+    <string name="quit_issue_price_invalid">Escribe un importe válido, con los decimales de la divisa.</string>
+    <string name="quit_issue_currency_invalid">Usa un código de divisa de tres letras, por ejemplo EUR.</string>
+    <string name="quit_issue_limit_missing">Indica tu límite semanal.</string>
+    <string name="quit_issue_limit_invalid">Escribe un número entero entre 0 y 1.000.</string>
+    <string name="quit_issue_start_in_future">El inicio no puede estar en el futuro.</string>
+    <string name="quit_issue_units_missing">Indica cuántas unidades.</string>
+    <string name="quit_issue_units_invalid">Escribe un número entero entre 1 y 1.000.</string>
+    <string name="quit_issue_event_in_future">Elige un momento que ya haya pasado.</string>
+    <string name="quit_issue_event_before_start">Elige un momento posterior al inicio del hábito.</string>
+
+    <!-- Duraciones en lenguaje natural -->
+    <plurals name="quit_span_years">
+        <item quantity="one">%1$d año</item>
+        <item quantity="other">%1$d años</item>
+    </plurals>
+    <plurals name="quit_span_days">
+        <item quantity="one">%1$d día</item>
+        <item quantity="other">%1$d días</item>
+    </plurals>
+    <plurals name="quit_span_hours">
+        <item quantity="one">%1$d hora</item>
+        <item quantity="other">%1$d horas</item>
+    </plurals>
+    <plurals name="quit_span_minutes">
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minutos</item>
+    </plurals>
+    <string name="quit_span_join">%1$s y %2$s</string>
+    <string name="quit_span_less_than_minute">menos de un minuto</string>
+    <string name="quit_hms">%1$d h %2$02d min %3$02d s</string>
+    <string name="quit_hm">%1$d h %2$02d min</string>
 </resources>

@@ -115,7 +115,14 @@ class QuitDaoTest {
 
             dao.upsertHabit(habit("h").copy(name = "Renombrado"))
 
-            assertEquals("Renombrado", dao.observeHabits().first().single().name)
+            assertEquals(
+                "Renombrado",
+                dao
+                    .observeHabits()
+                    .first()
+                    .single()
+                    .name,
+            )
             assertEquals(1, dao.observeCravings().first().size)
             assertEquals(1, dao.observeConsumptions().first().size)
         }
