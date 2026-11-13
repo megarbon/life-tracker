@@ -1,6 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="work_title">Work</string>
-    <string name="work_empty_title">Nothing here yet</string>
-    <string name="work_empty_message">Clock your workday and measure your focus sessions.</string>
+    <string name="work_retry">Retry</string>
+    <string name="work_save">Save</string>
+    <string name="work_delete">Delete</string>
+    <string name="work_ok">OK</string>
+    <string name="work_none">No project</string>
+
+    <!-- Tabs -->
+    <string name="work_tab_today">Today</string>
+    <string name="work_tab_focus">Focus</string>
+    <string name="work_tab_week">Week</string>
+    <string name="work_tab_projects">Projects</string>
+    <string name="work_add_shift">Add shift</string>
+    <string name="work_add_project">New project</string>
+
+    <!-- States -->
+    <string name="work_empty_title">You haven\'t clocked in yet</string>
+    <string name="work_empty_message">Clock in for the first time and you will see your hours, your weekly balance and the split by project here.</string>
+    <string name="work_empty_cta">Clock in</string>
+    <string name="work_error_load">Your work data could not be loaded.</string>
+    <string name="work_error_save">Could not save. Please try again.</string>
+    <string name="work_error_invalid">Check the highlighted data before saving.</string>
+    <string name="work_deleted_shift">Shift deleted</string>
+    <string name="work_deleted_project">Project deleted</string>
+    <string name="work_deleted_focus">Focus session deleted</string>
+    <string name="work_deleted_note">Note deleted</string>
+
+    <!-- Durations and balance -->
+    <string name="work_duration_hm">%1$d h %2$d min</string>
+    <string name="work_duration_h">%1$d h</string>
+    <string name="work_duration_m">%1$d min</string>
+    <string name="work_balance_plus">+%1$s</string>
+    <string name="work_balance_minus">−%1$s</string>
+
+    <!-- Today: hero -->
+    <string name="work_hero_title_in">Shift in progress</string>
+    <string name="work_hero_title_break">On break</string>
+    <string name="work_hero_title_idle">Today at work</string>
+    <string name="work_hero_since">Since %1$s</string>
+    <string name="work_hero_idle_hint">Clock in to start counting.</string>
+    <string name="work_hero_today_total">Today so far: %1$s</string>
+    <string name="work_hero_week_total">This week: %1$s of %2$s</string>
+    <string name="work_hero_balance">Week balance: %1$s</string>
+    <string name="work_hero_total_balance">Overall balance: %1$s</string>
+    <string name="work_hero_description">Shift stopwatch, %1$s</string>
+    <string name="work_clock_in">Clock in</string>
+    <string name="work_clock_break">Break</string>
+    <string name="work_clock_resume">Resume</string>
+    <string name="work_clock_out">Clock out</string>
+
+    <!-- Today: forgotten shifts and list -->
+    <string name="work_forgotten_title">Missing clock-out</string>
+    <string name="work_forgotten_message">The shift of %1$s is still open. Tell us when you finished so its hours count.</string>
+    <string name="work_forgotten_action">Set clock-out</string>
+    <string name="work_today_shifts">Today\'s shifts</string>
+    <string name="work_today_no_shifts">You haven\'t clocked in today.</string>
+    <string name="work_shift_open">In progress</string>
+    <string name="work_shift_open_forgotten">Not closed</string>
+    <string name="work_shift_range">%1$s – %2$s</string>
+    <string name="work_shift_next_day">%1$s – %2$s (next day)</string>
+    <string name="work_shift_worked">%1$s worked</string>
+    <string name="work_shift_with_breaks">%1$s worked, %2$s of breaks</string>
+    <string name="work_shift_midnight">Crosses midnight</string>
+
+    <!-- Day note -->
+    <string name="work_note_title">Note of the day</string>
+    <string name="work_note_empty">Add a note about your day.</string>
+    <string name="work_note_edit">Edit note</string>
+    <string name="work_note_field">Note</string>
+    <string name="work_note_sheet_title">Note for %1$s</string>
+
+    <!-- Focus -->
+    <string name="work_focus_title">Focus session</string>
+    <string name="work_focus_kind_focus">Focus</string>
+    <string name="work_focus_kind_short_break">Short break</string>
+    <string name="work_focus_kind_long_break">Long break</string>
+    <string name="work_focus_start">Start</string>
+    <string name="work_focus_stop">Stop</string>
+    <string name="work_focus_remaining">%1$s left</string>
+    <string name="work_focus_ring_description">%1$s, %2$s left</string>
+    <string name="work_focus_idle_hint">Choose how long you want to concentrate.</string>
+    <string name="work_focus_suggestion">Next: %1$s</string>
+    <string name="work_focus_minutes_field">Minutes</string>
+    <string name="work_focus_title_field">What will you work on?</string>
+    <string name="work_focus_project_field">Project</string>
+    <string name="work_focus_done_title">Focus today</string>
+    <plurals name="work_focus_done_sessions">
+        <item quantity="one">%1$d session completed</item>
+        <item quantity="other">%1$d sessions completed</item>
+    </plurals>
+    <string name="work_focus_recent">Recent sessions</string>
+    <string name="work_focus_recent_empty">Your finished sessions will show up here.</string>
+    <string name="work_focus_session_row">%1$s · %2$s</string>
+    <string name="work_focus_finished_focus">Focus session finished. Time for a break.</string>
+    <string name="work_focus_finished_break">Break finished. Whenever you are ready, another session.</string>
+    <string name="work_focus_background_note">Keep the screen open: there is no alert yet when the app is closed.</string>
+
+    <!-- Week -->
+    <string name="work_week_previous">Previous week</string>
+    <string name="work_week_next">Next week</string>
+    <string name="work_week_current">Go to this week</string>
+    <string name="work_week_hero_title">Hours this week</string>
+    <string name="work_week_hero_target">of %1$s target</string>
+    <string name="work_week_hero_balance">Week balance: %1$s</string>
+    <string name="work_week_day_target">target %1$s</string>
+    <string name="work_week_day_free">Day off</string>
+    <string name="work_week_day_empty">No shifts</string>
+    <string name="work_week_day_row">%1$s, %2$s, %3$s</string>
+    <string name="work_settings">Target and days</string>
+
+    <!-- Projects -->
+    <string name="work_projects_empty_title">No projects yet</string>
+    <string name="work_projects_empty_message">Create projects to see where your hours go.</string>
+    <string name="work_project_row_hours">%1$s this week · %2$s in total</string>
+    <string name="work_project_focus_hours">%1$s of focus</string>
+    <string name="work_project_sheet_add">New project</string>
+    <string name="work_project_sheet_edit">Edit project</string>
+    <string name="work_project_name_field">Name</string>
+    <string name="work_project_color_field">Color</string>
+    <string name="work_project_color_selected">%1$s, selected</string>
+
+    <!-- Charts -->
+    <string name="work_chart_hours_title">Hours per day</string>
+    <string name="work_chart_hours_none">No hours yet this week.</string>
+    <string name="work_chart_hours_total">You have %1$s of your %2$s target.</string>
+    <string name="work_chart_hours_summary">Hours worked each day of the week: %1$s.</string>
+    <string name="work_chart_balance_title">Accumulated hours balance</string>
+    <string name="work_chart_balance_none">There is no balance to show yet.</string>
+    <string name="work_chart_balance_positive">You have %1$s of overtime.</string>
+    <string name="work_chart_balance_negative">You owe %1$s of hours.</string>
+    <string name="work_chart_balance_zero">You are right on target.</string>
+    <string name="work_chart_balance_summary">Accumulated balance at the end of each week: %1$s.</string>
+    <string name="work_chart_projects_title">Split by project</string>
+    <string name="work_chart_projects_none">No project hours in the last few weeks.</string>
+    <string name="work_chart_projects_top">%1$s takes the largest share: %2$s.</string>
+    <string name="work_chart_projects_summary">Hours of the last four weeks by project: %1$s.</string>
+    <string name="work_chart_item">%1$s: %2$s</string>
+    <string name="work_chart_hours_value">%1$s h</string>
+
+    <!-- Shift sheet -->
+    <string name="work_sheet_add">Add shift</string>
+    <string name="work_sheet_edit">Edit shift</string>
+    <string name="work_field_date">Day: %1$s</string>
+    <string name="work_field_start">Clock-in: %1$s</string>
+    <string name="work_field_end">Clock-out: %1$s</string>
+    <string name="work_field_end_next_day">Clock-out: %1$s (next day)</string>
+    <string name="work_field_still_open">Still in progress</string>
+    <string name="work_field_project">Project</string>
+    <string name="work_field_note">Shift note</string>
+    <string name="work_field_breaks">Breaks</string>
+    <string name="work_field_add_break">Add break</string>
+    <string name="work_field_remove_break">Remove break</string>
+    <string name="work_break_start">Break from: %1$s</string>
+    <string name="work_break_end">to: %1$s</string>
+
+    <!-- Close afterwards -->
+    <string name="work_close_title">Set clock-out</string>
+    <string name="work_close_message">You clocked in on %1$s at %2$s. When did you leave?</string>
+    <string name="work_close_exit_date">Exit day: %1$s</string>
+    <string name="work_close_exit_time">Exit time: %1$s</string>
+    <string name="work_close_save">Close shift</string>
+
+    <!-- Settings -->
+    <string name="work_settings_title">Target and working days</string>
+    <string name="work_settings_hours_field">Hours per week</string>
+    <string name="work_settings_hours_hint">For example 40 or 37.5</string>
+    <string name="work_settings_days">Days you work</string>
+    <string name="work_settings_days_hint">The target is split between them; work on other days counts as overtime.</string>
+
+    <!-- Form issues -->
+    <string name="work_issue_start_future">Clock-in cannot be in the future.</string>
+    <string name="work_issue_end_future">Clock-out cannot be in the future.</string>
+    <string name="work_issue_end_before_start">Clock-out must be after clock-in.</string>
+    <string name="work_issue_too_long">A shift cannot last more than 24 hours.</string>
+    <string name="work_issue_note_too_long">The text is too long.</string>
+    <string name="work_issue_too_many_breaks">There are too many breaks in the shift.</string>
+    <string name="work_issue_break_end_before_start">A break ends before it starts.</string>
+    <string name="work_issue_break_outside">A break falls outside the shift.</string>
+    <string name="work_issue_breaks_overlap">Some breaks overlap.</string>
+    <string name="work_issue_open_break_closed">A closed shift cannot have a break in progress.</string>
+    <string name="work_issue_more_open_breaks">There can only be one break in progress.</string>
+    <string name="work_issue_overlaps_shift">That shift overlaps another one you already have.</string>
+    <string name="work_issue_already_clocked_in">You have already clocked in.</string>
+    <string name="work_issue_not_clocked_in">There is no shift in progress.</string>
+    <string name="work_issue_already_on_break">You are already on a break.</string>
+    <string name="work_issue_not_on_break">You are not on a break.</string>
+    <string name="work_issue_shift_not_found">That shift could not be found.</string>
+    <string name="work_issue_timer_running">A timer is already running.</string>
+    <string name="work_issue_no_timer">No timer is running.</string>
+    <string name="work_issue_invalid_duration">The duration must be between 1 and 240 minutes.</string>
+    <string name="work_issue_title_too_long">The title is too long.</string>
+    <string name="work_issue_name_missing">Give the project a name.</string>
+    <string name="work_issue_name_too_long">The project name is too long.</string>
+    <string name="work_issue_too_many_projects">You have reached the maximum number of projects.</string>
+    <string name="work_issue_target_invalid">Enter weekly hours between 0.1 and 168.</string>
+    <string name="work_issue_no_working_days">Pick at least one working day.</string>
+
+    <!-- Project colors -->
+    <string name="work_color_blue">Blue</string>
+    <string name="work_color_teal">Teal</string>
+    <string name="work_color_green">Green</string>
+    <string name="work_color_amber">Amber</string>
+    <string name="work_color_orange">Orange</string>
+    <string name="work_color_red">Red</string>
+    <string name="work_color_pink">Pink</string>
+    <string name="work_color_purple">Purple</string>
+    <string name="work_color_indigo">Indigo</string>
+    <string name="work_color_grey">Gray</string>
 </resources>
