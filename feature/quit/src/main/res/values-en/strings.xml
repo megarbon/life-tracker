@@ -1,6 +1,298 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="quit_title">Quit habits</string>
-    <string name="quit_empty_title">Nothing here yet</string>
-    <string name="quit_empty_message">Track your days without smoking or drinking, guilt-free.</string>
+    <string name="quit_add">Log</string>
+    <string name="quit_retry">Retry</string>
+    <string name="quit_save">Save</string>
+    <string name="quit_delete">Delete</string>
+    <string name="quit_ok">OK</string>
+    <string name="quit_edit_habit">Edit habit</string>
+
+    <!-- Tabs -->
+    <string name="quit_tab_summary">Summary</string>
+    <string name="quit_tab_milestones">Milestones</string>
+    <string name="quit_tab_history">History</string>
+
+    <!-- States -->
+    <string name="quit_empty_title">Start at your own pace</string>
+    <string name="quit_empty_message">Here you will see how long you have gone without smoking or drinking, what you have saved and how your cravings are going. No pressure and no guilt: every day counts.</string>
+    <string name="quit_empty_cta">Add a habit</string>
+    <string name="quit_error_load">We could not load your data.</string>
+    <string name="quit_error_save">We could not save that. Please try again.</string>
+    <string name="quit_error_invalid">Check the highlighted fields before saving.</string>
+    <string name="quit_saved_habit">Habit saved</string>
+    <string name="quit_saved_craving">Craving logged. You got through it.</string>
+    <string name="quit_saved_consumption">Logged. A slip does not erase what you have done.</string>
+    <string name="quit_deleted_habit">Habit deleted</string>
+    <string name="quit_deleted_craving">Craving deleted</string>
+    <string name="quit_deleted_consumption">Entry deleted</string>
+
+    <!-- Habit picker -->
+    <string name="quit_habit_selected">%1$s, selected</string>
+    <string name="quit_habit_add_another">Add another habit</string>
+
+    <!-- Hero -->
+    <string name="quit_hero_title_quit">Time clean</string>
+    <string name="quit_hero_title_reduce">This week</string>
+    <string name="quit_hero_saved">%1$s saved</string>
+    <string name="quit_hero_started_today">Your journey starts today. The first day is the most important one.</string>
+    <string name="quit_hero_not_started">You start on %1$s. We will be here.</string>
+    <string name="quit_hero_since_last">%1$s clean since the last time</string>
+    <string name="quit_hero_record">Your record: %1$s</string>
+    <string name="quit_hero_record_current">This is your best streak</string>
+    <string name="quit_hero_keep_going">A slip does not erase your progress: your record and your totals are still here.</string>
+    <plurals name="quit_clean_days_total">
+        <item quantity="one">%1$d clean day in total</item>
+        <item quantity="other">%1$d clean days in total</item>
+    </plurals>
+    <string name="quit_hero_description">%1$s: %2$s. %3$s</string>
+
+    <!-- Reduction -->
+    <string name="quit_reduce_week_value">%1$d of %2$d</string>
+    <string name="quit_reduce_week_value_no_limit">%1$d</string>
+    <string name="quit_reduce_within">You are within your weekly limit.</string>
+    <plurals name="quit_reduce_remaining">
+        <item quantity="one">You have %1$d drink left this week.</item>
+        <item quantity="other">You have %1$d drinks left this week.</item>
+    </plurals>
+    <string name="quit_reduce_at_limit">You have reached your weekly limit. A new week is coming.</string>
+    <string name="quit_reduce_over">You went a little over this week. It happens. What matters is the path over several weeks.</string>
+    <plurals name="quit_reduce_compliance">
+        <item quantity="one">You kept to your limit in %1$d of the last complete week.</item>
+        <item quantity="other">You kept to your limit in %1$d of the last %2$d weeks.</item>
+    </plurals>
+    <string name="quit_reduce_compliance_none">There are no complete weeks to compare yet.</string>
+
+    <!-- Cards -->
+    <string name="quit_stat_craving_today">Cravings today</string>
+    <string name="quit_stat_cravings_in_total">%1$s in total</string>
+    <string name="quit_triggers_title">What usually sets off your cravings</string>
+    <string name="quit_stat_avoided">Not consumed</string>
+    <plurals name="quit_stat_avoided_units">
+        <item quantity="one">%1$s unit</item>
+        <item quantity="other">%1$s units</item>
+    </plurals>
+    <string name="quit_stat_avoided_hint">compared with before</string>
+    <string name="quit_stat_slips">Slips</string>
+    <string name="quit_stat_slips_hint">they never count against you</string>
+    <string name="quit_stat_none">None</string>
+    <string name="quit_next_milestone">Next milestone: %1$s</string>
+    <string name="quit_next_milestone_remaining">%1$s to go</string>
+    <string name="quit_all_milestones">You have reached every milestone. Amazing.</string>
+
+    <!-- Main actions -->
+    <string name="quit_action_craving">I have a craving</string>
+    <string name="quit_action_consumption">I used</string>
+    <string name="quit_action_sos">I need help now</string>
+    <plurals name="quit_craving_today">
+        <item quantity="one">Today you have logged %1$d craving and you are still here.</item>
+        <item quantity="other">Today you have logged %1$d cravings and you are still here.</item>
+    </plurals>
+
+    <!-- Charts -->
+    <string name="quit_chart_hours_title">Cravings by hour of the day</string>
+    <string name="quit_chart_hours_none">Once you log cravings you will see what time they come.</string>
+    <string name="quit_chart_hours_peak">Your cravings mostly come between %1$s and %2$s.</string>
+    <string name="quit_chart_hours_summary">Cravings by hour of the day, from 0 to 23: %1$s.</string>
+    <string name="quit_chart_item">%1$s %2$s</string>
+    <string name="quit_chart_hour_label">%1$d h</string>
+    <string name="quit_chart_savings_title">Savings so far</string>
+    <string name="quit_chart_savings_none">Your savings will start to grow from today.</string>
+    <string name="quit_chart_savings_up">You have saved %1$s since you started.</string>
+    <string name="quit_chart_savings_summary">Savings so far, from the oldest date to the most recent: %1$s.</string>
+    <string name="quit_chart_week_title">Use per week</string>
+    <string name="quit_chart_week_summary">Drinks per week, from the oldest to the current one: %1$s.</string>
+    <string name="quit_chart_week_within">This week you are within your limit of %1$d.</string>
+    <string name="quit_chart_week_at">This week you are at %1$d of a limit of %2$d.</string>
+    <string name="quit_heatmap_title">Clean days calendar</string>
+    <plurals name="quit_heatmap_headline">
+        <item quantity="one">%1$d clean day in the last %2$d months.</item>
+        <item quantity="other">%1$d clean days in the last %2$d months.</item>
+    </plurals>
+    <plurals name="quit_heatmap_month_summary">
+        <item quantity="one">%1$s: %2$d clean day.</item>
+        <item quantity="other">%1$s: %2$d clean days.</item>
+    </plurals>
+    <string name="quit_heatmap_legend">Fainter days are days with some use; they never subtract.</string>
+
+    <!-- Milestones -->
+    <string name="quit_milestones_intro">Each milestone marks what your body and mind have already gained. The ones you reached stay with you.</string>
+    <string name="quit_milestones_reduce">In reduction mode there are no time milestones: what counts is staying within your limit week after week.</string>
+    <string name="quit_milestone_reached_now">Reached</string>
+    <string name="quit_milestone_reached_before">You reached it before</string>
+    <string name="quit_milestone_pending">Pending</string>
+    <string name="quit_milestone_new">New</string>
+    <string name="quit_milestone_in">%1$s to go</string>
+    <string name="quit_milestone_reached_on">Reached on %1$s</string>
+    <string name="quit_milestone_24h">24 hours</string>
+    <string name="quit_milestone_48h">48 hours</string>
+    <string name="quit_milestone_72h">72 hours</string>
+    <string name="quit_milestone_1w">1 week</string>
+    <string name="quit_milestone_2w">2 weeks</string>
+    <string name="quit_milestone_1m">1 month</string>
+    <string name="quit_milestone_3m">3 months</string>
+    <string name="quit_milestone_6m">6 months</string>
+    <string name="quit_milestone_1y">1 year</string>
+    <string name="quit_milestone_2y">2 years</string>
+    <string name="quit_milestone_5y">5 years</string>
+    <string name="quit_milestone_24h_note">Your body is already clearing out the carbon monoxide.</string>
+    <string name="quit_milestone_48h_note">Taste and smell start to come back.</string>
+    <string name="quit_milestone_72h_note">The hardest part of physical withdrawal is usually behind you.</string>
+    <string name="quit_milestone_1w_note">A whole week. Your routine is already reorganising itself.</string>
+    <string name="quit_milestone_2w_note">Your circulation and energy are slowly improving.</string>
+    <string name="quit_milestone_1m_note">One month: cravings are rarer and shorter.</string>
+    <string name="quit_milestone_3m_note">Three months: your lungs breathe more easily.</string>
+    <string name="quit_milestone_6m_note">Half a year. You have truly changed the way you live.</string>
+    <string name="quit_milestone_1y_note">A full year. That is a huge achievement.</string>
+    <string name="quit_milestone_2y_note">Two years: it is already part of who you are.</string>
+    <string name="quit_milestone_5y_note">Five years. A different life, built day by day.</string>
+    <string name="quit_celebration_title">Milestone reached</string>
+    <string name="quit_celebration_message">You have reached %1$s. You deserve to celebrate it quietly.</string>
+    <string name="quit_celebration_dismiss">Thanks</string>
+
+    <!-- History -->
+    <string name="quit_history_empty">There are no cravings or slips yet. Once you log them, they will show up here.</string>
+    <string name="quit_history_craving">Craving · intensity %1$d of %2$d</string>
+    <string name="quit_history_consumption">Use · %1$s</string>
+    <string name="quit_history_meta">%1$s · %2$s</string>
+    <string name="quit_history_midnight">Around midnight</string>
+    <plurals name="quit_units">
+        <item quantity="one">%1$d unit</item>
+        <item quantity="other">%1$d units</item>
+    </plurals>
+
+    <!-- SOS -->
+    <string name="quit_sos_title">Breathe with me</string>
+    <string name="quit_sos_intro">A craving rises, peaks and fades on its own. It usually lasts only a few minutes. Let us get through it together.</string>
+    <string name="quit_sos_start">Start</string>
+    <string name="quit_sos_stop">Stop</string>
+    <string name="quit_sos_inhale">Breathe in slowly</string>
+    <string name="quit_sos_hold">Hold your breath</string>
+    <string name="quit_sos_exhale">Let the air out slowly</string>
+    <plurals name="quit_sos_cycles">
+        <item quantity="one">%1$d breath completed</item>
+        <item quantity="other">%1$d breaths completed</item>
+    </plurals>
+    <string name="quit_sos_keep_going">You are doing well. Go at your own pace.</string>
+    <string name="quit_sos_reduced_motion">The circle stays still: follow the words and the numbers.</string>
+    <string name="quit_sos_log">It has passed, log it</string>
+    <string name="quit_sos_tips_title">In the meantime</string>
+    <string name="quit_sos_tip_water">Slowly drink a glass of water.</string>
+    <string name="quit_sos_tip_move">Change rooms or take a short walk.</string>
+    <string name="quit_sos_tip_wait">Wait ten minutes: the craving loses strength.</string>
+    <string name="quit_sos_tip_call">Message or call someone you trust.</string>
+    <string name="quit_sos_support">If you are having a really hard time, you do not have to carry it alone: your doctor or a professional can support you. In case of an emergency, call your local emergency number.</string>
+    <plurals name="quit_breath_circle_description">
+        <item quantity="one">%1$s, %2$d second left</item>
+        <item quantity="other">%1$s, %2$d seconds left</item>
+    </plurals>
+
+    <!-- Habit sheet -->
+    <string name="quit_habit_sheet_add">New habit</string>
+    <string name="quit_habit_sheet_edit">Edit habit</string>
+    <string name="quit_kind_tobacco">Tobacco</string>
+    <string name="quit_kind_alcohol">Alcohol</string>
+    <string name="quit_mode_quit">Quit completely</string>
+    <string name="quit_mode_reduce">Cut down</string>
+    <string name="quit_mode_hint">If you prefer to cut down gradually, set a weekly limit.</string>
+    <string name="quit_field_name">Name (optional)</string>
+    <string name="quit_field_start_date">You started on %1$s</string>
+    <string name="quit_field_start_time">At %1$s</string>
+    <string name="quit_field_baseline_day_tobacco">Cigarettes per day before</string>
+    <string name="quit_field_baseline_week_tobacco">Cigarettes per week before</string>
+    <string name="quit_field_baseline_day_alcohol">Drinks per day before</string>
+    <string name="quit_field_baseline_week_alcohol">Drinks per week before</string>
+    <string name="quit_period_day">Per day</string>
+    <string name="quit_period_week">Per week</string>
+    <string name="quit_field_pack_size">Cigarettes per pack</string>
+    <string name="quit_field_pack_price">Price of a pack</string>
+    <string name="quit_field_drink_price">Price of one drink</string>
+    <string name="quit_field_weekly_limit">Weekly limit (drinks)</string>
+    <string name="quit_field_currency">Currency (three-letter code)</string>
+
+    <!-- Craving and use sheet -->
+    <string name="quit_event_sheet_craving">Log a craving</string>
+    <string name="quit_event_sheet_craving_edit">Edit craving</string>
+    <string name="quit_event_sheet_consumption">Log a slip</string>
+    <string name="quit_event_sheet_consumption_edit">Edit slip</string>
+    <string name="quit_event_kind_craving">Craving</string>
+    <string name="quit_event_kind_consumption">Slip</string>
+    <string name="quit_consumption_reassurance">A slip is not a failure. Your record, your clean days and your savings stay. It only restarts the current streak.</string>
+    <string name="quit_craving_reassurance">Noticing the craving and stopping to log it is already a way of beating it.</string>
+    <string name="quit_field_intensity">Intensity: %1$s</string>
+    <string name="quit_intensity_1">very mild</string>
+    <string name="quit_intensity_2">mild</string>
+    <string name="quit_intensity_3">medium</string>
+    <string name="quit_intensity_4">strong</string>
+    <string name="quit_intensity_5">very strong</string>
+    <string name="quit_field_trigger">What set it off?</string>
+    <string name="quit_field_trigger_optional">What set it off? (optional)</string>
+    <string name="quit_field_strategy">What did you do?</string>
+    <string name="quit_field_strategy_none">Nothing in particular</string>
+    <string name="quit_field_units">How many units</string>
+    <string name="quit_field_note">Note (optional)</string>
+    <string name="quit_field_date">Day: %1$s</string>
+    <string name="quit_field_time">At %1$s</string>
+    <string name="quit_recent_combo">%1$s · %2$s</string>
+
+    <!-- Triggers -->
+    <string name="quit_trigger_stress">Stress</string>
+    <string name="quit_trigger_emotions">Emotions</string>
+    <string name="quit_trigger_social">Company</string>
+    <string name="quit_trigger_boredom">Boredom</string>
+    <string name="quit_trigger_after_meal">After a meal</string>
+    <string name="quit_trigger_coffee">Coffee</string>
+    <string name="quit_trigger_work_break">Work break</string>
+    <string name="quit_trigger_tiredness">Tiredness</string>
+    <string name="quit_trigger_routine">Routine</string>
+    <string name="quit_trigger_other">Other</string>
+
+    <!-- Strategies -->
+    <string name="quit_strategy_breathing">Breathe</string>
+    <string name="quit_strategy_walk">Go for a walk</string>
+    <string name="quit_strategy_water">Drink water</string>
+    <string name="quit_strategy_call_someone">Talk to someone</string>
+    <string name="quit_strategy_distraction">Distract myself</string>
+    <string name="quit_strategy_exercise">Exercise</string>
+    <string name="quit_strategy_wait">Wait it out</string>
+    <string name="quit_strategy_snack">Have a snack</string>
+    <string name="quit_strategy_other">Something else</string>
+
+    <!-- Form errors -->
+    <string name="quit_issue_baseline_missing">Enter how much you used.</string>
+    <string name="quit_issue_baseline_invalid">Enter a whole number between 1 and 1,000.</string>
+    <string name="quit_issue_pack_size_missing">Enter how many a pack holds.</string>
+    <string name="quit_issue_pack_size_invalid">Enter a whole number between 1 and 1,000.</string>
+    <string name="quit_issue_price_missing">Enter the price.</string>
+    <string name="quit_issue_price_invalid">Enter a valid amount, with the currency\'s decimals.</string>
+    <string name="quit_issue_currency_invalid">Use a three-letter currency code, for example EUR.</string>
+    <string name="quit_issue_limit_missing">Enter your weekly limit.</string>
+    <string name="quit_issue_limit_invalid">Enter a whole number between 0 and 1,000.</string>
+    <string name="quit_issue_start_in_future">The start cannot be in the future.</string>
+    <string name="quit_issue_units_missing">Enter how many units.</string>
+    <string name="quit_issue_units_invalid">Enter a whole number between 1 and 1,000.</string>
+    <string name="quit_issue_event_in_future">Choose a time that has already passed.</string>
+    <string name="quit_issue_event_before_start">Choose a date after the habit started.</string>
+
+    <!-- Durations in natural language -->
+    <plurals name="quit_span_years">
+        <item quantity="one">%1$d year</item>
+        <item quantity="other">%1$d years</item>
+    </plurals>
+    <plurals name="quit_span_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+    <plurals name="quit_span_hours">
+        <item quantity="one">%1$d hour</item>
+        <item quantity="other">%1$d hours</item>
+    </plurals>
+    <plurals name="quit_span_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <string name="quit_span_join">%1$s and %2$s</string>
+    <string name="quit_span_less_than_minute">less than a minute</string>
+    <string name="quit_hms">%1$d h %2$02d min %3$02d s</string>
+    <string name="quit_hm">%1$d h %2$02d min</string>
 </resources>
