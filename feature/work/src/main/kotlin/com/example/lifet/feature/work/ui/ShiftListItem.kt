@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +27,7 @@ import com.example.lifet.feature.work.DurationFormat
 import com.example.lifet.feature.work.R
 import com.example.lifet.feature.work.WorkFormatters
 import com.example.lifet.feature.work.color
+import com.example.lifet.feature.work.rememberLiveNow
 import java.time.Instant
 
 /**
@@ -37,12 +39,16 @@ import java.time.Instant
 internal fun ShiftListItem(
     shift: WorkShift,
     project: WorkProject?,
-    now: Instant,
+    snapshotNow: Instant,
     formatters: WorkFormatters,
     durations: DurationFormat,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Una jornada en marcha avanza sola; las cerradas, en pausa u olvidadas se quedan con el instante de la emisión.
+    val ticking = shift.isOpen && !shift.isOnBreak && !shift.isForgotten(snapshotNow)
+    val liveNow by rememberLiveNow(enabled = ticking)
+    val now = if (ticking) liveNow else snapshotNow
     val range = shiftRange(shift, now, formatters)
     val worked = durations.format(shift.netSecondsAt(now))
     val breaks = shift.breakSecondsAt(now)

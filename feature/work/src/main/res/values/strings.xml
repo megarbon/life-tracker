@@ -24,8 +24,6 @@
     <string name="work_error_invalid">Revisa los datos marcados antes de guardar.</string>
     <string name="work_deleted_shift">Jornada borrada</string>
     <string name="work_deleted_project">Proyecto borrado</string>
-    <string name="work_deleted_focus">Sesión de foco borrada</string>
-    <string name="work_deleted_note">Nota borrada</string>
 
     <!-- Duraciones y saldo -->
     <string name="work_duration_hm">%1$d h %2$d min</string>
@@ -108,7 +106,7 @@
     <string name="work_week_day_free">Día libre</string>
     <string name="work_week_day_empty">Sin jornadas</string>
     <string name="work_week_day_row">%1$s, %2$s, %3$s</string>
-    <string name="work_settings">Objetivo y días</string>
+    <string name="work_settings_open">Ajustes de horas</string>
 
     <!-- Proyectos -->
     <string name="work_projects_empty_title">Aún no hay proyectos</string>
@@ -136,6 +134,8 @@
     <string name="work_chart_projects_none">Aún no hay horas con proyecto en las últimas semanas.</string>
     <string name="work_chart_projects_top">%1$s se lleva la mayor parte: %2$s.</string>
     <string name="work_chart_projects_summary">Horas de las últimas cuatro semanas por proyecto: %1$s.</string>
+    <string name="work_chart_projects_none_week">Esta semana no hay horas con proyecto.</string>
+    <string name="work_chart_projects_summary_week">Horas de la semana por proyecto: %1$s.</string>
     <string name="work_chart_item">%1$s: %2$s</string>
     <string name="work_chart_hours_value">%1$s h</string>
 

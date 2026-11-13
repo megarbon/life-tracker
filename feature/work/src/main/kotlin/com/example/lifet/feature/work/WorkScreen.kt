@@ -1,5 +1,6 @@
 package com.example.lifet.feature.work
 
+import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -23,9 +26,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -33,7 +38,10 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.lifet.core.designsystem.component.LTEmptyState
 import com.example.lifet.core.designsystem.component.LTErrorState
 import com.example.lifet.core.designsystem.component.LTLoadingSkeleton
@@ -55,6 +63,7 @@ import com.example.lifet.feature.work.ui.ShiftSheet
 import com.example.lifet.feature.work.ui.TodayTab
 import com.example.lifet.feature.work.ui.WeekTab
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.time.Clock
 import com.example.lifet.core.designsystem.R as DesignR
 
@@ -110,7 +119,22 @@ internal fun WorkScreen(
     CompositionLocalProvider(LocalWorkClock provides clock) {
         Scaffold(
             modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = { LTTopAppBar(title = stringResource(R.string.work_title), scrollBehavior = scrollBehavior) },
+            topBar = {
+                LTTopAppBar(
+                    title = stringResource(R.string.work_title),
+                    scrollBehavior = scrollBehavior,
+                    actions = {
+                        if (overview != null) {
+                            IconButton(onClick = { onAction(WorkAction.OpenSettings) }) {
+                                Icon(
+                                    Icons.Rounded.Tune,
+                                    contentDescription = stringResource(R.string.work_settings_open),
+                                )
+                            }
+                        }
+                    },
+                )
+            },
             snackbarHost = { SnackbarHost(snackbar) },
             floatingActionButton = { if (overview != null) AddButton(tab, onAction) },
         ) { innerPadding ->
@@ -211,7 +235,7 @@ private fun Tabs(
         }
 
         tab == WorkTab.WEEK -> {
-            WeekTab(overview, week, padding, onAction)
+            WeekTab(week, padding, onAction)
         }
 
         else -> {
@@ -229,35 +253,54 @@ private fun EffectsHandler(
     val haptic = LocalHapticFeedback.current
     val undoLabel = stringResource(DesignR.string.lt_undo)
     val resources = LocalResources.current
-    LaunchedEffect(effects) {
-        effects.collect { effect ->
-            when (effect) {
-                is WorkEffect.Message -> {
-                    haptic.performHapticFeedback(HapticFeedbackType.Reject)
-                    snackbar.showSnackbar(resources.getString(effect.messageRes))
-                }
-
-                is WorkEffect.Deleted -> {
-                    snackbar.showUndo(resources.getString(effect.messageRes), undoLabel) {
-                        onAction(WorkAction.Undo(effect.item))
-                    }
-                }
-
-                WorkEffect.Saved -> {
-                    haptic.performHapticFeedback(HapticFeedbackType.Confirm)
-                }
-
-                is WorkEffect.FocusFinished -> {
-                    haptic.performHapticFeedback(HapticFeedbackType.Confirm)
-                    val message =
-                        if (effect.kind == FocusKind.FOCUS) {
-                            R.string.work_focus_finished_focus
-                        } else {
-                            R.string.work_focus_finished_break
-                        }
-                    snackbar.showSnackbar(resources.getString(message))
+    val currentOnAction by rememberUpdatedState(onAction)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(effects, lifecycle) {
+        // Sólo se consumen eventos con la pantalla visible; cada snackbar va en su propia corrutina para que un
+        // "Deshacer" a medias (que suspende hasta ~10 s) no retrase el aviso del siguiente evento.
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            effects.collect { effect ->
+                launch {
+                    handle(effect, snackbar, haptic, resources, undoLabel) { currentOnAction(it) }
                 }
             }
+        }
+    }
+}
+
+private suspend fun handle(
+    effect: WorkEffect,
+    snackbar: SnackbarHostState,
+    haptic: HapticFeedback,
+    resources: Resources,
+    undoLabel: String,
+    onAction: (WorkAction) -> Unit,
+) {
+    when (effect) {
+        is WorkEffect.Message -> {
+            haptic.performHapticFeedback(HapticFeedbackType.Reject)
+            snackbar.showSnackbar(resources.getString(effect.messageRes))
+        }
+
+        is WorkEffect.Deleted -> {
+            snackbar.showUndo(resources.getString(effect.messageRes), undoLabel) {
+                onAction(WorkAction.Undo(effect.item))
+            }
+        }
+
+        WorkEffect.Saved -> {
+            haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+        }
+
+        is WorkEffect.FocusFinished -> {
+            haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+            val message =
+                if (effect.kind == FocusKind.FOCUS) {
+                    R.string.work_focus_finished_focus
+                } else {
+                    R.string.work_focus_finished_break
+                }
+            snackbar.showSnackbar(resources.getString(message))
         }
     }
 }

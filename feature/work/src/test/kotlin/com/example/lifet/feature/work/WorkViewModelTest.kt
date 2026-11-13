@@ -82,7 +82,7 @@ class WorkViewModelTest {
             observeWeek = ObserveWorkWeek(repository, clock),
             clockActions = manageClock,
             focusActions = manageFocus,
-            writer = WorkWriter(manageClock, manageFocus, manageData),
+            writer = WorkWriter(manageClock, manageData),
             clock = clock,
             savedState = savedState,
         )
@@ -478,6 +478,51 @@ class WorkViewModelTest {
                 awaitItem()
                 assertEquals(LocalDate.of(2026, 2, 23), (awaitItem() as WorkUiState.Success).week.week.start)
             }
+        }
+
+    @Test
+    fun `tapping a day in the week opens a new shift on that day, never in the future`() =
+        runTest {
+            val viewModel = viewModel(InMemoryWorkRepository(), endOfDay)
+
+            viewModel.onAction(WorkAction.OpenShift(date = LocalDate.of(2026, 3, 10)))
+            assertEquals(LocalDate.of(2026, 3, 10), (viewModel.editor.value as WorkEditor.EditShift).startDate)
+
+            viewModel.onAction(WorkAction.OpenShift(date = LocalDate.of(2026, 3, 20)))
+            assertEquals(today, (viewModel.editor.value as WorkEditor.EditShift).startDate)
+
+            viewModel.onAction(WorkAction.OpenShift())
+            assertEquals(today, (viewModel.editor.value as WorkEditor.EditShift).startDate)
+        }
+
+    @Test
+    fun `undoing a delete that now collides with another shift is rejected and explained`() =
+        runTest {
+            val deleted = shift("a", "2026-03-12T08:00", "2026-03-12T12:00")
+            val replacement = shift("b", "2026-03-12T09:00", "2026-03-12T11:00")
+            val repository = InMemoryWorkRepository(WorkDataSet(shifts = listOf(replacement)))
+            val viewModel = viewModel(repository, endOfDay)
+
+            viewModel.effects.test {
+                viewModel.onAction(WorkAction.Undo(WorkItem.Shift(deleted)))
+                assertEquals(WorkEffect.Message(R.string.work_error_save), awaitItem())
+            }
+            assertEquals(listOf("b"), repository.current.shifts.map { it.id })
+        }
+
+    @Test
+    fun `the settings and note editors open without needing an existing record`() =
+        runTest {
+            val viewModel = viewModel(InMemoryWorkRepository())
+
+            viewModel.onAction(WorkAction.OpenSettings)
+            assertEquals(WorkEditor.EditSettings, viewModel.editor.value)
+
+            viewModel.onAction(WorkAction.OpenNote(today, "hola"))
+            assertEquals(WorkEditor.EditNote(today, "hola"), viewModel.editor.value)
+
+            viewModel.onAction(WorkAction.Dismiss)
+            assertNull(viewModel.editor.value)
         }
 
     private companion object {

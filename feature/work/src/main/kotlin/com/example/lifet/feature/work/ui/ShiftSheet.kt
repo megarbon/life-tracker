@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Close
@@ -24,8 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.lifet.core.designsystem.component.LTQuickAddSheet
 import com.example.lifet.core.designsystem.theme.LifeTrackerTheme
@@ -34,6 +33,7 @@ import com.example.lifet.core.model.work.ShiftIssue
 import com.example.lifet.core.model.work.WorkProject
 import com.example.lifet.core.model.work.WorkRules
 import com.example.lifet.feature.work.BreakDraft
+import com.example.lifet.feature.work.LocalWorkClock
 import com.example.lifet.feature.work.MINUTES_IN_DAY
 import com.example.lifet.feature.work.R
 import com.example.lifet.feature.work.ShiftDraft
@@ -61,10 +61,11 @@ internal fun ShiftSheet(
     val formatters = rememberWorkFormatters()
     val zone = editor.existing?.zone ?: editor.zone
     var draft by rememberSaveable(editor.existing?.id, editor.newId) {
-        mutableStateOf(editor.existing?.toDraft() ?: blankShiftDraft(editor.newId, editor.today))
+        mutableStateOf(editor.existing?.toDraft() ?: blankShiftDraft(editor.newId, editor.startDate))
     }
     var submitted by rememberSaveable { mutableStateOf(false) }
-    val issues = if (submitted) draft.issues(zone, editor.now) else emptySet()
+    val clock = LocalWorkClock.current
+    val issues = if (submitted) draft.issues(zone, clock.instant()) else emptySet()
     LTQuickAddSheet(
         title = stringResource(if (editor.existing == null) R.string.work_sheet_add else R.string.work_sheet_edit),
         onDismiss = onDismiss,
@@ -100,7 +101,7 @@ internal fun ShiftSheet(
             SheetActions(
                 onSave = {
                     submitted = true
-                    if (draft.issues(zone, editor.now).isEmpty()) onSave(draft)
+                    if (draft.issues(zone, clock.instant()).isEmpty()) onSave(draft)
                 },
                 onDelete = onDelete,
             )
@@ -123,11 +124,20 @@ private fun TimesRow(
             onChange = { onChange(draft.copy(startMinute = it)) },
             modifier = Modifier.fillMaxWidth(),
         )
+        // Toda la fila es un único objetivo táctil con su rol: TalkBack lee "Sigue en curso, casilla, marcada".
         Row(
-            modifier = Modifier.fillMaxWidth().semantics { role = Role.Checkbox },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = MinTouchTarget)
+                    .toggleable(
+                        value = !draft.hasEnd,
+                        role = Role.Checkbox,
+                        onValueChange = { onChange(draft.copy(hasEnd = !it)) },
+                    ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Checkbox(checked = !draft.hasEnd, onCheckedChange = { onChange(draft.copy(hasEnd = !it)) })
+            Checkbox(checked = !draft.hasEnd, onCheckedChange = null)
             Text(
                 text = stringResource(R.string.work_field_still_open),
                 style = MaterialTheme.typography.bodyLarge,

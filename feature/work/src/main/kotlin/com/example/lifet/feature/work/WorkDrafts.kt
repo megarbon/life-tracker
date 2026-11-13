@@ -36,9 +36,42 @@ internal data class BreakDraft(
 }
 
 /**
+ * Los instantes con los que se abrió una jornada al editarla, en milisegundos (un `Long` sí es `Serializable`) junto
+ * con las horas del día de las que salieron. Sirven para no degradar una jornada: si el usuario no toca una hora, se
+ * conserva el instante original con sus segundos en lugar de redondear al minuto.
+ */
+internal data class ShiftOrigin(
+    val startMillis: Long,
+    val startMinute: Int,
+    val startDate: LocalDate,
+    val endMillis: Long?,
+    val endMinute: Int,
+    val breaks: List<BreakOrigin>,
+) : Serializable {
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
+}
+
+/** Una pausa tal como estaba al abrir la jornada. */
+internal data class BreakOrigin(
+    val startMillis: Long,
+    val endMillis: Long?,
+    val startMinute: Int,
+    val endMinute: Int?,
+) : Serializable {
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
+}
+
+/**
  * Borrador de una jornada (alta a mano y edición). La salida se guarda como hora del día: si es igual o anterior a la
  * entrada, termina al día siguiente (una jornada nocturna, o de 24 h exactas). Las pausas se colocan en el primer
  * momento posible desde la entrada, así que no hace falta pedir fechas para cada una.
+ *
+ * Al editar, [origin] recuerda los instantes originales: lo que no se toque se conserva tal cual (con sus segundos y
+ * sin que la salida salte de día), y sólo se reconstruye con el selector de hora lo que el usuario cambie.
  */
 internal data class ShiftDraft(
     val id: String,
@@ -49,13 +82,27 @@ internal data class ShiftDraft(
     val projectId: String? = null,
     val note: String = "",
     val breaks: List<BreakDraft> = emptyList(),
+    val origin: ShiftOrigin? = null,
 ) : Serializable {
     /** La salida cae al día siguiente de la entrada. */
-    val endsNextDay: Boolean get() = hasEnd && endMinute <= startMinute
+    val endsNextDay: Boolean get() = hasEnd && endMinute <= startMinute && !keepsOriginalEnd
+
+    private val keepsOriginalStart: Boolean
+        get() = origin != null && origin.startDate == startDate && origin.startMinute == startMinute
+
+    private val keepsOriginalEnd: Boolean
+        get() = keepsOriginalStart && origin?.endMillis != null && origin.endMinute == endMinute
 
     fun toShift(zone: ZoneId): WorkShift {
-        val start = instantAt(startDate, startMinute, zone)
-        val end = if (hasEnd) instantAt(startDate.plusDays(if (endsNextDay) 1 else 0), endMinute, zone) else null
+        val start =
+            origin?.takeIf { keepsOriginalStart }?.let { Instant.ofEpochMilli(it.startMillis) }
+                ?: instantAt(startDate, startMinute, zone)
+        val end =
+            when {
+                !hasEnd -> null
+                keepsOriginalEnd -> origin?.endMillis?.let(Instant::ofEpochMilli)
+                else -> instantAt(startDate.plusDays(if (endsNextDay) 1 else 0), endMinute, zone)
+            }
         return WorkShift(
             id = id,
             start = start,
@@ -73,10 +120,15 @@ internal data class ShiftDraft(
         now: Instant,
     ): Set<ShiftIssue> = ShiftValidator.validate(toShift(zone), emptyList(), now)
 
+    /** Una pausa que el usuario no ha tocado conserva su instante original (la jornada no cambió de inicio). */
     private fun BreakDraft.resolve(
         shiftStart: Instant,
         zone: ZoneId,
     ): WorkBreak {
+        val kept = origin?.breaks?.firstOrNull { it.startMinute == startMinute && it.endMinute == endMinute }
+        if (kept != null && keepsOriginalStart) {
+            return WorkBreak(Instant.ofEpochMilli(kept.startMillis), kept.endMillis?.let(Instant::ofEpochMilli))
+        }
         val first = nextOccurrence(shiftStart, startMinute, zone)
         val last = endMinute?.let { nextOccurrence(first.plusSeconds(1), it, zone) }
         return WorkBreak(first, last)
@@ -118,17 +170,37 @@ internal fun blankShiftDraft(
     endMinute: Int = DEFAULT_END_MINUTE,
 ): ShiftDraft = ShiftDraft(id = id, startDate = today, startMinute = startMinute, endMinute = endMinute)
 
-internal fun WorkShift.toDraft(): ShiftDraft =
-    ShiftDraft(
+internal fun WorkShift.toDraft(): ShiftDraft {
+    val startMinute = start.minuteOfDay(zone)
+    val endMinute = end?.minuteOfDay(zone) ?: 0
+    return ShiftDraft(
         id = id,
         startDate = startDate,
-        startMinute = start.minuteOfDay(zone),
+        startMinute = startMinute,
         hasEnd = end != null,
-        endMinute = end?.minuteOfDay(zone) ?: 0,
+        endMinute = endMinute,
         projectId = projectId,
         note = note,
         breaks = breaks.map { BreakDraft(it.start.minuteOfDay(zone), it.end?.minuteOfDay(zone)) },
+        origin =
+            ShiftOrigin(
+                startMillis = start.toEpochMilli(),
+                startMinute = startMinute,
+                startDate = startDate,
+                endMillis = end?.toEpochMilli(),
+                endMinute = endMinute,
+                breaks =
+                    breaks.map {
+                        BreakOrigin(
+                            startMillis = it.start.toEpochMilli(),
+                            endMillis = it.end?.toEpochMilli(),
+                            startMinute = it.start.minuteOfDay(zone),
+                            endMinute = it.end?.minuteOfDay(zone),
+                        )
+                    },
+            ),
     )
+}
 
 private const val DEFAULT_START_MINUTE = 9 * MINUTES_IN_HOUR
 private const val DEFAULT_END_MINUTE = 17 * MINUTES_IN_HOUR

@@ -71,6 +71,11 @@ internal class WorkViewModel
                         .catch { emit(WorkUiState.Error(R.string.work_error_load)) }
                 }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), WorkUiState.Loading)
 
+        /**
+         * Enruta cada acción. Sin `else`: una acción nueva que nadie maneje es un error de compilación, no un toque
+         * que se pierde en silencio.
+         */
+        @Suppress("CyclomaticComplexMethod") // Tabla plana de una línea por acción: partirla sólo la dispersaría.
         fun onAction(action: WorkAction) {
             when (action) {
                 WorkAction.Retry -> retry.value += 1
@@ -82,22 +87,11 @@ internal class WorkViewModel
                 WorkAction.StopFocus -> perform { focusActions.stop() }
                 WorkAction.FinishFocus -> finishFocus()
                 is WorkAction.MoveWeek -> moveWeek(action.delta)
-                else -> onEditorAction(action)
-            }
-        }
-
-        private fun onEditorAction(action: WorkAction) {
-            when (action) {
-                is WorkAction.OpenShift -> _editor.value = newShiftEditor(action.existing, clock)
-                is WorkAction.OpenClose -> _editor.value = WorkEditor.CloseShift(action.shift, clock.instant())
-                is WorkAction.OpenProject -> _editor.value = WorkEditor.EditProject(action.existing)
-                is WorkAction.OpenNote -> _editor.value = WorkEditor.EditNote(action.date, action.text)
-                WorkAction.OpenSettings -> _editor.value = WorkEditor.EditSettings
-                WorkAction.Dismiss -> _editor.value = null
                 is WorkAction.Save -> save(action.form)
                 is WorkAction.Delete -> delete(action.item)
                 is WorkAction.Undo -> undo(action.item)
-                else -> Unit
+                WorkAction.Dismiss -> _editor.value = null
+                is WorkAction.OpenEditor -> _editor.value = action.editor(clock)
             }
         }
 
@@ -169,7 +163,5 @@ internal class WorkViewModel
             when (this) {
                 is WorkItem.Shift -> R.string.work_deleted_shift
                 is WorkItem.Project -> R.string.work_deleted_project
-                is WorkItem.Focus -> R.string.work_deleted_focus
-                is WorkItem.Note -> R.string.work_deleted_note
             }
     }

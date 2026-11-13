@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Stop
@@ -24,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,6 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.lifet.core.designsystem.component.LTChipGroup
 import com.example.lifet.core.designsystem.component.LTProgressRing
 import com.example.lifet.core.designsystem.component.LTSectionHeader
@@ -52,6 +56,8 @@ import com.example.lifet.feature.work.labelRes
 import com.example.lifet.feature.work.rememberDurationFormat
 import com.example.lifet.feature.work.rememberLiveNow
 import com.example.lifet.feature.work.rememberWorkFormatters
+import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 
 private val RING_SIZE = 240.dp
 private val RING_STROKE = 16.dp
@@ -104,8 +110,8 @@ internal fun FocusTab(
 }
 
 /**
- * Temporizador en marcha. Lee el "ahora" vivo en esta hoja: cada segundo se recompone el anillo y la cifra, no la
- * pantalla. Al llegar a cero avisa una sola vez ([WorkAction.FinishFocus]) y el dominio cierra el intervalo.
+ * Temporizador en marcha. La tarjeta (nota y botón de parar) es estática; sólo [LiveRing] lee el reloj, así que cada
+ * segundo se recompone el anillo y su cifra, no la tarjeta ni la pantalla.
  */
 @Composable
 private fun RunningTimer(
@@ -113,15 +119,6 @@ private fun RunningTimer(
     formatters: WorkFormatters,
     onAction: (WorkAction) -> Unit,
 ) {
-    val now by rememberLiveNow(enabled = true)
-    val remaining = session.remainingSecondsAt(now)
-    val due = session.isDueAt(now)
-    LaunchedEffect(session.id, due) {
-        if (due) onAction(WorkAction.FinishFocus)
-    }
-    val label = stringResource(session.kind.labelRes)
-    val countdown = formatters.countdown(remaining)
-    val description = stringResource(R.string.work_focus_ring_description, label, countdown)
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
@@ -131,14 +128,7 @@ private fun RunningTimer(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(LifeTrackerTheme.spacing.md),
         ) {
-            LTProgressRing(
-                rings = listOf(RingSpec(session.progressAt(now), LifeTrackerTheme.areaColors.work)),
-                size = RING_SIZE,
-                strokeWidth = RING_STROKE,
-                contentDescription = description,
-            ) {
-                RingCenter(label, countdown, session.title)
-            }
+            LiveRing(session, formatters, onFinished = { onAction(WorkAction.FinishFocus) })
             Text(
                 text = stringResource(R.string.work_focus_background_note),
                 style = MaterialTheme.typography.bodySmall,
@@ -159,6 +149,45 @@ private fun RunningTimer(
     }
 }
 
+/**
+ * Anillo con la cuenta atrás. Es la única hoja que lee el "ahora" vivo. El progreso se redondea a pasos del 1 %: el
+ * anillo anima su arco al cambiar de valor, y sin redondear lo relanzaría en cada segundo y quedaría moviéndose
+ * siempre. Al llegar a cero avisa con [onFinished]; si el dominio no pudo cerrarlo, vuelve a intentarlo cada poco en
+ * lugar de dejar el contador congelado en 00:00.
+ */
+@Composable
+private fun LiveRing(
+    session: FocusSession,
+    formatters: WorkFormatters,
+    onFinished: () -> Unit,
+) {
+    val now by rememberLiveNow(enabled = true)
+    val due = session.isDueAt(now)
+    val currentOnFinished by rememberUpdatedState(onFinished)
+    LaunchedEffect(session.id, due) {
+        while (due) {
+            currentOnFinished()
+            delay(FINISH_RETRY_MS)
+        }
+    }
+    val label = stringResource(session.kind.labelRes)
+    val countdown = formatters.countdown(session.remainingSecondsAt(now))
+    val description = stringResource(R.string.work_focus_ring_description, label, countdown)
+    val progress = (session.progressAt(now) * PROGRESS_STEPS).roundToInt() / PROGRESS_STEPS.toFloat()
+    LTProgressRing(
+        rings = listOf(RingSpec(progress, LifeTrackerTheme.areaColors.work)),
+        size = RING_SIZE,
+        strokeWidth = RING_STROKE,
+        contentDescription = description,
+    ) {
+        RingCenter(label, countdown, session.title)
+    }
+}
+
+private const val PROGRESS_STEPS = 100
+private const val FINISH_RETRY_MS = 2_000L
+
+/** Centro del anillo. La cifra se encoge hasta caber (fuente 2x, "01:00:00") en lugar de cortarse. */
 @Composable
 private fun RingCenter(
     label: String,
@@ -167,12 +196,15 @@ private fun RingCenter(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(horizontal = RING_TEXT_INSET),
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.width(RING_CONTENT_WIDTH),
     ) {
         Text(
             text = countdown,
-            style = MaterialTheme.typography.displayMedium,
+            modifier = Modifier.fillMaxWidth(),
+            style = MaterialTheme.typography.displayMedium.copy(textAlign = TextAlign.Center),
             maxLines = 1,
+            autoSize = TextAutoSize.StepBased(minFontSize = COUNTDOWN_MIN_SP.sp, maxFontSize = COUNTDOWN_MAX_SP.sp),
         )
         Text(
             text = label,
@@ -186,7 +218,7 @@ private fun RingCenter(
                 text = title,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
             )
@@ -194,7 +226,9 @@ private fun RingCenter(
     }
 }
 
-private val RING_TEXT_INSET = 28.dp
+private val RING_CONTENT_WIDTH = 168.dp
+private const val COUNTDOWN_MIN_SP = 20
+private const val COUNTDOWN_MAX_SP = 45
 
 /** Sin temporizador: elegir tipo, minutos, proyecto y título, y empezar. Recuerda la elección al girar. */
 @Composable

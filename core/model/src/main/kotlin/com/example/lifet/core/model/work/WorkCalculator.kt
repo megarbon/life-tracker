@@ -51,6 +51,12 @@ public class WorkCalculator(
             hasData = !data.hasNoRecords,
             liveToday = active?.startDate == today,
             liveWeek = active?.startDate?.let { it in currentWeek } == true,
+            liveDaySurplusSeconds =
+                active?.startDate?.let {
+                    ledger.workedSeconds(
+                        it,
+                    ) - ledger.targetSeconds(it)
+                } ?: 0L,
         )
     }
 
@@ -106,7 +112,10 @@ public class WorkCalculator(
             summary = todaySummary(),
             activeShift = activeShift,
             forgottenShifts = forgottenShifts,
-            todayShifts = data.shifts.filter { it.startDate == today }.sortedByDescending { it.start },
+            todayShifts =
+                (data.shifts.filter { it.startDate == today } + listOfNotNull(activeShift))
+                    .distinctBy { it.id }
+                    .sortedByDescending { it.start },
             todayNote =
                 data.notes
                     .firstOrNull { it.date == today }

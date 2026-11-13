@@ -130,6 +130,7 @@ internal fun BalanceChart(
 internal fun ProjectSharesChart(
     shares: List<ProjectShare>,
     modifier: Modifier = Modifier,
+    weekly: Boolean = false,
 ) {
     val durations = rememberDurationFormat()
     val hours = rememberHoursText()
@@ -141,7 +142,7 @@ internal fun ProjectSharesChart(
     val top = shares.firstOrNull()
     val headline =
         if (top == null) {
-            stringResource(R.string.work_chart_projects_none)
+            stringResource(if (weekly) R.string.work_chart_projects_none_week else R.string.work_chart_projects_none)
         } else {
             stringResource(R.string.work_chart_projects_top, top.project?.name ?: none, durations.format(top.seconds))
         }
@@ -151,7 +152,7 @@ internal fun ProjectSharesChart(
         headline = headline,
         summary =
             stringResource(
-                R.string.work_chart_projects_summary,
+                if (weekly) R.string.work_chart_projects_summary_week else R.string.work_chart_projects_summary,
                 points.joinToString(", ") { itemFormat.format(it.label, hours(it.value)) },
             ),
         points = points,
