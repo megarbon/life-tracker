@@ -104,6 +104,7 @@ internal fun previewWork(): WorkTodaySummary =
         focusSecondsToday = 0,
         hasData = true,
         liveToday = false,
+        liveDaySurplusSeconds = 0,
         liveWeek = false,
     )
 
