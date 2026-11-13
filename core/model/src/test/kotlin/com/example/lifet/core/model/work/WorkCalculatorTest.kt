@@ -357,4 +357,60 @@ class WorkCalculatorTest {
 
         assertEquals(7 * HOUR, summary.activeShiftSeconds)
     }
+
+    @Test
+    fun `a night shift still running from yesterday is listed among todays shifts`() {
+        // Entrada ayer a las 22:00 y sigue abierta a las 02:00: no puede desaparecer de la lista de hoy.
+        val night = shift("a", "2026-03-11T22:00", null)
+        val overview = calculator(listOf(night), at = at("2026-03-12T02:00")).overview()
+
+        assertEquals(listOf("a"), overview.todayShifts.map { it.id })
+        assertTrue(overview.summary.isClockedIn)
+    }
+
+    @Test
+    fun `an active shift is not duplicated when it also started today`() {
+        val overview = calculator(listOf(shift("a", "2026-03-12T09:00", null))).overview()
+
+        assertEquals(1, overview.todayShifts.size)
+    }
+
+    @Test
+    fun `live totals keep growing from the emission instant while clocked in`() {
+        val summary = calculator(listOf(shift("a", "2026-03-12T09:00", null))).todaySummary()
+        val later = now.plusSeconds(600)
+
+        assertEquals(summary.todaySeconds + 600, summary.todaySecondsAt(later))
+        assertEquals(summary.weekSeconds + 600, summary.weekSecondsAt(later))
+        assertEquals(summary.activeShiftSeconds + 600, summary.shiftSecondsAt(later))
+    }
+
+    @Test
+    fun `the live week balance stays at zero until the running day passes its target`() {
+        // 3 h trabajadas de un objetivo de 8: el día en curso no resta ni suma hasta superar las 8 h.
+        val summary = calculator(listOf(shift("a", "2026-03-12T09:00", null))).todaySummary()
+
+        assertEquals(0L, summary.weekBalanceSecondsAt(now))
+        assertEquals(0L, summary.weekBalanceSecondsAt(now.plusSeconds(4 * HOUR)))
+        assertEquals(HOUR, summary.weekBalanceSecondsAt(now.plusSeconds(6 * HOUR)))
+    }
+
+    @Test
+    fun `the live week balance matches what the ledger computes at that later instant`() {
+        val data = listOf(shift("a", "2026-03-12T01:00", null))
+        val earlier = calculator(data, at = at("2026-03-12T12:00")).todaySummary()
+        val later = calculator(data, at = at("2026-03-12T15:00")).todaySummary()
+
+        assertEquals(later.weekBalanceSeconds, earlier.weekBalanceSecondsAt(at("2026-03-12T15:00")))
+    }
+
+    @Test
+    fun `no live time is added while on a break or with nothing running`() {
+        val onBreak = shift("a", "2026-03-12T09:00", null, breaks = listOf(pause("2026-03-12T11:00", null)))
+        val paused = calculator(listOf(onBreak)).todaySummary()
+        val idle = calculator(listOf(shift("b", "2026-03-11T09:00", "2026-03-11T17:00"))).todaySummary()
+
+        assertEquals(paused.todaySeconds, paused.todaySecondsAt(now.plusSeconds(3_600)))
+        assertEquals(idle.weekSeconds, idle.weekSecondsAt(now.plusSeconds(3_600)))
+    }
 }

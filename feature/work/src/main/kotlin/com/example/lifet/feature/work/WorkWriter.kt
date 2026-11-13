@@ -2,7 +2,6 @@ package com.example.lifet.feature.work
 
 import com.example.lifet.core.common.AppError
 import com.example.lifet.core.common.AppResult
-import com.example.lifet.core.domain.work.ManageFocusTimer
 import com.example.lifet.core.domain.work.ManageWorkClock
 import com.example.lifet.core.domain.work.ManageWorkData
 import com.example.lifet.core.model.work.WorkClockIssue
@@ -17,7 +16,6 @@ internal class WorkWriter
     @Inject
     constructor(
         private val clock: ManageWorkClock,
-        private val focus: ManageFocusTimer,
         private val data: ManageWorkData,
     ) {
         suspend fun save(form: WorkForm): AppResult<Unit> =
@@ -33,16 +31,12 @@ internal class WorkWriter
             when (item) {
                 is WorkItem.Shift -> clock.deleteShift(item.value.id)
                 is WorkItem.Project -> data.deleteProject(item.value.id)
-                is WorkItem.Focus -> focus.delete(item.value.id)
-                is WorkItem.Note -> data.saveNote(item.value.date, "")
             }
 
         suspend fun restore(item: WorkItem): AppResult<Unit> =
             when (item) {
                 is WorkItem.Shift -> clock.restoreShift(item.value)
                 is WorkItem.Project -> data.restoreProject(item.value)
-                is WorkItem.Focus -> focus.restore(item.value)
-                is WorkItem.Note -> data.restoreNote(item.value)
             }
 
         private suspend fun close(form: WorkForm.Close): AppResult<Unit> =

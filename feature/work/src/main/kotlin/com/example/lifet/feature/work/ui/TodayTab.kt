@@ -85,7 +85,7 @@ internal fun TodayTab(
             ShiftListItem(
                 shift = shift,
                 project = shift.projectId?.let(projects::get),
-                now = overview.now,
+                snapshotNow = overview.now,
                 formatters = formatters,
                 durations = durations,
                 onClick = { onAction(WorkAction.OpenShift(shift)) },

@@ -24,8 +24,6 @@
     <string name="work_error_invalid">Check the highlighted data before saving.</string>
     <string name="work_deleted_shift">Shift deleted</string>
     <string name="work_deleted_project">Project deleted</string>
-    <string name="work_deleted_focus">Focus session deleted</string>
-    <string name="work_deleted_note">Note deleted</string>
 
     <!-- Durations and balance -->
     <string name="work_duration_hm">%1$d h %2$d min</string>
@@ -108,7 +106,7 @@
     <string name="work_week_day_free">Day off</string>
     <string name="work_week_day_empty">No shifts</string>
     <string name="work_week_day_row">%1$s, %2$s, %3$s</string>
-    <string name="work_settings">Target and days</string>
+    <string name="work_settings_open">Hours settings</string>
 
     <!-- Projects -->
     <string name="work_projects_empty_title">No projects yet</string>
@@ -136,6 +134,8 @@
     <string name="work_chart_projects_none">No project hours in the last few weeks.</string>
     <string name="work_chart_projects_top">%1$s takes the largest share: %2$s.</string>
     <string name="work_chart_projects_summary">Hours of the last four weeks by project: %1$s.</string>
+    <string name="work_chart_projects_none_week">No project hours this week.</string>
+    <string name="work_chart_projects_summary_week">Hours this week by project: %1$s.</string>
     <string name="work_chart_item">%1$s: %2$s</string>
     <string name="work_chart_hours_value">%1$s h</string>
 

@@ -8,18 +8,26 @@ import com.example.lifet.core.model.work.WorkCalculator
 import com.example.lifet.core.model.work.WorkClockIssue
 import com.example.lifet.core.model.work.WorkShift
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.time.Clock
 import java.time.Instant
 import java.util.UUID
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Acciones de fichaje: entrada, pausa, reanudar, salida, cerrar a posteriori una jornada olvidada y guardar o borrar
  * una jornada a mano. Toda jornada que se guarda pasa por [ShiftValidator]: una pausa solapada, una salida anterior a
  * la entrada o una jornada que pisa a otra se rechazan con [AppError.Validation] sin tocar la base de datos.
  *
+ * Es un singleton y cada acción mantiene [lock] durante todo el ciclo leer, validar y escribir: dos toques seguidos en
+ * "Entrada" no pueden ver los dos "no hay jornada" y crear dos jornadas abiertas. El cerrojo no es reentrante, así que
+ * sólo lo toman las funciones públicas y las privadas asumen que ya lo tienen.
+ *
  * "Ahora" sale del [Clock] inyectado; el instante se guarda con la zona del reloj en ese momento.
  */
+@Singleton
 @Suppress("TooManyFunctions") // Una función por acción de fichaje.
 public class ManageWorkClock
     @Inject
@@ -27,16 +35,20 @@ public class ManageWorkClock
         private val repository: WorkRepository,
         private val clock: Clock,
     ) {
+        private val lock = Mutex()
+
         /** Ficha la entrada ahora. Falla si ya hay una jornada en curso. */
-        public suspend fun clockIn(projectId: String? = null): AppResult<WorkShift> {
-            val now = clock.instant()
-            val data = repository.observeData().first()
-            if (WorkCalculator(data, now, clock.zone).currentShift() != null) {
-                return invalid(WorkClockIssue.ALREADY_CLOCKED_IN)
+        public suspend fun clockIn(projectId: String? = null): AppResult<WorkShift> =
+            lock.withLock {
+                val now = clock.instant()
+                val data = repository.observeData().first()
+                if (WorkCalculator(data, now, clock.zone).currentShift() != null) {
+                    invalid(WorkClockIssue.ALREADY_CLOCKED_IN)
+                } else {
+                    val shift = WorkShift(UUID.randomUUID().toString(), now, clock.zone, projectId = projectId)
+                    save(shift, data.shifts, now).thenReturn(shift)
+                }
             }
-            val shift = WorkShift(UUID.randomUUID().toString(), now, clock.zone, projectId = projectId)
-            return save(shift, data.shifts, now).thenReturn(shift)
-        }
 
         /** Empieza una pausa en la jornada en curso. */
         public suspend fun startBreak(): AppResult<WorkShift> =
@@ -62,26 +74,31 @@ public class ManageWorkClock
         public suspend fun closeAt(
             shiftId: String,
             end: Instant,
-        ): AppResult<WorkShift> {
-            val now = clock.instant()
-            val data = repository.observeData().first()
-            val shift =
-                data.shifts.firstOrNull { it.id == shiftId && it.isOpen }
-                    ?: return invalid(WorkClockIssue.SHIFT_NOT_FOUND)
-            val closed = shift.closedAt(end)
-            return save(closed, data.shifts, now).thenReturn(closed)
-        }
+        ): AppResult<WorkShift> =
+            lock.withLock {
+                val now = clock.instant()
+                val data = repository.observeData().first()
+                val shift = data.shifts.firstOrNull { it.id == shiftId && it.isOpen }
+                if (shift == null) {
+                    invalid(WorkClockIssue.SHIFT_NOT_FOUND)
+                } else {
+                    val closed = shift.closedAt(end)
+                    save(closed, data.shifts, now).thenReturn(closed)
+                }
+            }
 
         /** Guarda una jornada creada o editada a mano (alta con entrada y salida, o corrección de una existente). */
-        public suspend fun saveShift(shift: WorkShift): AppResult<Unit> {
-            val data = repository.observeData().first()
-            return save(shift, data.shifts, clock.instant())
-        }
+        public suspend fun saveShift(shift: WorkShift): AppResult<Unit> =
+            lock.withLock { save(shift, repository.observeData().first().shifts, clock.instant()) }
 
-        public suspend fun deleteShift(id: String): AppResult<Unit> = repository.deleteShift(id)
+        public suspend fun deleteShift(id: String): AppResult<Unit> = lock.withLock { repository.deleteShift(id) }
 
-        /** Restaura una jornada borrada ("Deshacer"): se guarda tal cual estaba, sin volver a validar. */
-        public suspend fun restoreShift(shift: WorkShift): AppResult<Unit> = repository.saveShift(shift)
+        /**
+         * Restaura una jornada borrada ("Deshacer"). Se vuelve a validar: si mientras tanto se creó otra que la pisa,
+         * se rechaza en lugar de contar las mismas horas dos veces.
+         */
+        public suspend fun restoreShift(shift: WorkShift): AppResult<Unit> =
+            lock.withLock { save(shift, repository.observeData().first().shifts, clock.instant()) }
 
         /** Valida y guarda; el id de la propia jornada se ignora en la comprobación de solapes. */
         private suspend fun save(
@@ -104,13 +121,18 @@ public class ManageWorkClock
         private suspend fun changeCurrent(
             onMissing: WorkClockIssue,
             change: (WorkShift, Instant) -> WorkShift?,
-        ): AppResult<WorkShift?> {
-            val now = clock.instant()
-            val data = repository.observeData().first()
-            val current = WorkCalculator(data, now, clock.zone).currentShift() ?: return invalid(onMissing)
-            val updated = change(current, now)
-            return if (updated == null) AppResult.Success(null) else save(updated, data.shifts, now).thenReturn(updated)
-        }
+        ): AppResult<WorkShift?> =
+            lock.withLock {
+                val now = clock.instant()
+                val data = repository.observeData().first()
+                val current = WorkCalculator(data, now, clock.zone).currentShift()
+                val updated = current?.let { change(it, now) }
+                when {
+                    current == null -> invalid(onMissing)
+                    updated == null -> AppResult.Success(null)
+                    else -> save(updated, data.shifts, now).thenReturn(updated)
+                }
+            }
 
         private fun AppResult<WorkShift?>.orIssue(issue: WorkClockIssue): AppResult<WorkShift> =
             when (this) {

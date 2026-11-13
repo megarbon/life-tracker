@@ -34,11 +34,11 @@ import com.example.lifet.core.designsystem.component.LTSectionHeader
 import com.example.lifet.core.designsystem.theme.LifeTrackerTheme
 import com.example.lifet.core.designsystem.theme.MinTouchTarget
 import com.example.lifet.core.model.Area
-import com.example.lifet.core.model.work.WorkOverview
 import com.example.lifet.core.model.work.WorkWeekDay
 import com.example.lifet.core.model.work.WorkWeekReport
 import com.example.lifet.core.ui.icon
 import com.example.lifet.feature.work.DurationFormat
+import com.example.lifet.feature.work.LocalWorkClock
 import com.example.lifet.feature.work.R
 import com.example.lifet.feature.work.WorkAction
 import com.example.lifet.feature.work.WorkFormatters
@@ -51,7 +51,6 @@ import com.example.lifet.feature.work.rememberWorkFormatters
  */
 @Composable
 internal fun WeekTab(
-    overview: WorkOverview,
     week: WorkWeekReport,
     contentPadding: PaddingValues,
     onAction: (WorkAction) -> Unit,
@@ -65,7 +64,7 @@ internal fun WeekTab(
         verticalArrangement = Arrangement.spacedBy(LifeTrackerTheme.spacing.md),
     ) {
         item(key = "nav", contentType = "nav") { WeekNavigator(week, formatters, onAction) }
-        item(key = "hero", contentType = "hero") { WeekHero(week, durations, onAction) }
+        item(key = "hero", contentType = "hero") { WeekHero(week, durations) }
         item(key = "days-header", contentType = "header") {
             LTSectionHeader(title = stringResource(R.string.work_chart_hours_title))
         }
@@ -74,13 +73,13 @@ internal fun WeekTab(
                 day,
                 formatters,
                 durations,
-                onClick = { onAction(WorkAction.OpenShift(day.shifts.firstOrNull())) },
+                onClick = { onAction(WorkAction.OpenShift(day.shifts.firstOrNull(), day.date)) },
             )
         }
         item(key = "chart-hours", contentType = "chart") { HoursChart(week) }
         item(key = "chart-balance", contentType = "chart") { BalanceChart(week) }
         item(key = "chart-projects", contentType = "chart") {
-            ProjectSharesChart(week.projectShares.ifEmpty { overview.projectShares })
+            ProjectSharesChart(week.projectShares, weekly = true)
         }
     }
 }
@@ -124,7 +123,6 @@ private fun WeekNavigator(
 private fun WeekHero(
     week: WorkWeekReport,
     durations: DurationFormat,
-    onAction: (WorkAction) -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -162,12 +160,6 @@ private fun WeekHero(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            TextButton(
-                onClick = { onAction(WorkAction.OpenSettings) },
-                modifier = Modifier.heightIn(min = MinTouchTarget),
-            ) {
-                Text(stringResource(R.string.work_settings))
-            }
         }
     }
 }
@@ -181,10 +173,13 @@ private fun WeekDayRow(
     onClick: () -> Unit,
 ) {
     val title = formatters.dayTitle(day.date)
+    val clockNow = LocalWorkClock.current.instant()
     val worked =
         when {
             day.workedSeconds > 0L -> durations.format(day.workedSeconds)
-            day.shifts.isNotEmpty() -> stringResource(R.string.work_shift_open)
+            day.shifts.any { it.isOpen && !it.isForgotten(clockNow) } -> stringResource(R.string.work_shift_open)
+            day.shifts.any { it.isOpen } -> stringResource(R.string.work_shift_open_forgotten)
+            day.shifts.isNotEmpty() -> durations.format(0L)
             else -> stringResource(R.string.work_week_day_empty)
         }
     val target =

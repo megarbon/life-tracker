@@ -1,6 +1,8 @@
 package com.example.lifet.feature.work
 
 import com.example.lifet.core.model.work.ShiftIssue
+import com.example.lifet.core.model.work.WorkBreak
+import com.example.lifet.core.model.work.WorkShift
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -91,9 +93,12 @@ class WorkDraftsTest {
                     ),
             )
 
-        val rebuilt = original.toShift(zone).toDraft()
+        val shift = original.toShift(zone)
+        val rebuilt = shift.toDraft()
 
-        assertEquals(original, rebuilt)
+        // El borrador reabierto recuerda de dónde viene (origin); lo que debe coincidir es su contenido.
+        assertEquals(original, rebuilt.copy(origin = null))
+        assertEquals(shift, rebuilt.toShift(zone))
     }
 
     @Test
@@ -144,5 +149,56 @@ class WorkDraftsTest {
     fun `a project draft needs a name`() {
         assertFalse(ProjectDraft(null, "   ").isValid)
         assertTrue(ProjectDraft(null, "Web").isValid)
+    }
+
+    @Test
+    fun `settings draft toggles a working day on and off`() {
+        val monday = SettingsDraft("40", setOf(DayOfWeek.MONDAY))
+
+        assertEquals(setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), monday.withDayToggled(DayOfWeek.TUESDAY).workingDays)
+        assertTrue(monday.withDayToggled(DayOfWeek.MONDAY).workingDays.isEmpty())
+    }
+
+    @Test
+    fun `editing only the note keeps the original seconds of entry, exit and breaks`() {
+        val start = at("2026-03-12T09:00").plusSeconds(37)
+        val pause = WorkBreak(start.plusSeconds(4 * 3_600L + 5), start.plusSeconds(4 * 3_600L + 35 * 60L + 5))
+        val original = WorkShift("a", start, zone, end = start.plusSeconds(8 * 3_600L + 12), breaks = listOf(pause))
+
+        val edited = original.toDraft().copy(note = "Solo cambio la nota").toShift(zone)
+
+        assertEquals(original.start, edited.start)
+        assertEquals(original.end, edited.end)
+        assertEquals(original.breaks, edited.breaks)
+        assertEquals("Solo cambio la nota", edited.note)
+    }
+
+    @Test
+    fun `a tiny shift inside one minute never turns into 24 hours when edited`() {
+        val start = at("2026-03-12T09:00").plusSeconds(10)
+        val tiny = WorkShift("a", start, zone, end = start.plusSeconds(20))
+
+        val edited = tiny.toDraft().copy(projectId = "p").toShift(zone)
+
+        assertEquals(20L, edited.netSecondsAt(now))
+        assertEquals("p", edited.projectId)
+    }
+
+    @Test
+    fun `changing the entry hour rebuilds the shift from the pickers`() {
+        val start = at("2026-03-12T09:00").plusSeconds(37)
+        val original = WorkShift("a", start, zone, end = start.plusSeconds(8 * 3_600L))
+
+        val moved = original.toDraft().copy(startMinute = 8 * 60, endMinute = 16 * 60).toShift(zone)
+
+        assertEquals(at("2026-03-12T08:00"), moved.start)
+        assertEquals(at("2026-03-12T16:00"), moved.end)
+    }
+
+    @Test
+    fun `a draft opened from an open shift stays open`() {
+        val open = WorkShift("a", at("2026-03-12T09:00"), zone)
+
+        assertNull(open.toDraft().toShift(zone).end)
     }
 }

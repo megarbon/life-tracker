@@ -6,7 +6,6 @@ import com.example.lifet.core.common.AppResult
 import com.example.lifet.core.domain.work.ManageFocusTimer
 import com.example.lifet.core.model.work.FocusKind
 import com.example.lifet.core.model.work.FocusSession
-import com.example.lifet.core.model.work.WorkDayNote
 import com.example.lifet.core.model.work.WorkOverview
 import com.example.lifet.core.model.work.WorkProject
 import com.example.lifet.core.model.work.WorkShift
@@ -53,6 +52,8 @@ internal sealed interface WorkEditor {
         val today: LocalDate,
         val zone: ZoneId,
         val now: Instant,
+        /** Día con el que se rellena una jornada nueva: el que se tocó en Semana, o hoy. */
+        val startDate: LocalDate = today,
     ) : WorkEditor
 
     /** Indicar a posteriori la hora de salida de una jornada que se quedó abierta. */
@@ -81,14 +82,6 @@ internal sealed interface WorkItem {
 
     data class Project(
         val value: WorkProject,
-    ) : WorkItem
-
-    data class Focus(
-        val value: FocusSession,
-    ) : WorkItem
-
-    data class Note(
-        val value: WorkDayNote,
     ) : WorkItem
 }
 
@@ -153,25 +146,45 @@ internal sealed interface WorkAction {
 
     data object ClockOut : WorkAction
 
+    /**
+     * Acciones que abren una hoja. Cada una sabe construir la suya con el reloj inyectado (la UI no conoce el reloj),
+     * así el ViewModel las trata en una sola rama y `when` sigue siendo exhaustivo sin `else`.
+     */
+    sealed interface OpenEditor : WorkAction {
+        fun editor(clock: Clock): WorkEditor
+    }
+
     /** Abre la hoja de jornada: nueva (a mano) o editando [existing]. */
     data class OpenShift(
         val existing: WorkShift? = null,
-    ) : WorkAction
+        /** Día de una jornada nueva; `null` es hoy. */
+        val date: LocalDate? = null,
+    ) : OpenEditor {
+        override fun editor(clock: Clock): WorkEditor = newShiftEditor(existing, clock, date)
+    }
 
     data class OpenClose(
         val shift: WorkShift,
-    ) : WorkAction
+    ) : OpenEditor {
+        override fun editor(clock: Clock): WorkEditor = WorkEditor.CloseShift(shift, clock.instant())
+    }
 
     data class OpenProject(
         val existing: WorkProject? = null,
-    ) : WorkAction
+    ) : OpenEditor {
+        override fun editor(clock: Clock): WorkEditor = WorkEditor.EditProject(existing)
+    }
 
     data class OpenNote(
         val date: LocalDate,
         val text: String,
-    ) : WorkAction
+    ) : OpenEditor {
+        override fun editor(clock: Clock): WorkEditor = WorkEditor.EditNote(date, text)
+    }
 
-    data object OpenSettings : WorkAction
+    data object OpenSettings : OpenEditor {
+        override fun editor(clock: Clock): WorkEditor = WorkEditor.EditSettings
+    }
 
     data object Dismiss : WorkAction
 
@@ -209,14 +222,19 @@ internal sealed interface WorkAction {
 internal fun newShiftEditor(
     existing: WorkShift?,
     clock: Clock,
-): WorkEditor.EditShift =
-    WorkEditor.EditShift(
+    date: LocalDate? = null,
+): WorkEditor.EditShift {
+    val today = LocalDate.now(clock)
+    return WorkEditor.EditShift(
         existing = existing,
         newId = UUID.randomUUID().toString(),
-        today = LocalDate.now(clock),
+        today = today,
         zone = clock.zone,
         now = clock.instant(),
+        // Nunca en el futuro: una jornada no puede empezar después de ahora.
+        startDate = minOf(date ?: today, today),
     )
+}
 
 internal suspend fun WorkAction.StartFocus.startOn(focus: ManageFocusTimer): AppResult<FocusSession> =
     focus.start(kind, minutes, projectId, title)

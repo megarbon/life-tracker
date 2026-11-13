@@ -154,11 +154,13 @@ private fun HeroTotals(
     summary: WorkTodaySummary,
     durations: DurationFormat,
 ) {
+    // Sólo se vuelve a leer el reloj si hay una jornada en marcha; si no, las cifras no cambian solas.
+    val now by rememberLiveNow(enabled = summary.isClockedIn && !summary.onBreak)
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
     val style = MaterialTheme.typography.bodyMedium
     Column(verticalArrangement = Arrangement.spacedBy(LifeTrackerTheme.spacing.xs)) {
         Text(
-            text = stringResource(R.string.work_hero_today_total, durations.format(summary.todaySeconds)),
+            text = stringResource(R.string.work_hero_today_total, durations.format(summary.todaySecondsAt(now))),
             style = style,
             color = muted,
         )
@@ -166,14 +168,14 @@ private fun HeroTotals(
             text =
                 stringResource(
                     R.string.work_hero_week_total,
-                    durations.format(summary.weekSeconds),
+                    durations.format(summary.weekSecondsAt(now)),
                     durations.format(summary.weeklyTargetSeconds),
                 ),
             style = style,
             color = muted,
         )
         Text(
-            text = stringResource(R.string.work_hero_balance, durations.signed(summary.weekBalanceSeconds)),
+            text = stringResource(R.string.work_hero_balance, durations.signed(summary.weekBalanceSecondsAt(now))),
             style = style,
             color = muted,
         )

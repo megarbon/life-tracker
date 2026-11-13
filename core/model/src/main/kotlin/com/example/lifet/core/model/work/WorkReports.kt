@@ -1,6 +1,7 @@
 package com.example.lifet.core.model.work
 
 import com.example.lifet.core.model.DateRange
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
 
@@ -19,6 +20,7 @@ import java.time.LocalDate
  * @property totalBalanceSeconds saldo acumulado de todo el histórico.
  * @property hasData `false` si el área aún no se ha usado: Hoy debe invitar a fichar la primera entrada.
  * @property liveToday y [liveWeek] indican si la jornada en curso cuenta en las cifras de hoy y de la semana.
+ * @property liveDaySurplusSeconds lo trabajado menos el objetivo en el día de la jornada en curso, en [asOf].
  */
 public data class WorkTodaySummary(
     public val asOf: Instant,
@@ -35,6 +37,7 @@ public data class WorkTodaySummary(
     public val focusSecondsToday: Long,
     public val hasData: Boolean,
     public val liveToday: Boolean,
+    public val liveDaySurplusSeconds: Long,
     public val liveWeek: Boolean,
 ) {
     /** Progreso de la semana hacia el objetivo, entre 0 y 1. */
@@ -46,13 +49,22 @@ public data class WorkTodaySummary(
 
     /** Segundos que han pasado desde [asOf] y cuentan como trabajados (cero si no hay jornada en marcha). */
     private fun liveDelta(now: Instant): Long =
-        if (!isClockedIn || onBreak || now <= asOf) 0L else now.epochSecond - asOf.epochSecond
+        if (!isClockedIn || onBreak || now <= asOf) 0L else Duration.between(asOf, now).seconds
 
     public fun shiftSecondsAt(now: Instant): Long = activeShiftSeconds + liveDelta(now)
 
     public fun todaySecondsAt(now: Instant): Long = todaySeconds + if (liveToday) liveDelta(now) else 0L
 
     public fun weekSecondsAt(now: Instant): Long = weekSeconds + if (liveWeek) liveDelta(now) else 0L
+
+    /** Saldo de la semana en [now]: el día en curso no resta, así que sólo suma una vez superado su objetivo. */
+    public fun weekBalanceSecondsAt(now: Instant): Long {
+        if (!liveWeek) return weekBalanceSeconds
+        // El día en curso nunca resta: su contribución al saldo es max(0, trabajado - objetivo).
+        val before = liveDaySurplusSeconds.coerceAtLeast(0L)
+        val after = (liveDaySurplusSeconds + liveDelta(now)).coerceAtLeast(0L)
+        return weekBalanceSeconds + after - before
+    }
 }
 
 /** Un día de la serie. Los días sin jornada llevan cero (no se omiten). */
