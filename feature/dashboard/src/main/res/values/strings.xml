@@ -38,4 +38,13 @@
     <string name="dashboard_fitness_today">Hoy has entrenado %1$s min</string>
     <string name="dashboard_fitness_reached">Has superado el objetivo semanal</string>
     <string name="dashboard_fitness_empty">Registra tu primer entreno para ver el progreso</string>
+    <string name="dashboard_quit_title">Dejar de fumar y beber</string>
+    <string name="dashboard_quit_empty_value">Empieza hoy</string>
+    <string name="dashboard_quit_empty">Añade un hábito para ver tu tiempo limpio y lo que ahorras</string>
+    <string name="dashboard_quit_saved">Llevas ahorrados %1$s</string>
+    <string name="dashboard_quit_saved_best">Ahorrados %1$s · tu récord: %2$s</string>
+    <plurals name="dashboard_quit_days">
+        <item quantity="one">%1$d día limpio</item>
+        <item quantity="other">%1$d días limpios</item>
+    </plurals>
 </resources>

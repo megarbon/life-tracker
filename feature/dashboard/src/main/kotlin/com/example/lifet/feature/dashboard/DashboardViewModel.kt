@@ -11,11 +11,13 @@ import com.example.lifet.core.domain.mood.ObserveMoodTodaySummary
 import com.example.lifet.core.domain.mood.SaveMoodEntry
 import com.example.lifet.core.domain.nutrition.AddWater
 import com.example.lifet.core.domain.nutrition.ObserveNutritionTodaySummary
+import com.example.lifet.core.domain.quit.ObserveQuitTodaySummary
 import com.example.lifet.core.model.finance.FinanceTodaySummary
 import com.example.lifet.core.model.fitness.FitnessTodaySummary
 import com.example.lifet.core.model.mood.MoodLevel
 import com.example.lifet.core.model.mood.MoodTodaySummary
 import com.example.lifet.core.model.nutrition.NutritionTodaySummary
+import com.example.lifet.core.model.quit.QuitTodaySummary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -39,19 +41,21 @@ internal class DashboardViewModel
         observeFinance: ObserveFinanceTodaySummary,
         observeNutrition: ObserveNutritionTodaySummary,
         observeFitness: ObserveFitnessTodaySummary,
+        observeQuit: ObserveQuitTodaySummary,
         private val saveMood: SaveMoodEntry,
         private val addWater: AddWater,
     ) : ViewModel() {
         private val today = getToday()
 
         val uiState: StateFlow<DashboardUiState> =
-            combine(observeMood(), observeFinance(), observeNutrition(), observeFitness()) { areas ->
+            combine(observeMood(), observeFinance(), observeNutrition(), observeFitness(), observeQuit()) { areas ->
                 DashboardUiState.Success(
                     today = today,
                     mood = areas[MOOD] as MoodTodaySummary,
                     finance = areas[FINANCE] as FinanceTodaySummary,
                     nutrition = areas[NUTRITION] as NutritionTodaySummary,
                     fitness = areas[FITNESS] as FitnessTodaySummary,
+                    quit = areas[QUIT] as QuitTodaySummary,
                 )
             }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), DashboardUiState.Loading)
 
@@ -86,5 +90,6 @@ internal class DashboardViewModel
             const val FINANCE = 1
             const val NUTRITION = 2
             const val FITNESS = 3
+            const val QUIT = 4
         }
     }

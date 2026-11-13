@@ -38,4 +38,13 @@
     <string name="dashboard_fitness_today">You trained %1$s min today</string>
     <string name="dashboard_fitness_reached">You beat your weekly goal</string>
     <string name="dashboard_fitness_empty">Log your first workout to see your progress</string>
+    <string name="dashboard_quit_title">Quit smoking and drinking</string>
+    <string name="dashboard_quit_empty_value">Start today</string>
+    <string name="dashboard_quit_empty">Add a habit to see your clean time and what you save</string>
+    <string name="dashboard_quit_saved">You have saved %1$s</string>
+    <string name="dashboard_quit_saved_best">Saved %1$s · your record: %2$s</string>
+    <plurals name="dashboard_quit_days">
+        <item quantity="one">%1$d clean day</item>
+        <item quantity="other">%1$d clean days</item>
+    </plurals>
 </resources>

@@ -8,6 +8,7 @@ import com.example.lifet.core.domain.mood.ObserveMoodTodaySummary
 import com.example.lifet.core.domain.mood.SaveMoodEntry
 import com.example.lifet.core.domain.nutrition.AddWater
 import com.example.lifet.core.domain.nutrition.ObserveNutritionTodaySummary
+import com.example.lifet.core.domain.quit.ObserveQuitTodaySummary
 import com.example.lifet.core.model.mood.MoodLevel
 import com.example.lifet.core.testing.MainDispatcherRule
 import com.example.lifet.core.testing.TestClock
@@ -16,6 +17,7 @@ import com.example.lifet.core.testing.fitness.InMemoryFitnessRepository
 import com.example.lifet.core.testing.mood.FakeMoodRepository
 import com.example.lifet.core.testing.nutrition.FakeNutritionGoalsRepository
 import com.example.lifet.core.testing.nutrition.FakeNutritionLogRepository
+import com.example.lifet.core.testing.quit.InMemoryQuitRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -42,6 +44,7 @@ class DashboardViewModelTest {
             observeNutrition =
                 ObserveNutritionTodaySummary(nutritionLog, FakeNutritionGoalsRepository(), getToday),
             observeFitness = ObserveFitnessTodaySummary(InMemoryFitnessRepository(), clock),
+            observeQuit = ObserveQuitTodaySummary(InMemoryQuitRepository(), clock),
             saveMood = SaveMoodEntry(mood, clock),
             addWater = AddWater(nutritionLog, clock),
         )

@@ -17,6 +17,7 @@ public fun NavGraphBuilder.dashboardGraph(
     onOpenFinance: () -> Unit,
     onOpenNutrition: () -> Unit,
     onOpenFitness: () -> Unit,
+    onOpenQuit: () -> Unit,
 ) {
     composable<DashboardDestination> {
         DashboardRoute(
@@ -24,6 +25,7 @@ public fun NavGraphBuilder.dashboardGraph(
             onOpenFinance = onOpenFinance,
             onOpenNutrition = onOpenNutrition,
             onOpenFitness = onOpenFitness,
+            onOpenQuit = onOpenQuit,
         )
     }
 }
