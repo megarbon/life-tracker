@@ -4,7 +4,6 @@ import com.example.lifet.core.common.AppError
 import com.example.lifet.core.common.AppResult
 import com.example.lifet.core.common.runCatchingApp
 import com.example.lifet.core.data.finance.FinanceRepository
-import com.example.lifet.core.designsystem.util.parseAmount
 import com.example.lifet.core.model.finance.Account
 import com.example.lifet.core.model.finance.FinanceCategory
 import com.example.lifet.core.model.finance.FinanceDataSet

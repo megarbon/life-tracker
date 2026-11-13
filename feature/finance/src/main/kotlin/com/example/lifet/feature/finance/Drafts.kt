@@ -1,6 +1,5 @@
 package com.example.lifet.feature.finance
 
-import com.example.lifet.core.designsystem.util.parseAmount
 import com.example.lifet.core.model.CurrencyCode
 import com.example.lifet.core.model.Money
 import com.example.lifet.core.model.finance.Account
@@ -63,7 +62,7 @@ private class Validation {
         text: String,
         currency: CurrencyCode?,
     ): Money? {
-        val parsed = currency?.let { parseAmount(text, it) }?.takeUnless { it.isZero }
+        val parsed = currency?.let { parseFinanceAmount(text, it) }?.takeUnless { it.isZero }
         when {
             currency == null -> Unit
             text.isBlank() -> issues += DraftIssue.AMOUNT_MISSING
@@ -229,7 +228,16 @@ internal data class AccountDraft(
         check.require(name.isNotBlank(), DraftIssue.NAME_MISSING)
         val currency = runCatching { CurrencyCode(currencyText.trim().uppercase()) }.getOrNull()
         check.require(currency != null, DraftIssue.CURRENCY_INVALID)
-        val opening = currency?.let { if (openingText.isBlank()) Money.zero(it) else parseAmount(openingText, it) }
+        val opening =
+            currency?.let {
+                if (openingText.isBlank()) {
+                    Money.zero(
+                        it,
+                    )
+                } else {
+                    parseFinanceAmount(openingText, it)
+                }
+            }
         check.require(currency == null || opening != null, DraftIssue.AMOUNT_INVALID)
         return check.result {
             opening?.let {

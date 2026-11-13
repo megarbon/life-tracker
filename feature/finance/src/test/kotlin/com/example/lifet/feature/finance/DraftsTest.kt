@@ -67,6 +67,18 @@ class DraftsTest {
         assertEquals(setOf(DraftIssue.AMOUNT_INVALID), draft(amount = "99999999999999999999").issues(bank))
     }
 
+    @Test
+    fun `an amount that fits a Long but could overflow when summed is rejected`() {
+        // 5·10^16 € cabe en un Long, pero dos movimientos así desbordan al sumarse y tumbaban el resumen entero.
+        assertEquals(setOf(DraftIssue.AMOUNT_INVALID), draft(amount = "50000000000000000").issues(bank))
+    }
+
+    @Test
+    fun `an amount exactly at the limit is accepted and one cent above is rejected`() {
+        assertTrue(draft(amount = "10000000000").issues(bank).isEmpty())
+        assertEquals(setOf(DraftIssue.AMOUNT_INVALID), draft(amount = "10000000000,01").issues(bank))
+    }
+
     private fun transfer(
         from: String? = "bank",
         to: String? = "cash",

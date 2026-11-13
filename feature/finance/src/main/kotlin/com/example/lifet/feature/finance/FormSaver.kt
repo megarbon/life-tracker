@@ -3,7 +3,6 @@ package com.example.lifet.feature.finance
 import com.example.lifet.core.common.AppError
 import com.example.lifet.core.common.AppResult
 import com.example.lifet.core.data.finance.FinanceRepository
-import com.example.lifet.core.designsystem.util.parseAmount
 import com.example.lifet.core.model.finance.FinanceDataSet
 import com.example.lifet.core.model.finance.primaryCurrency
 import java.time.Clock
@@ -94,7 +93,7 @@ internal class FormSaver
             data: FinanceDataSet,
         ): AppResult<Unit> {
             if (form.amountText.isBlank()) return repository.setBudget(form.categoryId, null)
-            val limit = parseAmount(form.amountText, data.primaryCurrency())
+            val limit = parseFinanceAmount(form.amountText, data.primaryCurrency())
             return if (limit == null) {
                 AppResult.Failure(AppError.Validation(DraftIssue.AMOUNT_INVALID.name))
             } else {
