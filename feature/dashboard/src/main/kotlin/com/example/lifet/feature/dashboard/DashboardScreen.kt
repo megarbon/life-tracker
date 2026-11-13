@@ -1,5 +1,6 @@
 package com.example.lifet.feature.dashboard
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,14 +11,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -35,6 +39,7 @@ import com.example.lifet.core.model.mood.MoodTodaySummary
 import com.example.lifet.core.model.nutrition.Nutrients
 import com.example.lifet.core.model.nutrition.NutritionGoals
 import com.example.lifet.core.model.nutrition.NutritionTodaySummary
+import java.time.Clock
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -52,15 +57,25 @@ internal fun DashboardRoute(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
-    val texts = DashboardMessageTexts.rememberTexts()
+    val texts by rememberUpdatedState(DashboardMessageTexts.rememberTexts())
     LaunchedEffect(viewModel) {
         viewModel.messages.collect { message ->
-            snackbar.showSnackbar(texts.textFor(message))
+            // Un aviso nuevo sustituye al anterior en lugar de encolarse (tres toques en +250 no dan tres avisos).
+            snackbar.currentSnackbarData?.dismiss()
+            val undoable = texts.isUndoable(message)
+            val result =
+                snackbar.showSnackbar(
+                    message = texts.textFor(message),
+                    actionLabel = if (undoable) texts.undo else null,
+                    duration = SnackbarDuration.Short,
+                )
+            if (result == SnackbarResult.ActionPerformed) viewModel.undo(message)
         }
     }
     DashboardScreen(
         state = state,
         snackbar = snackbar,
+        clock = viewModel.clock,
         actions =
             DashboardActions(
                 onOpenMood = onOpenMood,
@@ -93,6 +108,7 @@ internal data class DashboardActions(
 internal fun DashboardScreen(
     state: DashboardUiState,
     snackbar: SnackbarHostState,
+    clock: Clock,
     actions: DashboardActions,
     modifier: Modifier = Modifier,
 ) {
@@ -104,7 +120,7 @@ internal fun DashboardScreen(
         Box(Modifier.fillMaxSize().padding(innerPadding)) {
             when (state) {
                 DashboardUiState.Loading -> LTLoadingSkeleton(Modifier.padding(LifeTrackerTheme.spacing.md))
-                is DashboardUiState.Success -> DashboardContent(state, actions)
+                is DashboardUiState.Success -> DashboardContent(state, clock, actions)
             }
         }
     }
@@ -113,6 +129,7 @@ internal fun DashboardScreen(
 @Composable
 private fun DashboardContent(
     state: DashboardUiState.Success,
+    clock: Clock,
     actions: DashboardActions,
 ) {
     Column(
@@ -129,12 +146,37 @@ private fun DashboardContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         LTSectionHeader(stringResource(R.string.dashboard_section_areas))
-        NutritionTodayCard(summary = state.nutrition, onOpen = actions.onOpenNutrition, onAddWater = actions.onAddWater)
-        FitnessTodayCard(summary = state.fitness, onClick = actions.onOpenFitness)
-        FinanceTodayCard(summary = state.finance, onClick = actions.onOpenFinance)
-        MoodTodayCard(summary = state.mood, onOpen = actions.onOpenMood, onCheckIn = actions.onCheckIn)
-        WorkTodayCard(summary = state.work, onClick = actions.onOpenWork)
-        QuitTodayCard(summary = state.quit, onClick = actions.onOpenQuit)
+        AreaCard(state.nutrition, R.string.dashboard_nutrition_title) {
+            NutritionTodayCard(summary = it, onOpen = actions.onOpenNutrition, onAddWater = actions.onAddWater)
+        }
+        AreaCard(state.fitness, R.string.dashboard_fitness_title) {
+            FitnessTodayCard(summary = it, onClick = actions.onOpenFitness)
+        }
+        AreaCard(state.finance, R.string.dashboard_finance_title) {
+            FinanceTodayCard(summary = it, onClick = actions.onOpenFinance)
+        }
+        AreaCard(state.mood, R.string.dashboard_mood_title) {
+            MoodTodayCard(summary = it, onOpen = actions.onOpenMood, onCheckIn = actions.onCheckIn)
+        }
+        AreaCard(state.work, R.string.dashboard_work_title) {
+            WorkTodayCard(summary = it, clock = clock, onClick = actions.onOpenWork)
+        }
+        AreaCard(state.quit, R.string.dashboard_quit_title) {
+            QuitTodayCard(summary = it, onClick = actions.onOpenQuit)
+        }
+    }
+}
+
+/** Dibuja la tarjeta del área si se pudo leer; si no, una tarjeta discreta sin afectar a las demás. */
+@Composable
+private fun <T> AreaCard(
+    state: AreaState<T>,
+    @StringRes title: Int,
+    content: @Composable (T) -> Unit,
+) {
+    when (state) {
+        is AreaState.Ready -> content(state.value)
+        AreaState.Unavailable -> UnavailableAreaCard(title = stringResource(title))
     }
 }
 
@@ -154,14 +196,18 @@ private fun DashboardScreenPreview() {
             state =
                 DashboardUiState.Success(
                     today = LocalDate.parse("2026-03-10"),
-                    mood = MoodTodaySummary(null, 0, null, null, 0),
-                    finance = FinanceTodaySummary(eur, Money(0, eur), Money(0, eur), null, hasData = false),
-                    nutrition = previewNutrition(),
-                    fitness = previewFitness(),
-                    quit = previewQuit(),
-                    work = previewWork(),
+                    mood = AreaState.Ready(MoodTodaySummary(null, 0, null, null, 0)),
+                    finance =
+                        AreaState.Ready(
+                            FinanceTodaySummary(eur, Money(0, eur), Money(0, eur), null, hasData = false),
+                        ),
+                    nutrition = AreaState.Ready(previewNutrition()),
+                    fitness = AreaState.Unavailable,
+                    quit = AreaState.Ready(previewQuit()),
+                    work = AreaState.Ready(previewWork()),
                 ),
             snackbar = remember { SnackbarHostState() },
+            clock = Clock.systemUTC(),
             actions = DashboardActions({}, {}, {}, {}, {}, {}, {}, {}),
         )
     }
@@ -174,6 +220,7 @@ private fun DashboardScreenLoadingPreview() {
         DashboardScreen(
             state = DashboardUiState.Loading,
             snackbar = remember { SnackbarHostState() },
+            clock = Clock.systemUTC(),
             actions = DashboardActions({}, {}, {}, {}, {}, {}, {}, {}),
         )
     }

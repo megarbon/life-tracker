@@ -11,4 +11,8 @@
     <string name="dev_working">Trabajando…</string>
     <string name="dev_done">Hecho</string>
     <string name="dev_failed">Error: %1$s</string>
+    <string name="dev_demo_warning">Atención: cargar un escenario o borrar sustituye TODOS los datos de la app, también los que hayas introducido tú.</string>
+    <string name="dev_confirm_title">¿Sustituir todos los datos?</string>
+    <string name="dev_confirm_message">Se perderán los datos actuales de todas las áreas. Esta acción no se puede deshacer.</string>
+    <string name="dev_confirm_action">Sustituir</string>
 </resources>

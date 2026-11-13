@@ -11,14 +11,19 @@ internal class DashboardMessageTexts(
     private val moodFailed: String,
     private val waterSaved: String,
     private val waterFailed: String,
+    val undo: String,
 ) {
     fun textFor(message: DashboardMessage): String =
         when (message) {
-            DashboardMessage.MOOD_SAVED -> moodSaved
-            DashboardMessage.MOOD_FAILED -> moodFailed
-            DashboardMessage.WATER_SAVED -> waterSaved
-            DashboardMessage.WATER_FAILED -> waterFailed
+            is DashboardMessage.MoodSaved -> moodSaved
+            DashboardMessage.MoodFailed -> moodFailed
+            is DashboardMessage.WaterSaved -> waterSaved
+            DashboardMessage.WaterFailed -> waterFailed
         }
+
+    /** Solo los registros guardados se pueden deshacer; un fallo no tiene nada que revertir. */
+    fun isUndoable(message: DashboardMessage): Boolean =
+        message is DashboardMessage.MoodSaved || message is DashboardMessage.WaterSaved
 
     companion object {
         @Composable
@@ -28,6 +33,7 @@ internal class DashboardMessageTexts(
                 moodFailed = stringResource(R.string.dashboard_mood_failed),
                 waterSaved = stringResource(R.string.dashboard_water_saved),
                 waterFailed = stringResource(R.string.dashboard_water_failed),
+                undo = stringResource(R.string.dashboard_undo),
             )
     }
 }

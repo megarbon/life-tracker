@@ -32,9 +32,16 @@ internal fun QuitTodayCard(
     modifier: Modifier = Modifier,
 ) {
     val days = (summary.cleanSeconds / SECONDS_PER_DAY).toInt()
+    val reducing = summary.primaryMode == HabitMode.REDUCE && summary.weeklyLimit != null
     val title = summary.primaryHabitName ?: stringResource(R.string.dashboard_quit_title)
     val value =
-        if (summary.hasData) {
+        if (summary.hasData && reducing) {
+            stringResource(
+                R.string.dashboard_quit_week_units,
+                "${summary.weekUnits ?: 0}",
+                "${summary.weeklyLimit ?: 0}",
+            )
+        } else if (summary.hasData) {
             pluralStringResource(R.plurals.dashboard_quit_days, days, days)
         } else {
             stringResource(R.string.dashboard_quit_empty_value)
@@ -44,6 +51,10 @@ internal fun QuitTodayCard(
         when {
             !summary.hasData -> {
                 stringResource(R.string.dashboard_quit_empty)
+            }
+
+            reducing -> {
+                stringResource(R.string.dashboard_quit_reducing_saved, summary.totalSaved.format())
             }
 
             summary.bestStreakSeconds > summary.cleanSeconds -> {
@@ -58,11 +69,12 @@ internal fun QuitTodayCard(
                 stringResource(R.string.dashboard_quit_saved, summary.totalSaved.format())
             }
         }
+    val note = if (summary.hasOtherCurrencies) stringResource(R.string.dashboard_quit_other_currencies) else null
     LTMetricCard(
         icon = Area.QUIT.icon,
         title = title,
         value = value,
-        subtitle = subtitle,
+        subtitle = listOfNotNull(subtitle, note).joinToString(". "),
         progress = summary.nextMilestone?.progress,
         accent = LifeTrackerTheme.areaColors.quit,
         onClick = onClick,

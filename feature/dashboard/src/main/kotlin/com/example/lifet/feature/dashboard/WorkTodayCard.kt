@@ -9,6 +9,7 @@ import com.example.lifet.core.designsystem.theme.LifeTrackerTheme
 import com.example.lifet.core.model.Area
 import com.example.lifet.core.model.work.WorkTodaySummary
 import com.example.lifet.core.ui.icon
+import java.time.Clock
 import java.time.Instant
 import java.util.Locale
 import kotlin.math.abs
@@ -24,12 +25,18 @@ private const val PREVIEW_BALANCE_SECONDS = 1_800L
 @Composable
 internal fun WorkTodayCard(
     summary: WorkTodaySummary,
+    clock: Clock,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Solo con la jornada en marcha se lee el reloj vivo; sin ella las cifras del resumen ya son definitivas.
+    val now = if (summary.liveToday || summary.liveWeek) rememberMinuteNow(clock).value else summary.asOf
+    val todaySeconds = summary.todaySecondsAt(now)
+    val weekSeconds = summary.weekSecondsAt(now)
+    val weekBalance = summary.weekBalanceSecondsAt(now)
     val value =
         if (summary.hasData || summary.isClockedIn) {
-            stringResource(R.string.dashboard_work_hours, formatHoursMinutes(summary.todaySeconds))
+            stringResource(R.string.dashboard_work_hours, formatHoursMinutes(todaySeconds))
         } else {
             stringResource(R.string.dashboard_work_empty_value)
         }
@@ -51,20 +58,20 @@ internal fun WorkTodayCard(
                 stringResource(R.string.dashboard_work_empty)
             }
 
-            summary.weekBalanceSeconds >= 0 -> {
-                stringResource(R.string.dashboard_work_balance_ahead, formatHoursMinutes(summary.weekBalanceSeconds))
+            weekBalance >= 0 -> {
+                stringResource(R.string.dashboard_work_balance_ahead, formatHoursMinutes(weekBalance))
             }
 
             else -> {
                 stringResource(
                     R.string.dashboard_work_balance_behind,
-                    formatHoursMinutes(abs(summary.weekBalanceSeconds)),
+                    formatHoursMinutes(abs(weekBalance)),
                 )
             }
         }
     val progress =
         if (summary.weeklyTargetSeconds > 0) {
-            (summary.weekSeconds.toFloat() / summary.weeklyTargetSeconds).coerceIn(0f, 1f)
+            (weekSeconds.toFloat() / summary.weeklyTargetSeconds).coerceIn(0f, 1f)
         } else {
             null
         }
@@ -111,5 +118,5 @@ internal fun previewWork(): WorkTodaySummary =
 @LTPreviews
 @Composable
 private fun WorkTodayCardPreview() {
-    LifeTrackerTheme { WorkTodayCard(summary = previewWork(), onClick = {}) }
+    LifeTrackerTheme { WorkTodayCard(summary = previewWork(), clock = Clock.systemUTC(), onClick = {}) }
 }

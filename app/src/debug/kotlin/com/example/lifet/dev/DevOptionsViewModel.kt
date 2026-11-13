@@ -45,6 +45,8 @@ internal class DevOptionsViewModel
 
         @Suppress("TooGenericExceptionCaught") // Herramienta de depuración: mostrar cualquier fallo.
         private fun execute(block: suspend () -> Unit) {
+            // Ignora un segundo toque mientras corre otra operación: dos cargas a la vez duplicarían registros.
+            if (_uiState.value.status == DevStatus.Working) return
             _uiState.update { it.copy(status = DevStatus.Working) }
             viewModelScope.launch {
                 val result =

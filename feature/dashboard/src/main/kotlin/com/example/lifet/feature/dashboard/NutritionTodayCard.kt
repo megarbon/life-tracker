@@ -31,6 +31,7 @@ import com.example.lifet.core.model.Area
 import com.example.lifet.core.model.nutrition.Nutrients
 import com.example.lifet.core.model.nutrition.NutritionGoals
 import com.example.lifet.core.model.nutrition.NutritionTodaySummary
+import com.example.lifet.core.model.nutrition.WaterEntry
 import com.example.lifet.core.ui.icon
 import java.text.NumberFormat
 import java.time.LocalDate
@@ -136,9 +137,13 @@ private fun WaterRow(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f),
         )
-        FilledTonalButton(onClick = onAddWater, modifier = Modifier.heightIn(min = MinTouchTarget)) {
-            Icon(Icons.Rounded.WaterDrop, contentDescription = stringResource(R.string.dashboard_nutrition_add_water))
-            Text("+250")
+        val addWaterLabel = stringResource(R.string.dashboard_nutrition_add_water, WaterEntry.GLASS_ML)
+        FilledTonalButton(
+            onClick = onAddWater,
+            modifier = Modifier.heightIn(min = MinTouchTarget).semantics { contentDescription = addWaterLabel },
+        ) {
+            Icon(Icons.Rounded.WaterDrop, contentDescription = null)
+            Text(stringResource(R.string.dashboard_nutrition_water_amount, WaterEntry.GLASS_ML))
         }
     }
 }

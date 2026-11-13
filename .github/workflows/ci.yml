@@ -32,6 +32,16 @@ jobs:
       - name: Compilar APK debug
         run: ./gradlew assembleDebug
 
+      - name: Compilar y analizar release (R8 y lint)
+        run: ./gradlew assembleRelease lintRelease
+
+      - name: Comprobar que los datos de demo no entran en release
+        run: |
+          if ./gradlew :app:dependencies --configuration releaseRuntimeClasspath | grep -q "core:demo"; then
+            echo "core:demo no debe estar en el classpath de release"
+            exit 1
+          fi
+
       - name: Subir informes si falla
         if: failure()
         uses: actions/upload-artifact@v4

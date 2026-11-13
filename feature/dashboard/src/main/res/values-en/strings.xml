@@ -7,7 +7,6 @@
     <string name="dashboard_mood_missing_value">Not logged</string>
     <string name="dashboard_mood_missing">You have not logged anything today yet. One tap is enough.</string>
     <string name="dashboard_mood_week">Average of the last 7 days: %1$s</string>
-    <string name="dashboard_empty_message">Nothing logged yet. Once you add finance, fitness, food or sleep entries, your summary will show up here.</string>
     <string name="dashboard_mood_open">Open Mood</string>
     <string name="dashboard_mood_checkin">Log mood: %1$s</string>
     <string name="dashboard_mood_saved">Mood logged</string>
@@ -21,7 +20,7 @@
     <string name="dashboard_finance_empty">Log your first expense to see the summary</string>
     <string name="dashboard_finance_today">You spent %1$s today</string>
     <string name="dashboard_finance_today_budget">You spent %1$s today · %2$s of budget left</string>
-    <string name="dashboard_water_saved">+250 ml of water</string>
+    <string name="dashboard_water_saved">Water logged</string>
     <string name="dashboard_water_failed">Could not save the water</string>
     <string name="dashboard_nutrition_title">Nutrition</string>
     <string name="dashboard_nutrition_kcal">%1$s kcal</string>
@@ -29,7 +28,7 @@
     <string name="dashboard_nutrition_remaining">%1$s kcal left</string>
     <string name="dashboard_nutrition_over">%1$s kcal over your goal</string>
     <string name="dashboard_nutrition_water">Water: %1$s ml</string>
-    <string name="dashboard_nutrition_add_water">Add 250 ml of water</string>
+    <string name="dashboard_nutrition_add_water">Add %1$d ml of water</string>
     <string name="dashboard_nutrition_open">Open Nutrition</string>
     <string name="dashboard_nutrition_progress">%1$d %% of your calorie goal</string>
     <string name="dashboard_fitness_title">Active minutes this week</string>
@@ -56,4 +55,10 @@
     <string name="dashboard_work_needs_closing">You have a shift left open</string>
     <string name="dashboard_work_balance_ahead">You are %1$s h ahead this week</string>
     <string name="dashboard_work_balance_behind">%1$s h left this week</string>
+    <string name="dashboard_undo">Undo</string>
+    <string name="dashboard_area_unavailable">This area could not be loaded. The rest of Today keeps working.</string>
+    <string name="dashboard_quit_week_units">This week: %1$s of %2$s</string>
+    <string name="dashboard_quit_reducing_saved">Cutting down · saved %1$s</string>
+    <string name="dashboard_quit_other_currencies">Some habits use another currency and are not added up</string>
+    <string name="dashboard_nutrition_water_amount">+%1$d</string>
 </resources>

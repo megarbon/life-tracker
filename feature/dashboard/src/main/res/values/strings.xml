@@ -7,7 +7,6 @@
     <string name="dashboard_mood_missing_value">Sin registrar</string>
     <string name="dashboard_mood_missing">Aún no has registrado nada hoy. Un toque basta.</string>
     <string name="dashboard_mood_week">Media de los últimos 7 días: %1$s</string>
-    <string name="dashboard_empty_message">Aún no hay registros. Cuando añadas finanzas, deporte, comida o sueño, tu resumen aparecerá aquí.</string>
     <string name="dashboard_mood_open">Abrir Ánimo</string>
     <string name="dashboard_mood_checkin">Registrar ánimo: %1$s</string>
     <string name="dashboard_mood_saved">Ánimo registrado</string>
@@ -21,7 +20,7 @@
     <string name="dashboard_finance_empty">Registra tu primer gasto para ver el resumen</string>
     <string name="dashboard_finance_today">Hoy has gastado %1$s</string>
     <string name="dashboard_finance_today_budget">Hoy has gastado %1$s · quedan %2$s de presupuesto</string>
-    <string name="dashboard_water_saved">+250 ml de agua</string>
+    <string name="dashboard_water_saved">Agua registrada</string>
     <string name="dashboard_water_failed">No se pudo guardar el agua</string>
     <string name="dashboard_nutrition_title">Alimentación</string>
     <string name="dashboard_nutrition_kcal">%1$s kcal</string>
@@ -29,7 +28,7 @@
     <string name="dashboard_nutrition_remaining">Te quedan %1$s kcal</string>
     <string name="dashboard_nutrition_over">Has superado el objetivo en %1$s kcal</string>
     <string name="dashboard_nutrition_water">Agua: %1$s ml</string>
-    <string name="dashboard_nutrition_add_water">Añadir 250 ml de agua</string>
+    <string name="dashboard_nutrition_add_water">Añadir %1$d ml de agua</string>
     <string name="dashboard_nutrition_open">Abrir Alimentación</string>
     <string name="dashboard_nutrition_progress">%1$d %% del objetivo de calorías</string>
     <string name="dashboard_fitness_title">Minutos activos esta semana</string>
@@ -56,4 +55,10 @@
     <string name="dashboard_work_needs_closing">Tienes una jornada sin cerrar</string>
     <string name="dashboard_work_balance_ahead">Vas %1$s h por delante esta semana</string>
     <string name="dashboard_work_balance_behind">Te faltan %1$s h esta semana</string>
+    <string name="dashboard_undo">Deshacer</string>
+    <string name="dashboard_area_unavailable">No se pudo cargar esta área. El resto de Hoy sigue funcionando.</string>
+    <string name="dashboard_quit_week_units">Esta semana: %1$s de %2$s</string>
+    <string name="dashboard_quit_reducing_saved">Reduciendo · ahorrados %1$s</string>
+    <string name="dashboard_quit_other_currencies">Hay hábitos en otra divisa que no se suman</string>
+    <string name="dashboard_nutrition_water_amount">+%1$d</string>
 </resources>

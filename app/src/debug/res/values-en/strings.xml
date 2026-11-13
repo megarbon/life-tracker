@@ -11,4 +11,8 @@
     <string name="dev_working">Working…</string>
     <string name="dev_done">Done</string>
     <string name="dev_failed">Error: %1$s</string>
+    <string name="dev_demo_warning">Careful: loading a scenario or deleting replaces ALL the app data, including anything you entered yourself.</string>
+    <string name="dev_confirm_title">Replace all data?</string>
+    <string name="dev_confirm_message">The current data of every area will be lost. This cannot be undone.</string>
+    <string name="dev_confirm_action">Replace</string>
 </resources>
