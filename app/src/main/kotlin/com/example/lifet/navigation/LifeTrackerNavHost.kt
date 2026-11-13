@@ -115,6 +115,7 @@ fun LifeTrackerNavHost(modifier: Modifier = Modifier) {
                 onOpenNutrition = { navController.navigateToTab(NutritionDestination) },
                 onOpenFitness = { navController.navigateToTab(FitnessDestination) },
                 onOpenQuit = { navController.navigate(QuitDestination) },
+                onOpenWork = { navController.navigate(WorkDestination) },
             )
             nutritionGraph()
             fitnessGraph()

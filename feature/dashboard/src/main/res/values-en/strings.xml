@@ -47,4 +47,13 @@
         <item quantity="one">%1$d clean day</item>
         <item quantity="other">%1$d clean days</item>
     </plurals>
+    <string name="dashboard_work_title">Work</string>
+    <string name="dashboard_work_hours">%1$s h today</string>
+    <string name="dashboard_work_empty_value">Not clocked in</string>
+    <string name="dashboard_work_empty">Clock in your first shift to see your hours</string>
+    <string name="dashboard_work_in_progress">Shift in progress</string>
+    <string name="dashboard_work_on_break">On break</string>
+    <string name="dashboard_work_needs_closing">You have a shift left open</string>
+    <string name="dashboard_work_balance_ahead">You are %1$s h ahead this week</string>
+    <string name="dashboard_work_balance_behind">%1$s h left this week</string>
 </resources>

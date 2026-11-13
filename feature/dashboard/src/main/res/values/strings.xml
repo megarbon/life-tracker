@@ -47,4 +47,13 @@
         <item quantity="one">%1$d día limpio</item>
         <item quantity="other">%1$d días limpios</item>
     </plurals>
+    <string name="dashboard_work_title">Trabajo</string>
+    <string name="dashboard_work_hours">%1$s h hoy</string>
+    <string name="dashboard_work_empty_value">Sin fichar</string>
+    <string name="dashboard_work_empty">Ficha tu primera jornada para ver tus horas</string>
+    <string name="dashboard_work_in_progress">Jornada en curso</string>
+    <string name="dashboard_work_on_break">En pausa</string>
+    <string name="dashboard_work_needs_closing">Tienes una jornada sin cerrar</string>
+    <string name="dashboard_work_balance_ahead">Vas %1$s h por delante esta semana</string>
+    <string name="dashboard_work_balance_behind">Te faltan %1$s h esta semana</string>
 </resources>

@@ -46,6 +46,7 @@ internal fun DashboardRoute(
     onOpenNutrition: () -> Unit,
     onOpenFitness: () -> Unit,
     onOpenQuit: () -> Unit,
+    onOpenWork: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
@@ -67,6 +68,7 @@ internal fun DashboardRoute(
                 onOpenNutrition = onOpenNutrition,
                 onOpenFitness = onOpenFitness,
                 onOpenQuit = onOpenQuit,
+                onOpenWork = onOpenWork,
                 onCheckIn = viewModel::checkIn,
                 onAddWater = viewModel::addGlassOfWater,
             ),
@@ -81,6 +83,7 @@ internal data class DashboardActions(
     val onOpenNutrition: () -> Unit,
     val onOpenFitness: () -> Unit,
     val onOpenQuit: () -> Unit,
+    val onOpenWork: () -> Unit,
     val onCheckIn: (MoodLevel) -> Unit,
     val onAddWater: () -> Unit,
 )
@@ -130,6 +133,7 @@ private fun DashboardContent(
         FitnessTodayCard(summary = state.fitness, onClick = actions.onOpenFitness)
         FinanceTodayCard(summary = state.finance, onClick = actions.onOpenFinance)
         MoodTodayCard(summary = state.mood, onOpen = actions.onOpenMood, onCheckIn = actions.onCheckIn)
+        WorkTodayCard(summary = state.work, onClick = actions.onOpenWork)
         QuitTodayCard(summary = state.quit, onClick = actions.onOpenQuit)
     }
 }
@@ -155,9 +159,10 @@ private fun DashboardScreenPreview() {
                     nutrition = previewNutrition(),
                     fitness = previewFitness(),
                     quit = previewQuit(),
+                    work = previewWork(),
                 ),
             snackbar = remember { SnackbarHostState() },
-            actions = DashboardActions({}, {}, {}, {}, {}, {}, {}),
+            actions = DashboardActions({}, {}, {}, {}, {}, {}, {}, {}),
         )
     }
 }
@@ -169,7 +174,7 @@ private fun DashboardScreenLoadingPreview() {
         DashboardScreen(
             state = DashboardUiState.Loading,
             snackbar = remember { SnackbarHostState() },
-            actions = DashboardActions({}, {}, {}, {}, {}, {}, {}),
+            actions = DashboardActions({}, {}, {}, {}, {}, {}, {}, {}),
         )
     }
 }
