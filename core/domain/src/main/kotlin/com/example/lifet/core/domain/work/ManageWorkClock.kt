@@ -108,8 +108,8 @@ public class ManageWorkClock
             val now = clock.instant()
             val data = repository.observeData().first()
             val current = WorkCalculator(data, now, clock.zone).currentShift() ?: return invalid(onMissing)
-            val updated = change(current, now) ?: return AppResult.Success(null)
-            return save(updated, data.shifts, now).thenReturn(updated)
+            val updated = change(current, now)
+            return if (updated == null) AppResult.Success(null) else save(updated, data.shifts, now).thenReturn(updated)
         }
 
         private fun AppResult<WorkShift?>.orIssue(issue: WorkClockIssue): AppResult<WorkShift> =

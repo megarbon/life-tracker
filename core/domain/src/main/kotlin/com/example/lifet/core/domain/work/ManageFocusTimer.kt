@@ -39,9 +39,20 @@ public class ManageFocusTimer
             title: String = "",
         ): AppResult<FocusSession> {
             val issue = validate(minutes, title)
-            if (issue != null) return invalid(issue)
-            finishIfDue()
-            if (running() != null) return invalid(WorkClockIssue.TIMER_ALREADY_RUNNING)
+            if (issue == null) finishIfDue()
+            return when {
+                issue != null -> invalid(issue)
+                running() != null -> invalid(WorkClockIssue.TIMER_ALREADY_RUNNING)
+                else -> begin(kind, minutes, projectId, title)
+            }
+        }
+
+        private suspend fun begin(
+            kind: FocusKind,
+            minutes: Int,
+            projectId: String?,
+            title: String,
+        ): AppResult<FocusSession> {
             val session =
                 FocusSession(
                     id = UUID.randomUUID().toString(),
@@ -73,9 +84,9 @@ public class ManageFocusTimer
             val now = clock.instant()
             val due = running()?.takeIf { it.isDueAt(now) } ?: return null
             val finished = due.copy(end = due.plannedEnd, completed = true)
-            if (repository.saveFocusSession(finished) !is AppResult.Success) return null
-            alarm.cancel(finished.id)
-            return finished
+            val saved = repository.saveFocusSession(finished) is AppResult.Success
+            if (saved) alarm.cancel(finished.id)
+            return finished.takeIf { saved }
         }
 
         /**

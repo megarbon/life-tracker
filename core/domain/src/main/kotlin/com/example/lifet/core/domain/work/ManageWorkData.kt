@@ -54,7 +54,7 @@ public class ManageWorkData
 
         public suspend fun deleteProject(id: String): AppResult<Unit> = repository.deleteProject(id)
 
-        /** Restaura un proyecto borrado ("Deshacer"); sus jornadas nunca se tocaron, así que recupera todas sus horas. */
+        /** Restaura un proyecto borrado ("Deshacer"); sus jornadas nunca se tocaron: recupera todas sus horas. */
         public suspend fun restoreProject(project: WorkProject): AppResult<Unit> = repository.saveProject(project)
 
         /** Guarda la nota del día; un texto vacío la borra. */

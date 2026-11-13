@@ -37,7 +37,9 @@ public object ShiftValidator {
         val issues = mutableSetOf<ShiftIssue>()
         validateBounds(shift, now, issues)
         if (shift.note.length > WorkRules.SHIFT_NOTE_MAX_LENGTH) issues += ShiftIssue.NOTE_TOO_LONG
-        validateBreaks(shift, now, issues)
+        validateBreakCount(shift, issues)
+        shift.breaks.forEach { validateBreak(shift, it, now, issues) }
+        validateBreakOverlaps(shift, issues)
         val boundsOk = ShiftIssue.END_BEFORE_START !in issues
         if (boundsOk && others.any { it.id != shift.id && overlaps(shift, it, now) }) {
             issues += ShiftIssue.OVERLAPS_OTHER_SHIFT
@@ -59,27 +61,46 @@ public object ShiftValidator {
         if (end > now) issues += ShiftIssue.END_IN_FUTURE
     }
 
-    private fun validateBreaks(
+    private fun validateBreakCount(
         shift: WorkShift,
-        now: Instant,
         issues: MutableSet<ShiftIssue>,
     ) {
         if (shift.breaks.size > WorkRules.MAX_BREAKS) issues += ShiftIssue.TOO_MANY_BREAKS
         if (shift.breaks.count { it.isOpen } > 1) issues += ShiftIssue.MORE_THAN_ONE_OPEN_BREAK
-        val limit = shift.end ?: now
-        shift.breaks.forEach { pause ->
-            val end = pause.end
-            when {
-                end == null && !shift.isOpen -> issues += ShiftIssue.OPEN_BREAK_IN_CLOSED_SHIFT
-                end != null && end <= pause.start -> issues += ShiftIssue.BREAK_END_BEFORE_START
-            }
-            if (pause.start < shift.start || pause.start > limit || (end != null && end > limit)) {
-                issues += ShiftIssue.BREAK_OUTSIDE_SHIFT
-            }
+    }
+
+    private fun validateBreak(
+        shift: WorkShift,
+        pause: WorkBreak,
+        now: Instant,
+        issues: MutableSet<ShiftIssue>,
+    ) {
+        val end = pause.end
+        when {
+            end == null && !shift.isOpen -> issues += ShiftIssue.OPEN_BREAK_IN_CLOSED_SHIFT
+            end != null && end <= pause.start -> issues += ShiftIssue.BREAK_END_BEFORE_START
         }
-        // Solapes: ordenadas por inicio, cada pausa debe empezar cuando la anterior ya terminó.
-        val ordered = shift.breaks.sortedBy { it.start }
-        ordered.zipWithNext().forEach { (previous, next) ->
+        if (!isInside(pause, shift, now)) issues += ShiftIssue.BREAK_OUTSIDE_SHIFT
+    }
+
+    /** La pausa empieza y termina dentro de la jornada (o hasta [now] si la jornada sigue abierta). */
+    private fun isInside(
+        pause: WorkBreak,
+        shift: WorkShift,
+        now: Instant,
+    ): Boolean {
+        val limit = shift.end ?: now
+        val startsInside = pause.start >= shift.start && pause.start <= limit
+        val endsInside = pause.end?.let { it <= limit } ?: true
+        return startsInside && endsInside
+    }
+
+    /** Ordenadas por inicio, cada pausa debe empezar cuando la anterior ya terminó. */
+    private fun validateBreakOverlaps(
+        shift: WorkShift,
+        issues: MutableSet<ShiftIssue>,
+    ) {
+        shift.breaks.sortedBy { it.start }.zipWithNext().forEach { (previous, next) ->
             val previousEnd = previous.end
             if (previousEnd == null || next.start < previousEnd) issues += ShiftIssue.BREAKS_OVERLAP
         }
@@ -92,9 +113,7 @@ public object ShiftValidator {
     private fun occupiedEnd(
         shift: WorkShift,
         now: Instant,
-    ): Instant =
-        shift.end
-            ?: minOf(now, shift.start.plusSeconds(WorkRules.FORGOTTEN_AFTER_SECONDS))
+    ): Instant = shift.end ?: minOf(now, shift.start.plusSeconds(WorkRules.FORGOTTEN_AFTER_SECONDS))
 
     private fun overlaps(
         a: WorkShift,
