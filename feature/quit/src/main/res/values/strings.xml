@@ -57,7 +57,10 @@
     </plurals>
     <string name="quit_reduce_at_limit">Has llegado a tu límite semanal. Lo que viene es una semana nueva.</string>
     <string name="quit_reduce_over">Esta semana te has pasado un poco. Pasa. Lo importante es el camino de varias semanas.</string>
-    <string name="quit_reduce_compliance">Has cumplido tu límite %1$d de las últimas %2$d semanas.</string>
+    <plurals name="quit_reduce_compliance">
+        <item quantity="one">Has cumplido tu límite %1$d de la última semana completa.</item>
+        <item quantity="other">Has cumplido tu límite %1$d de las últimas %2$d semanas.</item>
+    </plurals>
     <string name="quit_reduce_compliance_none">Aún no hay semanas completas para comparar.</string>
 
     <!-- Tarjetas -->
@@ -179,7 +182,10 @@
     <string name="quit_sos_tip_wait">Espera diez minutos: el antojo pierde fuerza.</string>
     <string name="quit_sos_tip_call">Escribe o llama a alguien de confianza.</string>
     <string name="quit_sos_support">Si lo estás pasando muy mal, no tienes que llevarlo solo: tu centro de salud o un profesional pueden acompañarte. En España, el 112 atiende emergencias.</string>
-    <string name="quit_breath_circle_description">%1$s, quedan %2$d segundos</string>
+    <plurals name="quit_breath_circle_description">
+        <item quantity="one">%1$s, queda %2$d segundo</item>
+        <item quantity="other">%1$s, quedan %2$d segundos</item>
+    </plurals>
 
     <!-- Hoja de hábito -->
     <string name="quit_habit_sheet_add">Nuevo hábito</string>
@@ -265,8 +271,8 @@
     <string name="quit_issue_start_in_future">El inicio no puede estar en el futuro.</string>
     <string name="quit_issue_units_missing">Indica cuántas unidades.</string>
     <string name="quit_issue_units_invalid">Escribe un número entero entre 1 y 1.000.</string>
-    <string name="quit_issue_event_in_future">Elige un momento que ya haya pasado.</string>
-    <string name="quit_issue_event_before_start">Elige un momento posterior al inicio del hábito.</string>
+    <string name="quit_issue_event_in_future">Elige una hora que ya haya pasado.</string>
+    <string name="quit_issue_event_before_start">Elige una fecha posterior al inicio del hábito.</string>
 
     <!-- Duraciones en lenguaje natural -->
     <plurals name="quit_span_years">

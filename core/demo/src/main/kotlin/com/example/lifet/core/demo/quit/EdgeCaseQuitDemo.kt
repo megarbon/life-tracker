@@ -20,16 +20,17 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 private const val YEARS_OF_ABSTINENCE_DAYS = 2_300L
-private const val LONG_NOTE_SEED = "Hoy ha sido un día largo y difícil 😮‍💨🚭 pero aquí sigo, paso a paso 💪\n"
+private const val LONG_NOTE_SEED = "Día largo y difícil 😮‍💨🚭 pero aquí sigo, paso a paso 💪\n"
 private const val LONG_NAME_SEED = "Sin humo 🚭 "
 private const val CRAVING_STORM = 30
 private const val TOKYO_ZONE = "Asia/Tokyo"
 
 /**
- * Escenario EDGE_CASES: años de abstinencia, un hábito recién empezado, importes enormes (el precio máximo que acepta
- * el formulario y una divisa sin decimales), nombres y notas en su longitud máxima con emojis, recaídas a medianoche
- * y justo en el cambio de hora, otra zona horaria, una tormenta de antojos en un solo día y un hueco sin datos.
+ * Escenario EDGE_CASES: años de abstinencia, un hábito recién empezado, importes enormes (el precio máximo que
+ * acepta el formulario y una divisa sin decimales), nombres y notas en su longitud máxima con emojis, recaídas a
+ * medianoche y justo en el cambio de hora, otra zona horaria, una tormenta de antojos en un solo día y un hueco.
  */
+@Suppress("TooManyFunctions") // Un método por caso límite: cada uno es independiente y se lee por separado.
 internal class EdgeCaseQuitDemo(
     private val clock: Clock,
 ) {
@@ -193,7 +194,7 @@ internal class EdgeCaseQuitDemo(
             ),
         )
 
-    /** Una recaída justo antes y otra justo después del último cambio de hora, con la hora saltándose o repitiéndose. */
+    /** Una recaída un segundo antes y otra un segundo después del último cambio de hora. */
     private fun daylightSavingSlips(): List<QuitConsumption> {
         val transition = zone.rules.previousTransition(now) ?: return emptyList()
         val first =

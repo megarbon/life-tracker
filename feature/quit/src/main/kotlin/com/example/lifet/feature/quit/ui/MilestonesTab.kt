@@ -1,6 +1,7 @@
 package com.example.lifet.feature.quit.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,18 +34,17 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.lifet.core.designsystem.theme.LifeTrackerTheme
+import com.example.lifet.core.designsystem.theme.MinTouchTarget
 import com.example.lifet.core.model.quit.HabitMode
 import com.example.lifet.core.model.quit.HabitProgress
 import com.example.lifet.core.model.quit.Milestone
 import com.example.lifet.core.model.quit.MilestoneKey
-import com.example.lifet.feature.quit.QuitFormatters
 import com.example.lifet.feature.quit.R
 import com.example.lifet.feature.quit.labelRes
 import com.example.lifet.feature.quit.liveProgress
 import com.example.lifet.feature.quit.millisUntilNextTick
 import com.example.lifet.feature.quit.noteRes
 import com.example.lifet.feature.quit.rememberLiveNow
-import com.example.lifet.feature.quit.rememberQuitFormatters
 import com.example.lifet.feature.quit.spanText
 import java.time.Clock
 import java.time.Instant
@@ -103,7 +103,6 @@ internal fun MilestonesTab(
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    val formatters = rememberQuitFormatters()
     val now = rememberLiveNow(clock) { millisUntilNextTick(progress.cleanSince, it) }
     LazyColumn(
         modifier = modifier,
@@ -125,7 +124,7 @@ internal fun MilestonesTab(
             )
         }
         items(progress.milestones, key = { it.key.name }, contentType = { "milestone" }) { milestone ->
-            MilestoneRow(milestone, formatters, now.value)
+            MilestoneRow(milestone, now.value)
         }
     }
 }
@@ -133,46 +132,24 @@ internal fun MilestonesTab(
 @Composable
 private fun MilestoneRow(
     milestone: Milestone,
-    formatters: QuitFormatters,
     now: Instant,
 ) {
-    val accent = LifeTrackerTheme.areaColors.quit
     val name = stringResource(milestone.key.labelRes)
     val reached = milestone.reachedNow || milestone.reachedEver
-    val status = milestoneStatus(milestone, formatters, now)
+    val status = milestoneStatus(milestone, now)
     val note = stringResource(milestone.key.noteRes)
-    val description = listOf(name, status, note.takeIf { reached }).filterNotNull().joinToString(". ")
+    val description = listOfNotNull(name, status, note.takeIf { reached }).joinToString(". ")
     Row(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .heightIn(min = LifeTrackerTheme.spacing.xl + LifeTrackerTheme.spacing.lg)
+                .heightIn(min = MinTouchTarget)
                 .clearAndSetSemantics { contentDescription = description }
                 .padding(vertical = LifeTrackerTheme.spacing.sm, horizontal = LifeTrackerTheme.spacing.xs),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(LifeTrackerTheme.spacing.md),
     ) {
-        Surface(
-            shape = CircleShape,
-            color =
-                if (reached) {
-                    accent.copy(
-                        alpha = BADGE_FILL_ALPHA,
-                    )
-                } else {
-                    MaterialTheme.colorScheme.surfaceContainerHigh
-                },
-            modifier = Modifier.size(ICON_BADGE),
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Icon(
-                    imageVector = if (reached) Icons.Rounded.CheckCircle else Icons.Rounded.Flag,
-                    contentDescription = null,
-                    tint = if (reached) accent else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(BADGE_ICON).padding(top = LifeTrackerTheme.spacing.sm),
-                )
-            }
-        }
+        MilestoneBadge(reached)
         Column(modifier = Modifier.weight(1f)) {
             Text(name, style = MaterialTheme.typography.bodyLarge)
             Text(
@@ -184,7 +161,7 @@ private fun MilestoneRow(
                 LinearProgressIndicator(
                     progress = { milestone.progress },
                     modifier = Modifier.fillMaxWidth().padding(top = LifeTrackerTheme.spacing.xs),
-                    color = accent,
+                    color = LifeTrackerTheme.areaColors.quit,
                     trackColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                 )
             }
@@ -192,9 +169,29 @@ private fun MilestoneRow(
         if (reached) {
             // La palabra acompaña al icono: el logro nunca depende sólo del color.
             Text(
-                text = if (milestone.isRecent(now)) stringResource(R.string.quit_milestone_new) else status,
+                text = status,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+/** Insignia redonda del hito: marca con el color del área si se consiguió y bandera si está pendiente. */
+@Composable
+private fun MilestoneBadge(reached: Boolean) {
+    val accent = LifeTrackerTheme.areaColors.quit
+    Surface(
+        shape = CircleShape,
+        color = if (reached) accent.copy(alpha = BADGE_FILL_ALPHA) else MaterialTheme.colorScheme.surfaceContainerHigh,
+        modifier = Modifier.size(ICON_BADGE),
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Icon(
+                imageVector = if (reached) Icons.Rounded.CheckCircle else Icons.Rounded.Flag,
+                contentDescription = null,
+                tint = if (reached) accent else MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(BADGE_ICON),
             )
         }
     }
@@ -204,7 +201,6 @@ private fun MilestoneRow(
 @Composable
 private fun milestoneStatus(
     milestone: Milestone,
-    formatters: QuitFormatters,
     now: Instant,
 ): String =
     when {

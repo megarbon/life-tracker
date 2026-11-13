@@ -71,6 +71,7 @@ private val COPING =
  * modo reducción desde hace doce semanas con un límite semanal de cuatro copas: de las últimas cuatro semanas
  * completas se cumplen tres. Todo el azar sale de [random]; las fechas, de [clock].
  */
+@Suppress("TooManyFunctions") // Un método por patrón de la demo (antojos, consumos, horas, disparadores...).
 internal class RegularQuitDemo(
     clock: Clock,
     private val random: Random,

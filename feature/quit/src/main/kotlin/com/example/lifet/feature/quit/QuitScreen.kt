@@ -136,7 +136,7 @@ internal fun QuitScreen(
         }
     }
     CelebrationHost(current, clock)
-    if (overview != null || editor is QuitEditor.Habit) EditorHost(overview, editor, current, onAction)
+    if (overview != null || editor is QuitEditor.Habit) EditorHost(overview, editor, onAction)
 }
 
 /** El hábito elegido, o el principal si no se ha elegido ninguno (o el elegido ya no existe). */
@@ -296,7 +296,6 @@ private fun EffectsHandler(
 private fun EditorHost(
     overview: QuitOverview?,
     editor: QuitEditor?,
-    current: HabitProgress?,
     onAction: (QuitAction) -> Unit,
 ) {
     val dismiss = { onAction(QuitAction.Dismiss) }

@@ -92,29 +92,7 @@ private fun HabitFields(
     onChange: (HabitDraft) -> Unit,
 ) {
     val tobacco = draft.kind == HabitKind.TOBACCO
-    if (!isEdit) {
-        val kinds = HabitKind.entries.associateWith { stringResource(it.labelRes) }
-        LTChipGroup(
-            options = HabitKind.entries,
-            selected = draft.kind,
-            label = { kinds.getValue(it) },
-            onSelect = { onChange(draft.withKind(it)) },
-        )
-    }
-    if (!tobacco) {
-        val modes = HabitMode.entries.associateWith { stringResource(it.labelRes) }
-        LTChipGroup(
-            options = HabitMode.entries,
-            selected = draft.mode,
-            label = { modes.getValue(it) },
-            onSelect = { onChange(draft.copy(mode = it)) },
-        )
-        Text(
-            text = stringResource(R.string.quit_mode_hint),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
+    KindAndModePickers(draft, isEdit, onChange)
     TextInput(
         value = draft.name,
         onValueChange = { onChange(draft.copy(name = it)) },
@@ -148,6 +126,38 @@ private fun HabitFields(
             modifier = Modifier.fillMaxWidth(),
             error = issueText(issues, DraftIssue.LIMIT_MISSING, DraftIssue.LIMIT_INVALID),
             imeAction = ImeAction.Done,
+        )
+    }
+}
+
+/** Qué se deja (sólo al crear) y, para el alcohol, si se deja del todo o se reduce con un límite semanal. */
+@Composable
+private fun KindAndModePickers(
+    draft: HabitDraft,
+    isEdit: Boolean,
+    onChange: (HabitDraft) -> Unit,
+) {
+    if (!isEdit) {
+        val kinds = HabitKind.entries.associateWith { stringResource(it.labelRes) }
+        LTChipGroup(
+            options = HabitKind.entries,
+            selected = draft.kind,
+            label = { kinds.getValue(it) },
+            onSelect = { onChange(draft.withKind(it)) },
+        )
+    }
+    if (draft.kind == HabitKind.ALCOHOL) {
+        val modes = HabitMode.entries.associateWith { stringResource(it.labelRes) }
+        LTChipGroup(
+            options = HabitMode.entries,
+            selected = draft.mode,
+            label = { modes.getValue(it) },
+            onSelect = { onChange(draft.copy(mode = it)) },
+        )
+        Text(
+            text = stringResource(R.string.quit_mode_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

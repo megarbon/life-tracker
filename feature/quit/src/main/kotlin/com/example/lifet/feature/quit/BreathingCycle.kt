@@ -1,12 +1,16 @@
 package com.example.lifet.feature.quit
 
+private const val INHALE_SECONDS = 4
+private const val HOLD_SECONDS = 4
+private const val EXHALE_SECONDS = 6
+
 /** Fases de la respiración guiada: inspirar, mantener y soltar el aire despacio. */
 internal enum class BreathPhase(
     val seconds: Int,
 ) {
-    INHALE(4),
-    HOLD(4),
-    EXHALE(6),
+    INHALE(INHALE_SECONDS),
+    HOLD(HOLD_SECONDS),
+    EXHALE(EXHALE_SECONDS),
 }
 
 /** Dónde está la respiración: la [phase], los [secondsLeft] de esa fase y los ciclos ya completados. */

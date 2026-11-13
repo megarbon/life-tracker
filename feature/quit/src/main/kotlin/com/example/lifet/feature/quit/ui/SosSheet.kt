@@ -131,8 +131,9 @@ private fun Controls(
 }
 
 /**
- * El círculo respira: su tamaño sigue la fase con un muelle suave. La palabra y los segundos van dentro, en una región
- * "viva" para que TalkBack anuncie cada cambio de fase sin repetir cada segundo.
+ * El círculo respira: su tamaño sigue la fase con una curva suave. La palabra y los segundos van dentro, en una región
+ * "viva" para que TalkBack anuncie cada cambio de fase sin repetir cada segundo. Con "eliminar animaciones" el círculo
+ * no se mueve: el ejercicio se sigue con las palabras y la cuenta atrás.
  */
 @Composable
 private fun BreathCircle(
@@ -140,27 +141,19 @@ private fun BreathCircle(
     running: Boolean,
 ) {
     val reduced = rememberReducedMotion()
-    val target =
-        when {
-            !running -> MIN_SCALE
-            state.phase == BreathPhase.INHALE || state.phase == BreathPhase.HOLD -> MAX_SCALE
-            else -> MIN_SCALE
-        }
     val scale by animateFloatAsState(
-        targetValue = target,
-        animationSpec =
-            if (reduced) {
-                tween(
-                    0,
-                )
-            } else {
-                tween(state.phase.seconds * SECOND_MS.toInt(), easing = FastOutSlowInEasing)
-            },
+        targetValue = targetScale(state.phase, running),
+        animationSpec = if (reduced) tween(0) else tween(phaseMillis(state.phase), easing = FastOutSlowInEasing),
         label = "breath-scale",
     )
     val phaseText = phaseText(state.phase, running)
-    val description = stringResource(R.string.quit_breath_circle_description, phaseText, state.secondsLeft)
-    val color = LifeTrackerTheme.areaColors.quit
+    val description =
+        pluralStringResource(
+            R.plurals.quit_breath_circle_description,
+            state.secondsLeft,
+            phaseText,
+            state.secondsLeft,
+        )
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         Box(
             modifier =
@@ -174,39 +167,8 @@ private fun BreathCircle(
                     },
             contentAlignment = Alignment.Center,
         ) {
-            Canvas(Modifier.matchParentSize()) {
-                val radius = size.minDimension / 2
-                drawCircle(
-                    color = color.copy(alpha = DISC_ALPHA),
-                    radius = radius * scale,
-                    center =
-                        Offset(
-                            size.width / 2,
-                            size.height / 2,
-                        ),
-                )
-                drawCircle(
-                    color = color.copy(alpha = RING_ALPHA),
-                    radius = radius,
-                    center = Offset(size.width / 2, size.height / 2),
-                    style = Stroke(width = RING_STROKE.toPx()),
-                )
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = phaseText,
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center,
-                    color = if (running) MaterialTheme.colorScheme.onSurface else Color.Unspecified,
-                )
-                if (running) {
-                    Text(
-                        text = state.secondsLeft.toString(),
-                        style = MaterialTheme.typography.displaySmall,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-            }
+            BreathDisc(scale = { scale }, modifier = Modifier.matchParentSize())
+            BreathLabel(phaseText = phaseText, secondsLeft = state.secondsLeft.takeIf { running })
         }
     }
     if (reduced && running) {
@@ -217,6 +179,51 @@ private fun BreathCircle(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
         )
+    }
+}
+
+/** Crece al inspirar, se queda grande al mantener y se encoge al soltar; parado, queda pequeño. */
+private fun targetScale(
+    phase: BreathPhase,
+    running: Boolean,
+): Float = if (running && phase != BreathPhase.EXHALE) MAX_SCALE else MIN_SCALE
+
+private fun phaseMillis(phase: BreathPhase): Int = phase.seconds * SECOND_MS.toInt()
+
+/** El disco y su aro. La escala se lee dentro del dibujo, así la animación no recompone el texto. */
+@Composable
+private fun BreathDisc(
+    scale: () -> Float,
+    modifier: Modifier = Modifier,
+) {
+    val color = LifeTrackerTheme.areaColors.quit
+    Canvas(modifier) {
+        val center = Offset(size.width / 2, size.height / 2)
+        val radius = size.minDimension / 2
+        drawCircle(color = color.copy(alpha = DISC_ALPHA), radius = radius * scale(), center = center)
+        drawCircle(
+            color = color.copy(alpha = RING_ALPHA),
+            radius = radius,
+            center = center,
+            style = Stroke(width = RING_STROKE.toPx()),
+        )
+    }
+}
+
+@Composable
+private fun BreathLabel(
+    phaseText: String,
+    secondsLeft: Int?,
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = phaseText, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+        if (secondsLeft != null) {
+            Text(
+                text = secondsLeft.toString(),
+                style = MaterialTheme.typography.displaySmall,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
 

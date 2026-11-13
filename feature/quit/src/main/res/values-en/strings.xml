@@ -57,7 +57,10 @@
     </plurals>
     <string name="quit_reduce_at_limit">You have reached your weekly limit. A new week is coming.</string>
     <string name="quit_reduce_over">You went a little over this week. It happens. What matters is the path over several weeks.</string>
-    <string name="quit_reduce_compliance">You kept to your limit in %1$d of the last %2$d weeks.</string>
+    <plurals name="quit_reduce_compliance">
+        <item quantity="one">You kept to your limit in %1$d of the last complete week.</item>
+        <item quantity="other">You kept to your limit in %1$d of the last %2$d weeks.</item>
+    </plurals>
     <string name="quit_reduce_compliance_none">There are no complete weeks to compare yet.</string>
 
     <!-- Cards -->
@@ -179,7 +182,10 @@
     <string name="quit_sos_tip_wait">Wait ten minutes: the craving loses strength.</string>
     <string name="quit_sos_tip_call">Message or call someone you trust.</string>
     <string name="quit_sos_support">If you are having a really hard time, you do not have to carry it alone: your doctor or a professional can support you. In case of an emergency, call your local emergency number.</string>
-    <string name="quit_breath_circle_description">%1$s, %2$d seconds left</string>
+    <plurals name="quit_breath_circle_description">
+        <item quantity="one">%1$s, %2$d second left</item>
+        <item quantity="other">%1$s, %2$d seconds left</item>
+    </plurals>
 
     <!-- Habit sheet -->
     <string name="quit_habit_sheet_add">New habit</string>
@@ -265,8 +271,8 @@
     <string name="quit_issue_start_in_future">The start cannot be in the future.</string>
     <string name="quit_issue_units_missing">Enter how many units.</string>
     <string name="quit_issue_units_invalid">Enter a whole number between 1 and 1,000.</string>
-    <string name="quit_issue_event_in_future">Choose a moment that has already passed.</string>
-    <string name="quit_issue_event_before_start">Choose a moment after the habit started.</string>
+    <string name="quit_issue_event_in_future">Choose a time that has already passed.</string>
+    <string name="quit_issue_event_before_start">Choose a date after the habit started.</string>
 
     <!-- Durations in natural language -->
     <plurals name="quit_span_years">

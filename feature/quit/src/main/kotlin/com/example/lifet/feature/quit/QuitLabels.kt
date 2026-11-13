@@ -16,6 +16,7 @@ import com.example.lifet.core.model.quit.MilestoneKey
 import com.example.lifet.core.model.quit.QuitConsumption
 import com.example.lifet.core.model.quit.QuitCraving
 import com.example.lifet.core.model.quit.QuitEvent
+import com.example.lifet.core.model.quit.QuitRules
 
 internal val HabitKind.icon: ImageVector
     get() =
@@ -141,13 +142,16 @@ internal val DraftIssue.messageRes: Int
             DraftIssue.EVENT_BEFORE_START -> R.string.quit_issue_event_before_start
         }
 
-/** Intensidad de 1 a 5 como palabra ("muy suave"... "muy fuerte"). */
+private val INTENSITY_LABELS =
+    listOf(
+        R.string.quit_intensity_1,
+        R.string.quit_intensity_2,
+        R.string.quit_intensity_3,
+        R.string.quit_intensity_4,
+        R.string.quit_intensity_5,
+    )
+
+/** Intensidad de 1 a 5 como palabra ("muy suave"... "muy fuerte"); fuera de rango se acota. */
 @StringRes
 internal fun intensityLabelRes(intensity: Int): Int =
-    when (intensity) {
-        1 -> R.string.quit_intensity_1
-        2 -> R.string.quit_intensity_2
-        3 -> R.string.quit_intensity_3
-        4 -> R.string.quit_intensity_4
-        else -> R.string.quit_intensity_5
-    }
+    INTENSITY_LABELS[(intensity - QuitRules.MIN_INTENSITY).coerceIn(0, INTENSITY_LABELS.lastIndex)]

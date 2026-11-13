@@ -17,6 +17,7 @@ import java.time.temporal.TemporalAdjusters
  * Un consumo reinicia sólo la racha actual: el récord, los días limpios totales y el ahorro acumulado se conservan.
  * Los consumos anteriores al inicio del hábito o posteriores a "ahora" no cuentan.
  */
+@Suppress("TooManyFunctions") // Una función privada por cada cifra que compone el progreso de un hábito.
 public class QuitCalculator(
     private val data: QuitDataSet,
     private val now: Instant,

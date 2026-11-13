@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -268,7 +269,12 @@ private fun ReduceHero(
             if (progress.compliance.isEmpty()) {
                 stringResource(R.string.quit_reduce_compliance_none)
             } else {
-                stringResource(R.string.quit_reduce_compliance, progress.compliantWeeks, progress.compliance.size)
+                pluralStringResource(
+                    R.plurals.quit_reduce_compliance,
+                    progress.compliance.size,
+                    progress.compliantWeeks,
+                    progress.compliance.size,
+                )
             },
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
